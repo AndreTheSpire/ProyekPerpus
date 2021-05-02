@@ -124,5 +124,28 @@ insert into premium values(7,'Permanent',750000,6);
 --insert into pembelian_premium values(id,id_user, id_premium,status,metode_pembayaran,created_at);
 --pembelian_premium (status: 0 pending, 1 accepted, 2 rejected)
 insert into pembelian_premium values(0,0,0,1,'BCA',to_date('16/09/2019', 'DD/MM/YYYY'));
-insert into pembelian_premium values(1,0,4,1,'BCA',to_date('16/12/2019', 'DD/MM/YYYY'));
-insert into pembelian_premium values(2,0,7,2,'BCA',to_date('12/06/2020', 'DD/MM/YYYY'));
+insert into pembelian_premium values(1,0,4,1,'OVO',to_date('16/12/2019', 'DD/MM/YYYY'));
+insert into pembelian_premium values(2,1,1,1,'OVO',to_date('12/06/2020', 'DD/MM/YYYY'));
+insert into pembelian_premium values(3,1,7,1,'BCA',to_date('01/09/2020', 'DD/MM/YYYY'));
+insert into pembelian_premium values(4,4,7,2,'BCA',to_date('05/02/2019', 'DD/MM/YYYY'));
+insert into pembelian_premium values(5,6,2,0,'Gopay',to_date('21/02/2020', 'DD/MM/YYYY'));
+insert into pembelian_premium values(6,2,7,2,'BCA',to_date('12/06/2020', 'DD/MM/YYYY'));
+insert into pembelian_premium values(7,5,3,0,'Gopay',to_date('15/12/2018', 'DD/MM/YYYY'));
+insert into pembelian_premium values(8,3,0,2,'BCA',to_date('20/01/2020', 'DD/MM/YYYY'));
+insert into pembelian_premium values(9,3,2,2,'OVO',to_date('11/04/2020', 'DD/MM/YYYY'));
+insert into pembelian_premium values(10,3,7,2,'BCA',to_date('24/07/2020', 'DD/MM/YYYY'));
+
+--insert into denda value(id,waktu,denda)
+--waktu dalam hari 
+insert into denda values(0, 1, 3000);
+insert into denda values(1, 2, 3000);
+insert into denda values(2, 3, 3000);
+insert into denda values(3, 4, 3000);
+insert into denda values(4, 5, 10000);
+insert into denda values(5, 6, 10000);
+insert into denda values(6, 7, 10000);
+insert into denda values(7, 8, 10000);
+insert into denda values(8, 9, 20000);
+insert into denda values(9, 10, 20000);
+insert into denda values(10, 11, 20000);
+insert into denda values(11, 12, 20000);

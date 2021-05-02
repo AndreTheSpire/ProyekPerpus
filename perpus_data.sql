@@ -4,6 +4,7 @@ DROP TABLE BUKU CASCADE CONSTRAINTS PURGE;
 DROP TABLE DENDA CASCADE CONSTRAINTS PURGE;
 DROP TABLE D_PEMINJAMAN CASCADE CONSTRAINTS PURGE;
 DROP TABLE H_PEMINJAMAN CASCADE CONSTRAINTS PURGE;
+DROP TABLE Kategori_Buku CASCADE CONSTRAINTS PURGE;
 DROP TABLE PEMBELIAN_PREMIUM CASCADE CONSTRAINTS PURGE;
 DROP TABLE PENGEMBALIAN CASCADE CONSTRAINTS PURGE;
 DROP TABLE PREMIUM CASCADE CONSTRAINTS PURGE;
@@ -49,8 +50,7 @@ create table pembelian_premium(
 create table h_peminjaman(
     id number(6) PRIMARY KEY,
     id_user REFERENCES users(id),
-    tanggal_peminjaman date,
-    status_peminjaman number(1)
+    tanggal_peminjaman date
 );
 create table d_peminjaman(
     id number(6) PRIMARY KEY,
@@ -117,9 +117,9 @@ insert into premium values(1,'Regular',30000,1);
 insert into premium values(2,'Double',40000,2);
 insert into premium values(3,'Triple',60000,3);
 insert into premium values(4,'Semester',100000,6);
-insert into premium values(5,'Yearly',180000,6);
-insert into premium values(6,'TriYear',510000,6);
-insert into premium values(7,'Permanent',750000,6);
+insert into premium values(5,'Yearly',180000,12);
+insert into premium values(6,'TriYear',510000,36);
+insert into premium values(7,'Permanent',750000,99);
 
 --insert into pembelian_premium values(id,id_user, id_premium,status,metode_pembayaran,created_at);
 --pembelian_premium (status: 0 pending, 1 accepted, 2 rejected)
@@ -135,26 +135,62 @@ insert into pembelian_premium values(8,3,0,2,'BCA',to_date('20/01/2020', 'DD/MM/
 insert into pembelian_premium values(9,3,2,2,'OVO',to_date('11/04/2020', 'DD/MM/YYYY'));
 insert into pembelian_premium values(10,3,7,2,'BCA',to_date('24/07/2020', 'DD/MM/YYYY'));
 
---insert h_peminjaman
-insert into h_peminjaman values(0, 0, TO_DATE('12/03/2018', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(1, 7, TO_DATE('01/07/2018', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(2, 6, TO_DATE('30/07/2018', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(3, 4, TO_DATE('26/08/2018', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(4, 2, TO_DATE('02/10/2018', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(5, 2, TO_DATE('16/10/2018', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(6, 5, TO_DATE('23/11/2018', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(7, 1, TO_DATE('04/01/2019', 'DD/MM/YYYY'), 0);
-insert into h_peminjaman values(8, 5, TO_DATE('15/08/2019', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(9, 3, TO_DATE('12/10/2019', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(10, 7, TO_DATE('02/01/2020', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(11, 6, TO_DATE('09/03/2020', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(12, 1, TO_DATE('09/05/2020', 'DD/MM/YYYY'), 0);
-insert into h_peminjaman values(13, 5, TO_DATE('12/06/2020', 'DD/MM/YYYY'), 0);
-insert into h_peminjaman values(14, 0, TO_DATE('21/07/2020', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(15, 3, TO_DATE('10/10/2020', 'DD/MM/YYYY'), 0);
-insert into h_peminjaman values(16, 4, TO_DATE('21/12/2020', 'DD/MM/YYYY'), 1);
-insert into h_peminjaman values(17, 2, TO_DATE('29/04/2021', 'DD/MM/YYYY'), 0);
-insert into h_peminjaman values(18, 7, TO_DATE('30/04/2021', 'DD/MM/YYYY'), 1);
+
+--insert h_peminjaman values(id,id_user,tanggal_peminjaman,status_peminjaman)
+--status peminjaman 0 belum kembali 1 kembali 
+insert into h_peminjaman values(0, 0, TO_DATE('12/03/2018', 'DD/MM/YYYY'));
+insert into h_peminjaman values(1, 7, TO_DATE('01/07/2018', 'DD/MM/YYYY'));
+insert into h_peminjaman values(2, 6, TO_DATE('30/07/2018', 'DD/MM/YYYY'));
+insert into h_peminjaman values(3, 4, TO_DATE('26/08/2018', 'DD/MM/YYYY'));
+insert into h_peminjaman values(4, 2, TO_DATE('02/10/2018', 'DD/MM/YYYY'));
+insert into h_peminjaman values(5, 2, TO_DATE('16/10/2018', 'DD/MM/YYYY'));
+insert into h_peminjaman values(6, 5, TO_DATE('23/11/2018', 'DD/MM/YYYY'));
+insert into h_peminjaman values(7, 1, TO_DATE('04/01/2019', 'DD/MM/YYYY'));
+insert into h_peminjaman values(8, 5, TO_DATE('15/08/2019', 'DD/MM/YYYY'));
+
+
+insert into h_peminjaman values(9, 3, TO_DATE('12/10/2019', 'DD/MM/YYYY'));
+insert into h_peminjaman values(10, 7, TO_DATE('02/01/2020', 'DD/MM/YYYY'));
+insert into h_peminjaman values(11, 6, TO_DATE('09/03/2020', 'DD/MM/YYYY'));
+insert into h_peminjaman values(12, 5, TO_DATE('09/05/2020', 'DD/MM/YYYY'));
+--premium joko
+insert into h_peminjaman values(13, 1, TO_DATE('12/06/2020', 'DD/MM/YYYY'));
+--
+insert into h_peminjaman values(14, 0, TO_DATE('21/07/2020', 'DD/MM/YYYY'));
+insert into h_peminjaman values(15, 3, TO_DATE('10/10/2020', 'DD/MM/YYYY'));
+insert into h_peminjaman values(16, 4, TO_DATE('21/12/2020', 'DD/MM/YYYY'));
+insert into h_peminjaman values(17, 2, TO_DATE('29/04/2021', 'DD/MM/YYYY'));
+insert into h_peminjaman values(18, 7, TO_DATE('30/04/2021', 'DD/MM/YYYY'));
+
+
+--insert d_peminjaman values(id,id_h_peminjaman,id_buku)
+insert into d_peminjaman values(0,0,7);
+insert into d_peminjaman values(1,0,5);
+insert into d_peminjaman values(2,1,1);
+insert into d_peminjaman values(3,2,7);
+insert into d_peminjaman values(4,3,1);
+insert into d_peminjaman values(5,3,5);
+insert into d_peminjaman values(6,3,7);
+insert into d_peminjaman values(7,4,2);
+insert into d_peminjaman values(8,5,1);
+insert into d_peminjaman values(9,6,5);
+insert into d_peminjaman values(10,7,6);
+insert into d_peminjaman values(11,8,5);
+insert into d_peminjaman values(12,8,7);
+insert into d_peminjaman values(13,9,9);
+insert into d_peminjaman values(14,10,2);
+insert into d_peminjaman values(15,11,7);
+insert into d_peminjaman values(16,12,1);
+insert into d_peminjaman values(17,12,5);
+insert into d_peminjaman values(18,13,3);
+insert into d_peminjaman values(19,13,4);
+insert into d_peminjaman values(20,13,8);
+insert into d_peminjaman values(21,14,9);
+insert into d_peminjaman values(22,15,2);
+insert into d_peminjaman values(23,16,1);
+insert into d_peminjaman values(24,17,7);
+insert into d_peminjaman values(25,18,2);
+
 
 --insert into denda value(id,waktu,denda)
 --waktu dalam hari 
@@ -170,3 +206,25 @@ insert into denda values(8, 9, 20000);
 insert into denda values(9, 10, 20000);
 insert into denda values(10, 11, 20000);
 insert into denda values(11, 12, 20000);
+
+--insert into pengembalian values(id,id_h_peminjaman,tanggal_pengembalian,jumlah_denda)
+
+insert into pengembalian values(0, 0, TO_DATE('15/03/2018', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(1, 1, TO_DATE('20/07/2018', 'DD/MM/YYYY'), 20000);
+insert into pengembalian values(2, 2, TO_DATE('02/08/2018', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(3, 3, TO_DATE('15/09/2018', 'DD/MM/YYYY'), 20000);
+insert into pengembalian values(4, 4, TO_DATE('10/10/2018', 'DD/MM/YYYY'), 3000);
+insert into pengembalian values(5, 5, TO_DATE('20/10/2018', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(6, 6, TO_DATE('30/11/2018', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(7, 7, TO_DATE('14/01/2019', 'DD/MM/YYYY'), 3000);
+insert into pengembalian values(8, 8, TO_DATE('22/08/2019', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(9, 9, TO_DATE('13/10/2019', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(10, 10, TO_DATE('13/01/2020', 'DD/MM/YYYY'), 10000);
+insert into pengembalian values(11, 11, TO_DATE('23/03/2020', 'DD/MM/YYYY'), 10000);
+insert into pengembalian values(12, 12, TO_DATE('09/07/2020', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(13, 14, TO_DATE('28/07/2020', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(14, 13, TO_DATE('30/07/2020', 'DD/MM/YYYY'), 26000);
+insert into pengembalian values(15, 15, TO_DATE('13/10/2020', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(16, 16, TO_DATE('29/12/2020', 'DD/MM/YYYY'), 3000);
+insert into pengembalian values(17, 18, TO_DATE('03/05/2021', 'DD/MM/YYYY'), 0);
+insert into pengembalian values(18, 17, TO_DATE('13/05/2021', 'DD/MM/YYYY'), 10000);

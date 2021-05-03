@@ -10,19 +10,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PerpusPCS
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MenuPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MenuPage : Window
     {
-        public MainWindow()
+        public MenuPage()
         {
             InitializeComponent();
+        }
+
+
+        private void btnLogOut_Click(object sender, RoutedEventArgs e)
+        {
+            MainPage mp = new MainPage();
+            mp.Show();
+            this.Close();
         }
     }
 }

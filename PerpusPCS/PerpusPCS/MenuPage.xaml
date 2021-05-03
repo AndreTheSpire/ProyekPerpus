@@ -1,0 +1,34 @@
+﻿<Window x:Class="PerpusPCS.MenuPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PerpusPCS"
+        mc:Ignorable="d"
+        Title="MenuPage" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DockPanel HorizontalAlignment="Left" Height="Auto" LastChildFill="False" VerticalAlignment="Top" Width="Auto" Grid.ColumnSpan="4">
+            <Grid Grid.Column="1" Grid.ColumnSpan="2">
+                <ToolBarTray HorizontalAlignment="Left" Height="Auto" Margin="10,10,0,0" VerticalAlignment="Top" Width="Auto" >
+                    <ToolBar>
+                        <Button ToolBar.OverflowMode="Never">Login</Button>
+                        <Button x:Name="btnLogOut" ToolBar.OverflowMode="Always" Click="btnLogOut_Click">LogOut</Button>
+                        <Button ToolBar.OverflowMode="Always">Lorem</Button>
+                    </ToolBar>
+                    <ToolBar>
+                        <Button ToolBar.OverflowMode="Never">Lorem</Button>
+                        <Button ToolBar.OverflowMode="Always">Lorem</Button>
+                        <Button ToolBar.OverflowMode="Always">Lorem</Button>
+                    </ToolBar>
+                </ToolBarTray>
+            </Grid>
+        </DockPanel>
+
+    </Grid>
+</Window>

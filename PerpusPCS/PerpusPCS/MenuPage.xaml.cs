@@ -38,5 +38,11 @@ namespace PerpusPCS
             MasterBukuPage mbp = new MasterBukuPage();
             mbp.ShowDialog();
         }
+
+        private void btnMasterUsers_Click(object sender, RoutedEventArgs e)
+        {
+            MasterUser mu = new MasterUser();
+            mu.ShowDialog();
+        }
     }
 }

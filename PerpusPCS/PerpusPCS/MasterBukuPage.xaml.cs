@@ -29,6 +29,7 @@ namespace PerpusPCS
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
+            loadData();
         }
 
         private void loadData()
@@ -38,7 +39,7 @@ namespace PerpusPCS
             da = new OracleDataAdapter();
 
             cmd.Connection = conn;
-            cmd.CommandText = " select * from buku";
+            cmd.CommandText = "select * from buku";
 
 
             conn.Open();

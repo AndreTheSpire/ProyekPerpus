@@ -228,3 +228,5 @@ insert into pengembalian values(15, 15, TO_DATE('13/10/2020', 'DD/MM/YYYY'), 0);
 insert into pengembalian values(16, 16, TO_DATE('29/12/2020', 'DD/MM/YYYY'), 3000);
 insert into pengembalian values(17, 18, TO_DATE('03/05/2021', 'DD/MM/YYYY'), 0);
 insert into pengembalian values(18, 17, TO_DATE('13/05/2021', 'DD/MM/YYYY'), 10000);
+
+commit;

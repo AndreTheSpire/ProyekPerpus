@@ -22,12 +22,13 @@ namespace PerpusPCS
         public MainPage()
         {
             InitializeComponent();
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            MenuPage mp = new MenuPage();
-            mp.Show();
+            ConnectionPage cp = new ConnectionPage();
+            cp.Show();
             this.Close();
         }
     }

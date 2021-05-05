@@ -15,28 +15,19 @@ using System.Windows.Shapes;
 namespace PerpusPCS
 {
     /// <summary>
-    /// Interaction logic for MenuPage.xaml
+    /// Interaction logic for MasterBukuPage.xaml
     /// </summary>
-    public partial class MenuPage : Window
+    public partial class MasterBukuPage : Window
     {
-        public MenuPage()
+        public MasterBukuPage()
         {
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
-
-        private void btnLogOut_Click(object sender, RoutedEventArgs e)
+        private void btnBackToMenu_Click(object sender, RoutedEventArgs e)
         {
-            MainPage mp = new MainPage();
-            mp.Show();
             this.Close();
-        }
-
-        private void btnMasterBuku_Click(object sender, RoutedEventArgs e)
-        {
-            MasterBukuPage mbp = new MasterBukuPage();
-            mbp.ShowDialog();
         }
     }
 }

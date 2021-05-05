@@ -29,6 +29,7 @@ namespace PerpusPCS
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
+            loadData();
         }
 
         private void loadData()

@@ -31,5 +31,10 @@ namespace PerpusPCS
             mp.Show();
             this.Close();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

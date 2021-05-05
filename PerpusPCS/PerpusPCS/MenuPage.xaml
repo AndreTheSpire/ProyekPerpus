@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpusPCS"
         mc:Ignorable="d"
-        Title="MenuPage" Height="450" Width="800">
+        Title="MenuPage" Height="450" Width="800" Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"></ColumnDefinition>
@@ -13,22 +13,58 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="10"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <DockPanel HorizontalAlignment="Left" Height="Auto" LastChildFill="False" VerticalAlignment="Top" Width="Auto" Grid.ColumnSpan="4">
-            <Grid Grid.Column="1" Grid.ColumnSpan="2">
-                <ToolBarTray HorizontalAlignment="Left" Height="Auto" Margin="10,10,0,0" VerticalAlignment="Top" Width="Auto" >
-                    <ToolBar>
-                        <Button ToolBar.OverflowMode="Never">Login</Button>
-                        <Button x:Name="btnLogOut" ToolBar.OverflowMode="Always" Click="btnLogOut_Click">LogOut</Button>
-                        <Button ToolBar.OverflowMode="Always">Lorem</Button>
-                    </ToolBar>
-                    <ToolBar>
-                        <Button ToolBar.OverflowMode="Never">Lorem</Button>
-                        <Button ToolBar.OverflowMode="Always">Lorem</Button>
-                        <Button ToolBar.OverflowMode="Always">Lorem</Button>
-                    </ToolBar>
-                </ToolBarTray>
-            </Grid>
-        </DockPanel>
+        <Grid Grid.Column="1" Grid.ColumnSpan="2">
+            <Image Source="placeholder.png" Stretch="UniformToFill"></Image>
+        </Grid>
+        <Grid Grid.Column="0" Grid.ColumnSpan="4">
+            <Menu Height="30" VerticalAlignment="Top" Width="Auto" Padding="10 0 0 0" Background="White">
+                <MenuItem x:Name="btnMaster" Margin="0 0 3 0" Header="Master" Height="30" Click="MenuItem_Click" Background="#FFDDDDDD" BorderBrush="#FF707070" BorderThickness="1 1 1 1">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                            <MenuItem Header="Buku"></MenuItem>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                            <MenuItem Header="Kategori Buku"></MenuItem>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                            <MenuItem Header="Users"></MenuItem>
+                        </StackPanel>
+                    </MenuItem>
+
+
+                <MenuItem x:Name="btnTransaksi" Margin="0 0 3 0" Header="Transaksi" Height="30" Click="MenuItem_Click" Background="#FFDDDDDD" BorderBrush="#FF707070" BorderThickness="1 1 1 1">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                        <MenuItem Header="Pembelian Premium"></MenuItem>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                        <MenuItem Header="Peminjaman Buku"></MenuItem>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                        <MenuItem Header="Pengembalian Buku"></MenuItem>
+                    </StackPanel>
+                </MenuItem>
+                <MenuItem x:Name="btnLaporan" Margin="0 0 3 0" Header="Laporan" Height="30" Click="MenuItem_Click" BorderBrush="#FF707070" Background="#FFDDDDDD" BorderThickness="1 1 1 1">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                        <MenuItem Header="Pembelian Premium"></MenuItem>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                        <MenuItem Header="Detail Buku"></MenuItem>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                        <MenuItem Header="Peminjaman dan Pengembalian Buku"></MenuItem>
+                    </StackPanel>
+                </MenuItem>
+            </Menu>
+        </Grid>
+       
 
     </Grid>
 </Window>

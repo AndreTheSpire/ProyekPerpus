@@ -18,28 +18,46 @@
             <RowDefinition Height="10"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1">
-            <DataGrid x:Name="DataGridUser" VerticalAlignment="Top"/>
-        </Grid>
-        <StackPanel Grid.Column="1" Grid.Row="2">
-            <Label Content="ID" Margin="0 2 0 0"/>
-
-            <Label Content="Username" Margin="0 2 0 0"/>
-            <Label Content="Password" Margin="0 2 0 0"/>
+        <DataGrid x:Name="dgvUser" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Height="300"/>
+        <StackPanel  Grid.Column="1" Grid.Row="2" >
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="ID" MinWidth="100"></Label>
+                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="Username" MinWidth="100"></Label>
+                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="Password" MinWidth="100"></Label>
+                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+            </StackPanel>
         </StackPanel>
+
         <StackPanel Grid.Column="2" Grid.Row="2">
-            <Label Content="Nama" Margin="0 2 0 0"/>
-            <Label Content="Tgl Lahir" Margin="0 2 0 0"/>
-            <Label Content="No Telp" Margin="0 2 0 0"/>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="Nama" MinWidth="100"></Label>
+                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="Tgl Lahir" MinWidth="100"></Label>
+                <DatePicker Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></DatePicker>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="No Telp" MinWidth="100"></Label>
+                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+            </StackPanel>
         </StackPanel>
         <StackPanel Grid.Column="3" Grid.Row="2">
-            <Button Content="Insert" MaxWidth="150" Width="auto" Margin="0 2 0 0"/>
-            <Button Content="Update" MaxWidth="150" Width="auto" Margin="0 2 0 0"/>
-            <Button Content="Delete" MaxWidth="150" Width="auto" Margin="0 2 0 0"/>
-            <Button Content="Clear" MaxWidth="150" Width="auto" Margin="0 2 0 0"/>
+            <Button MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0">Insert</Button>
+            <Button MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0">Update</Button>
+            <Button MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0">Delete</Button>
+            <Button MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0">Clear</Button>
         </StackPanel>
+        <Grid Grid.Column="3" Grid.Row="3">
+            <Button x:Name="btnBackToMenu" MinWidth="100" MaxWidth="150" HorizontalAlignment="Right" Margin="0 0 0 2" Click="btnBackToMenu_Click">Back to Menu</Button>
+        </Grid>
     </Grid>
 </Window>

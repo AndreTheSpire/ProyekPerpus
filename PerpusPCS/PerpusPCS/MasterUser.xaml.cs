@@ -23,5 +23,10 @@ namespace PerpusPCS
         {
             InitializeComponent();
         }
+
+        private void btnBackToMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

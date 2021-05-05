@@ -42,7 +42,7 @@
                 <MenuItem x:Name="btnTransaksi"  Margin="0 0 3 0" Header="Transaksi" Height="30" Background="#FFDDDDDD" BorderBrush="#FF707070" BorderThickness="1 1 1 1">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                        <MenuItem Header="Pembelian Premium"></MenuItem>
+                        <MenuItem x:Name="btnTransaksiPembelian" Header="Pembelian Premium" Click="btnTransaksiPembelian_Click"></MenuItem>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="placeholder.png" Width="20" Height="20"></Image>

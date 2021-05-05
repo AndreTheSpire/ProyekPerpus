@@ -44,5 +44,11 @@ namespace PerpusPCS
             MasterUser mu = new MasterUser();
             mu.ShowDialog();
         }
+
+        private void btnTransaksiPembelian_Click(object sender, RoutedEventArgs e)
+        {
+            TransaksiPembelian tp = new TransaksiPembelian();
+            tp.ShowDialog();
+        }
     }
 }

@@ -32,3 +32,15 @@ begin
     :new.created_at := sysdate;
 end;
 /
+
+--autogen id pembelian_premium
+CREATE OR REPLACE FUNCTION autogen_pembelian_premium
+RETURN NUMBER 
+IS 
+TEMP NUMBER;
+BEGIN
+SELECT MAX(ID) INTO TEMP FROM pembelian_premium;
+RETURN TEMP + 1;
+END;
+/
+SHOW ERR;

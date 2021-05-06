@@ -54,7 +54,5 @@ namespace PerpusPCS
         {
             this.Close();
         }
-
-        
     }
 }

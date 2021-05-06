@@ -44,7 +44,8 @@ namespace PerpusPCS
             OracleCommand cmd = new OracleCommand();
             da = new OracleDataAdapter();
             cmd.Connection = conn;
-            cmd.CommandText = "select * from pembelian_premium";
+            cmd.CommandText = "select PP.ID as " + '"' + "No." + '"' + ",U.nama,P.jenis," +
+                "case PP.status when 0 then 'Pending' when 1 then 'Accepted' when 2 then 'Rejected' end as " + '"' + "Status" + '"' + ",PP.metode_pembayaran as " + '"' + "Metode" + '"' + ",PP.created_at as " + '"' + "Tanggal Buat" + '"' + " from pembelian_premium PP, users U, premium P where PP.id_user = U.ID and PP.id_premium = p.ID order by 1 asc";
             conn.Open();
             cmd.ExecuteReader();
             da.SelectCommand = cmd;
@@ -82,7 +83,6 @@ namespace PerpusPCS
             cmd.Connection = conn;
             conn.Close();
             conn.Open();
-            //data namauser, status harus dijadikan kata"
             cmd.CommandText = "select * from premium";
             OracleDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -107,7 +107,57 @@ namespace PerpusPCS
                     int index = dgvPremium.SelectedIndex;
                     tbID.Text = ds.Rows[index][0].ToString();
                     tbNamaUser.Text = ds.Rows[index][1].ToString();
-                    //belum selected index (premium, metode)
+                    //selected index premium
+                    if(ds.Rows[index][2].ToString()== "NewComer")
+                    {
+                        cbPremium.SelectedIndex = 0;
+                    }
+                    else if (ds.Rows[index][2].ToString() == "Regular")
+                    {
+                        cbPremium.SelectedIndex = 1;
+                    }
+                    else if (ds.Rows[index][2].ToString() == "Double")
+                    {
+                        cbPremium.SelectedIndex = 2;
+                    }
+                    else if (ds.Rows[index][2].ToString() == "Triple")
+                    {
+                        cbPremium.SelectedIndex = 3;
+                    }
+                    else if (ds.Rows[index][2].ToString() == "Semester")
+                    {
+                        cbPremium.SelectedIndex = 4;
+                    }
+                    else if (ds.Rows[index][2].ToString() == "Yearly")
+                    {
+                        cbPremium.SelectedIndex = 5;
+                    }
+                    else if (ds.Rows[index][2].ToString() == "TriYear")
+                    {
+                        cbPremium.SelectedIndex = 6;
+                    }
+                    else if (ds.Rows[index][2].ToString() == "Permanent")
+                    {
+                        cbPremium.SelectedIndex = 7;
+                    }
+
+                    //selected index metode pembayaran
+                    if (ds.Rows[index][4].ToString() == "BCA")
+                    {
+                        cbMetodePembayaran.SelectedIndex = 0;
+                    }
+                    else if (ds.Rows[index][4].ToString() == "OVO")
+                    {
+                        cbMetodePembayaran.SelectedIndex = 1;
+                    }
+                    else if (ds.Rows[index][4].ToString() == "DANA")
+                    {
+                        cbMetodePembayaran.SelectedIndex = 2;
+                    }
+                    else if (ds.Rows[index][4].ToString() == "Gopay")
+                    {
+                        cbMetodePembayaran.SelectedIndex = 3;
+                    }
                     string tempStatus = ds.Rows[index][3].ToString();
                     if (tempStatus == "0")
                     {
@@ -142,7 +192,7 @@ namespace PerpusPCS
             loadData();
             tbNamaUser.Text = "";
             cbPremium.SelectedIndex = -1;
-            cbMetodePembayaran.SelectedItem = -1;
+            cbMetodePembayaran.SelectedIndex = -1;
             rbAccepted.IsChecked = false;
             rbPending.IsChecked = false;
             rbRejected.IsChecked = false;

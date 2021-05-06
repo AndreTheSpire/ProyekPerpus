@@ -20,45 +20,55 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dgvBuku" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" Height="300"/>
+        <DataGrid x:Name="dgvBuku" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" Height="300" RenderTransformOrigin="0.5,0.5" SelectionChanged="dgvBuku_SelectionChanged">
+            <DataGrid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.551"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </DataGrid.RenderTransform>
+        </DataGrid>
         <StackPanel  Grid.Column="1" Grid.Row="2" >
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="ID" MinWidth="100"></Label>
-                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+                <TextBox x:Name="txtID" Text="-" MinWidth="150" HorizontalAlignment="Center" IsReadOnly="True"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="Judul" MinWidth="100"></Label>
-                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+                <TextBox x:Name="txtJudul" MinWidth="150" HorizontalAlignment="Center" TextChanged="txtJudul_TextChanged"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="Author" MinWidth="100"></Label>
-                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+                <TextBox x:Name="txtAuthor" MinWidth="150" HorizontalAlignment="Center"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="Penerbit" MinWidth="100"></Label>
-                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+                <TextBox x:Name="txtPenerbit" MinWidth="150" HorizontalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
         
         <StackPanel Grid.Column="2" Grid.Row="2">
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="Halaman" MinWidth="100"></Label>
-                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+                <TextBox x:Name="txtHalaman" MinWidth="150" HorizontalAlignment="Center" TextChanged="txtHalaman_TextChanged"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="Status Premium" MinWidth="100"></Label>
-                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+                <RadioButton x:Name="rbFree" Content="Free" MinWidth="75" VerticalAlignment="Center" IsChecked="True"></RadioButton>
+                <RadioButton x:Name="rbPremium" Content="Premium" MinWidth="75" VerticalAlignment="Center"></RadioButton>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="Bahasa" MinWidth="100"></Label>
-                <TextBox Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
+                <TextBox x:Name="txtBahasa" MinWidth="150" HorizontalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Column="3" Grid.Row="2">
-            <Button MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0">Insert</Button>
-            <Button MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0">Update</Button>
-            <Button MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0">Delete</Button>
-            <Button MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0">Clear</Button>
+            <Button x:Name="btnInsert" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btnInsert_Click">Insert</Button>
+            <Button x:Name="btnUpdate" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btnUpdate_Click">Update</Button>
+            <Button x:Name="btnDelete" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btnDelete_Click">Delete</Button>
+            <Button x:Name="btnClear" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btnClear_Click">Clear</Button>
         </StackPanel>
         <Grid Grid.Column="3" Grid.Row="3">
             <Button x:Name="btnBackToMenu" MinWidth="100" MaxWidth="150" HorizontalAlignment="Right" Margin="0 0 0 2" Click="btnBackToMenu_Click">Back to Menu</Button>

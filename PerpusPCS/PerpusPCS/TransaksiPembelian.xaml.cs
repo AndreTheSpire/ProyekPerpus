@@ -51,13 +51,24 @@ namespace PerpusPCS
             da.Fill(ds);
             dgvPremium.ItemsSource = ds.DefaultView;
             conn.Close();
-            //OracleCommand cmdFunction = new OracleCommand()
-            //{
-            //    CommandType = CommandType.StoredProcedure,
-            //    Connection = conn,
-            //    CommandText = "autogen_pembelian_premium"
-            //};
+            OracleCommand cmdFunction = new OracleCommand()
+            {
+                CommandType = CommandType.StoredProcedure,
+                Connection = conn,
+                CommandText = "autogen_pembelian_premium"
+            };
 
+            cmdFunction.Parameters.Add(new OracleParameter()
+            {
+                Direction = ParameterDirection.ReturnValue,
+                ParameterName = "id_pembelian_premium",
+                OracleType = OracleType.VarChar,
+                Size = 100
+            });
+            conn.Open();
+            cmdFunction.ExecuteNonQuery();
+            tbID.Text = cmdFunction.Parameters["id_pembelian_premium"].Value.ToString();
+            conn.Close();
         }
 
         private void btnBackToMenu_Click(object sender, RoutedEventArgs e)
@@ -71,6 +82,7 @@ namespace PerpusPCS
             cmd.Connection = conn;
             conn.Close();
             conn.Open();
+            //data namauser, status harus dijadikan kata"
             cmd.CommandText = "select * from premium";
             OracleDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -84,6 +96,56 @@ namespace PerpusPCS
             cbPremium.SelectedValuePath = "Name";
             cbPremium.SelectedIndex = -1;
             conn.Close();
+        }
+
+        private void dgvPremium_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(dgvPremium.SelectedIndex != -1)
+            {
+                try
+                {
+                    int index = dgvPremium.SelectedIndex;
+                    tbID.Text = ds.Rows[index][0].ToString();
+                    tbNamaUser.Text = ds.Rows[index][1].ToString();
+                    //belum selected index (premium, metode)
+                    string tempStatus = ds.Rows[index][3].ToString();
+                    if (tempStatus == "0")
+                    {
+                        rbPending.IsChecked = true;
+                        rbAccepted.IsChecked = false;
+                        rbRejected.IsChecked = false;
+                    }
+                    else if (tempStatus == "1")
+                    {
+                        rbPending.IsChecked = false;
+                        rbAccepted.IsChecked = true;
+                        rbRejected.IsChecked = false;
+                    }
+                    else if (tempStatus == "2")
+                    {
+                        rbPending.IsChecked = false;
+                        rbAccepted.IsChecked = false;
+                        rbRejected.IsChecked = true;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
+            }
+            
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            loadData();
+            tbNamaUser.Text = "";
+            cbPremium.SelectedIndex = -1;
+            cbMetodePembayaran.SelectedItem = -1;
+            rbAccepted.IsChecked = false;
+            rbPending.IsChecked = false;
+            rbRejected.IsChecked = false;
         }
     }
 }

@@ -13,29 +13,29 @@ DROP TABLE USERS CASCADE CONSTRAINTS PURGE;
 --create table
 create table Buku(
     ID number(6) PRIMARY KEY,
-    judul varchar2(255),
-    author varchar2(255),
-    penerbit varchar2(255),
+    judul varchar2(100),
+    author varchar2(100),
+    penerbit varchar2(100),
     halaman number(10),
     status_premium number(1),
-    bahasa varchar2(255)
+    bahasa varchar2(100)
 );
 create table Kategori_Buku(
     ID number(6) PRIMARY KEY,
     id_buku REFERENCES Buku(id),
-    genre varchar2(255)
+    genre varchar2(100)
 );
 create table users (
     ID number(6) PRIMARY KEY,
-    username varchar2(255),
-    password varchar2(255),
-    nama varchar2(255),
+    username varchar2(100),
+    password varchar2(100),
+    nama varchar2(100),
     tanggal_lahir date,
-    no_telp number(15)
+    no_telp varchar2(15)
 );
 create table premium(
     ID number(6) PRIMARY KEY,
-    jenis varchar2(255),
+    jenis varchar2(100),
     harga number(10),
     waktu number(10)
 );
@@ -44,8 +44,8 @@ create table pembelian_premium(
     id_user REFERENCES users(id),
     id_premium REFERENCES premium(id),
     status number(1),
-    metode_pembayaran varchar2(255),
-    created_at varchar2(255)
+    metode_pembayaran varchar2(100),
+    created_at date
 );
 create table h_peminjaman(
     id number(6) PRIMARY KEY,
@@ -101,14 +101,14 @@ insert into kategori_buku values(13,8,'Economics');
 insert into kategori_buku values(14,9,'Economics');
 
 --insert into users values(id,'username','password','nama',tanggal_lahir,no_telp);
-insert into users values(0, 'windah' , 'windah123', 'Windah Basudara', TO_DATE('16/09/2001', 'DD/MM/YYYY'), 081231234123);
-insert into users values(1, 'jokohtampan' , 'jokoh', 'Joko Bodo', TO_DATE('21/03/2002', 'DD/MM/YYYY'), 082948239032);
-insert into users values(2, 'budisakti' , 'budicepek', 'Budi Budiman', TO_DATE('30/11/2000', 'DD/MM/YYYY'), 089231238754);
-insert into users values(3, 'andre2' , 'andre2', 'Andre Taulany', TO_DATE('01/02/1999', 'DD/MM/YYYY'), 081895234323);
-insert into users values(4, 'petlick' , 'spongebob', 'Patrick Star', TO_DATE('06/09/2000', 'DD/MM/YYYY'), 085123897123);
-insert into users values(5, 'deankok' , 'dewakipas', 'Dean Sudahan', TO_DATE('28/04/1989', 'DD/MM/YYYY'), 082157298434);
-insert into users values(6, 'tessa' , 'tissue', 'Tessa Facial Tissue', TO_DATE('30/12/1990', 'DD/MM/YYYY'), 089890001234);
-insert into users values(7, 'kaptenvincent' , 'pesawat', 'Vincent Raditya', TO_DATE('28/01/1980', 'DD/MM/YYYY'), 081672987264);
+insert into users values(0, 'windah' , 'windah123', 'Windah Basudara', TO_DATE('16/09/2001', 'DD/MM/YYYY'), '081231234123');
+insert into users values(1, 'jokohtampan' , 'jokoh', 'Joko Bodo', TO_DATE('21/03/2002', 'DD/MM/YYYY'), '082948239032');
+insert into users values(2, 'budisakti' , 'budicepek', 'Budi Budiman', TO_DATE('30/11/2000', 'DD/MM/YYYY'), '089231238754');
+insert into users values(3, 'andre2' , 'andre2', 'Andre Taulany', TO_DATE('01/02/1999', 'DD/MM/YYYY'), '081895234323');
+insert into users values(4, 'petlick' , 'spongebob', 'Patrick Star', TO_DATE('06/09/2000', 'DD/MM/YYYY'), '085123897123');
+insert into users values(5, 'deankok' , 'dewakipas', 'Dean Sudahan', TO_DATE('28/04/1989', 'DD/MM/YYYY'), '082157298434');
+insert into users values(6, 'tessa' , 'tissue', 'Tessa Facial Tissue', TO_DATE('30/12/1990', 'DD/MM/YYYY'), '089890001234');
+insert into users values(7, 'kaptenvincent' , 'pesawat', 'Vincent Raditya', TO_DATE('28/01/1980', 'DD/MM/YYYY'), '081672987264');
 
 --insert into premium values(id,'jenis',harga,waktu);
 --waktu dalam bulan

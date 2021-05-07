@@ -38,7 +38,7 @@ namespace PerpusPCS
             da = new OracleDataAdapter();
 
             cmd.Connection = conn;
-            cmd.CommandText = " select * from users";
+            cmd.CommandText = "select id, username, password, nama, to_char(tanggal_lahir, 'dd/MM/yyyy'), no_telp from users";
 
 
             conn.Open();
@@ -51,6 +51,20 @@ namespace PerpusPCS
         private void btnBackToMenu_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void dgvUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgvUser.SelectedIndex != -1)
+            {
+                tbID.Text = ds.Rows[dgvUser.SelectedIndex][0].ToString();
+                tbUsername.Text = ds.Rows[dgvUser.SelectedIndex][1].ToString();
+                tbPassword.Text = ds.Rows[dgvUser.SelectedIndex][2].ToString();
+                tbNama.Text = ds.Rows[dgvUser.SelectedIndex][3].ToString();
+                DateTime tanggallahir = DateTime.ParseExact(ds.Rows[dgvUser.SelectedIndex][4].ToString().Replace('/', '/'), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                DPTglLahir.SelectedDate = Convert.ToDateTime(tanggallahir);
+                tbNoTelp.Text = ds.Rows[dgvUser.SelectedIndex][5].ToString();
+            }
         }
     }
 }

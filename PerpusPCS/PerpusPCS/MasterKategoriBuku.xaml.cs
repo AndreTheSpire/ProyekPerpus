@@ -259,12 +259,64 @@ namespace PerpusPCS
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (cekValid())
+            {
+                try
+                {
+                    int id = Convert.ToInt32(txtID.Text);
+                    ComboBoxItem selectedPembayaran = (ComboBoxItem)cbGenre.SelectedItem;
+                    string genre = selectedPembayaran.Name.ToString();
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = conn;
+                    cmd.CommandText = $"Update kategori_buku set genre='{genre}' where id={id}";
+                    conn.Close();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    MessageBox.Show("update berhasil");
 
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("update gagal"); ;
+                }
+            }
+            else
+            {
+                MessageBox.Show("tidak boleh ada data yang kosong");
+            }
+            resetTampilan();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (cekValid())
+            {
+                try
+                {
+                    int id = Convert.ToInt32(txtID.Text);
+                    ComboBoxItem selectedPembayaran = (ComboBoxItem)cbGenre.SelectedItem;
+                    string genre = selectedPembayaran.Name.ToString();
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = conn;
+                    cmd.CommandText = $"delete from kategori_buku where id={id}";
+                    conn.Close();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    MessageBox.Show("delete berhasil");
 
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("delete gagal"); ;
+                }
+            }
+            else
+            {
+                MessageBox.Show("tidak boleh ada data yang kosong");
+            }
+            resetTampilan();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)

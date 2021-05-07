@@ -30,7 +30,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                            <MenuItem Header="Kategori Buku"></MenuItem>
+                            <MenuItem  x:Name="BtnKategoriBuku" Header="Kategori Buku" Click="BtnKategoriBuku_click"></MenuItem>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="placeholder.png" Width="20" Height="20"></Image>

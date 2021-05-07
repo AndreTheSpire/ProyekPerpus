@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MasterKategoriBuku.xaml.cs">
+      <DependentUpon>MasterKategoriBuku.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TransaksiPembelian.xaml.cs">
       <DependentUpon>TransaksiPembelian.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
     <Page Include="MasterBukuPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MasterKategoriBuku.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MasterUser.xaml">
       <SubType>Designer</SubType>

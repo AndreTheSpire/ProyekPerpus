@@ -50,5 +50,11 @@ namespace PerpusPCS
             TransaksiPembelian tp = new TransaksiPembelian();
             tp.ShowDialog();
         }
+
+        private void BtnKategoriBuku_click(object sender, RoutedEventArgs e)
+        {
+            MasterKategoriBuku KB = new MasterKategoriBuku();
+            KB.ShowDialog();
+        }
     }
 }

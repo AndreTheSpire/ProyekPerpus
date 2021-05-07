@@ -56,5 +56,11 @@ namespace PerpusPCS
             MasterKategoriBuku KB = new MasterKategoriBuku();
             KB.ShowDialog();
         }
+
+        private void btnPengembalianBuku_Click(object sender, RoutedEventArgs e)
+        {
+            TransaksiPengembalianBuku tpb = new TransaksiPengembalianBuku();
+            tpb.ShowDialog();
+        }
     }
 }

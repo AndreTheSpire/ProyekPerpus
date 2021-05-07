@@ -1,0 +1,41 @@
+﻿<Window x:Class="PerpusPCS.TransaksiPengembalianBuku"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PerpusPCS"
+        mc:Ignorable="d"
+        Title="TransaksiPengembalianBuku" Height="600" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="dgvPengembalianBuku" Grid.Row="0" Grid.Column="2" Margin="0 10 0 10" Height="Auto"  Width="Auto" ColumnWidth="*"/>
+        <DataGrid x:Name="dgvDetailPeminjaman" Grid.Row="2" Grid.Column="2" Margin="0 10 0 10" Height="Auto"  Width="Auto" ColumnWidth="*"/>
+        <Button x:Name="btnTampilkanBuku" Content=" Tampilkan Buku Yang Dipinjam " Margin="2" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" Click="btnTampilkanBuku_Click"></Button>
+        <Button x:Name="btnKembalikan" Content=" Pengembalian Buku " Margin="2" Grid.Column="2" Grid.Row="1" HorizontalAlignment="left"></Button>
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0 10 0 0">
+            <Label Content="Pencarian User" FontSize="15"/>
+            <StackPanel Orientation="Horizontal" Margin="10 5">
+                <Label Content="Username" MinWidth="100"/>
+                <TextBox x:Name="txtUsername" MinWidth="130"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 5">
+                <Label Content="Nama" MinWidth="100"/>
+                <TextBox x:Name="txtNama" MinWidth="130"/>
+            </StackPanel>
+            <Button x:Name="btnCari" HorizontalAlignment="Right" MinWidth="200" Content="Cari" Margin="20 20 20 0" Click="btnCari_Click"></Button>
+            <Button x:Name="btnResetPencarian" HorizontalAlignment="Right" MinWidth="200" Content="Reset Pencarian" Margin="20 4 20 0" Click="btnResetPencarian_Click"></Button>
+        </StackPanel>
+        <Button Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" MinWidth="100" Margin="3" Content="Back To Menu"></Button>
+    </Grid>
+</Window>

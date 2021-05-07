@@ -50,7 +50,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                        <MenuItem Header="Pengembalian Buku"></MenuItem>
+                        <MenuItem x:Name="btnPengembalianBuku" Header="Pengembalian Buku" Click="btnPengembalianBuku_Click"></MenuItem>
                     </StackPanel>
                 </MenuItem>
                 <MenuItem x:Name="btnLaporan" Margin="0 0 3 0" Header="Laporan" Height="30" BorderBrush="#FF707070" Background="#FFDDDDDD" BorderThickness="1 1 1 1">

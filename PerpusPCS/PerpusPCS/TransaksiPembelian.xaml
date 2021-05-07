@@ -37,7 +37,7 @@
                 <ComboBox x:Name="cbMetodePembayaran" MinWidth="150" HorizontalAlignment="Center"></ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
-                <Button x:Name="btnInsert" MinWidth="100" MaxWidth="150" Width="Auto" Margin="20 15 0 0">Beli</Button>
+                <Button x:Name="btnInsert" MinWidth="100" MaxWidth="150" Width="Auto" Margin="20 15 0 0" Click="btnInsert_Click">Beli</Button>
                 <Button x:Name="btnClear" MinWidth="100" MaxWidth="150" Width="Auto" Margin="50 15 0 0" Click="btnClear_Click">Clear</Button>
             </StackPanel>
             
@@ -45,12 +45,12 @@
         <StackPanel  Grid.Column="2" Grid.Row="1" >
             <StackPanel Orientation="Horizontal" Margin="20 15 0 0">
                 <Label Content="Status" MinWidth="100"></Label>
-                <RadioButton x:Name="rbAccepted" Content="Accepted" MinWidth="100" HorizontalAlignment="Center" Margin="0 8 0 0"/>
+                <RadioButton x:Name="rbAccepted" Content="Accepted" MinWidth="100" HorizontalAlignment="Center" Margin="0 8 0 0" Checked="rbAccepted_Checked"/>
                 <RadioButton x:Name="rbPending" Content="Pending" MinWidth="100" HorizontalAlignment="Center" Margin="0 8 0 0"/>
                 <RadioButton x:Name="rbRejected" Content="Rejected" MinWidth="100" HorizontalAlignment="Center" Margin="0 8 0 0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                <Button x:Name="btnUpdate" MinWidth="100" MaxWidth="150" Width="Auto" Margin="150 10 0 0">Update</Button>
+                <Button x:Name="btnUpdate" MinWidth="100" MaxWidth="150" Width="Auto" Margin="150 10 0 0" Click="btnUpdate_Click">Update</Button>
             </StackPanel>
 
         </StackPanel>

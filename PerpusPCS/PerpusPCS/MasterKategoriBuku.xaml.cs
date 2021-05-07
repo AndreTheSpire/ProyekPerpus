@@ -157,8 +157,19 @@ namespace PerpusPCS
             {
                 //mengatur judul
                 txtID.Text = ds2.Rows[idx][0].ToString();
-                txtJudul.Text = ds2.Rows[idx][1].ToString();
+                string judul = ds2.Rows[idx][1].ToString();
+                txtJudul.Text = judul;
+
+                OracleCommand cmd = new OracleCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = $"select ID from buku where judul='{judul}'";
+                conn.Close();
+                conn.Open();
+                int idbaru = Convert.ToInt32(cmd.ExecuteScalar());
+                conn.Close();
+
                 string genre = ds2.Rows[idx][2].ToString();
+                IDbuku = idbaru;
                 if (genre == "Educational")
                 {
                     cbGenre.SelectedIndex = 0;
@@ -220,7 +231,18 @@ namespace PerpusPCS
 
         private bool cekValid()
         {
+            ComboBoxItem selectedPembayaran = (ComboBoxItem)cbGenre.SelectedItem;
+            string genre = selectedPembayaran.Name.ToString();
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = $"select count(*) from kategori_buku where id_buku={IDbuku} and genre='{genre}'";
+            conn.Close();
+            conn.Open();
+            int sama = Convert.ToInt32(cmd.ExecuteScalar());
+            conn.Close();
+            
             bool valid = true;
+            if (sama != 0) valid = false;
             if (txtID.Text == "-") valid = false;
             if (txtJudul.Text.Length <= 0) valid = false;
             if (cbGenre.SelectedIndex == -1) valid = false;
@@ -252,7 +274,7 @@ namespace PerpusPCS
             }
             else
             {
-                MessageBox.Show("tidak boleh ada data yang kosong");
+                MessageBox.Show("tidak boleh ada data yang kosong/tidak bole data kembar");
             }
             resetTampilan();
         }
@@ -283,7 +305,7 @@ namespace PerpusPCS
             }
             else
             {
-                MessageBox.Show("tidak boleh ada data yang kosong");
+                MessageBox.Show("tidak boleh ada data yang kosong/tidak boleh data kembar");
             }
             resetTampilan();
         }

@@ -48,7 +48,7 @@ namespace PerpusPCS
             da = new OracleDataAdapter();
             cmd.Connection = conn;
             cmd.CommandText = "select PP.ID as " + '"' + "No" + '"' + ",U.nama,P.jenis," +
-                "case PP.status when 0 then 'Pending' when 1 then 'Accepted' when 2 then 'Rejected' end as " + '"' + "Status" + '"' + ",PP.metode_pembayaran as " + '"' + "Metode" + '"' + ",PP.created_at as " + '"' + "Tanggal Buat" + '"' + " from pembelian_premium PP, users U, premium P where PP.id_user = U.ID and PP.id_premium = p.ID order by 1 asc";
+                "case PP.status when 0 then 'Pending' when 1 then 'Accepted' when 2 then 'Rejected' end as " + '"' + "Status" + '"' + ",PP.metode_pembayaran as " + '"' + "Metode" + '"' + ",to_char(PP.created_at, 'dd/MM/yyyy') as " + '"' + "Tanggal Buat" + '"' + " from pembelian_premium PP, users U, premium P where PP.id_user = U.ID and PP.id_premium = p.ID order by 1 asc";
             conn.Close();
             conn.Open();
             cmd.ExecuteReader();

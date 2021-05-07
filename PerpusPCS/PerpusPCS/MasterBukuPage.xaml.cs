@@ -61,16 +61,19 @@ namespace PerpusPCS
 
         private void txtHalaman_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string text = txtHalaman.Text;
             try
             {
-                int numberpassed = Convert.ToInt32(text);
+                int numberpassed = Convert.ToInt32(txtHalaman.Text);
             }
-            catch (Exception)
+            catch
             {
-                int len = text.Length - 1;
-                if (len < 0) len = 0;
-                txtHalaman.Text = text.Substring(0, len);
+                int panjang = txtHalaman.Text.Length;
+                if (panjang >= 1)
+                {
+                    txtHalaman.Text = txtHalaman.Text.Substring(0, panjang - 1);
+                    txtHalaman.Focus();
+                    txtHalaman.SelectionStart = panjang;
+                }
             }
         }
 

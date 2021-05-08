@@ -291,10 +291,10 @@ namespace PerpusPCS
             {
                 conn.Close();
                 conn.Open();
-                MessageBox.Show("cek kondisi jalan");
+                //MessageBox.Show("cek kondisi jalan");
                 using (OracleTransaction transaksi = conn.BeginTransaction())
                 {
-                    MessageBox.Show("sebelom try catch");
+                    //MessageBox.Show("sebelom try catch");
                     try
                     {
                         string namaLengkap = tbNamaUser.Text;
@@ -311,19 +311,19 @@ namespace PerpusPCS
                         cmd.CommandText = $"select id from premium where jenis = '{premium}'";
                         int id_premium = Convert.ToInt32(cmd.ExecuteScalar());
                         int status = 0;
-                        MessageBox.Show("test sebelom cmd");
+                        //MessageBox.Show("test sebelom cmd");
                         cmd.CommandText = $"insert into pembelian_premium(id,id_user,id_premium,status,metode_pembayaran,created_at) values ({id_nota},{id_user},{id_premium},{status},'{pembayaran}',sysdate)";
-                        MessageBox.Show("id nota : " + id_nota);
-                        MessageBox.Show("id user : " + id_user);
-                        MessageBox.Show("id premium : " + id_premium);
-                        MessageBox.Show("status : " + status);
-                        MessageBox.Show("pembayaran : " + pembayaran);
-                        MessageBox.Show("test sesudah cmd");
+                        //MessageBox.Show("id nota : " + id_nota);
+                        //MessageBox.Show("id user : " + id_user);
+                        //MessageBox.Show("id premium : " + id_premium);
+                        //MessageBox.Show("status : " + status);
+                        //MessageBox.Show("pembayaran : " + pembayaran);
+                        //MessageBox.Show("test sesudah cmd");
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("test sesudah execute query");
+                        //MessageBox.Show("test sesudah execute query");
                         transaksi.Commit();
                         conn.Close();
-                        MessageBox.Show("transaksi berhasil");
+                        //MessageBox.Show("transaksi berhasil");
                         clear();
 
                     }

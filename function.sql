@@ -56,3 +56,14 @@ RETURN TEMP + 1;
 END;
 /
 SHOW ERR;
+
+--trigger delete buku (terpakai)
+create or replace trigger T_Del_Buku
+before delete on buku
+for each row
+begin
+    delete from kategori_buku where id_buku = :old.id;
+    delete from d_peminjaman where id_buku = :old.id;
+end;
+/
+show err;

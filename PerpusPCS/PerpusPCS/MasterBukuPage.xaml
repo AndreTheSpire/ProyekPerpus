@@ -20,7 +20,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dgvBuku" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" Height="300" RenderTransformOrigin="0.5,0.5" SelectionChanged="dgvBuku_SelectionChanged">
+        <DataGrid x:Name="dgvBuku" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" Height="300" RenderTransformOrigin="0.5,0.5" SelectionChanged="dgvBuku_SelectionChanged" ColumnWidth="*">
             <DataGrid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

@@ -245,12 +245,6 @@ namespace PerpusPCS
                     cmd.Connection = conn;
                     conn.Close();
                     conn.Open();
-                    cmd.CommandText = $"delete from kategori_buku where id_buku = {id}";
-                    cmd.ExecuteNonQuery();
-
-                    //melakukan delete d_peminjaman
-                    cmd.CommandText = $"delete from d_peminjaman where id_buku = {id}";
-                    cmd.ExecuteNonQuery();
 
                     //melakukan delete buku
                     cmd.CommandText = $"delete from buku where id = {id}";

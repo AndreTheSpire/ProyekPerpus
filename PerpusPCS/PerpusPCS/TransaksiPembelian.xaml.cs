@@ -40,6 +40,7 @@ namespace PerpusPCS
             rbAccepted.IsEnabled = false;
             rbPending.IsEnabled = false;
             rbRejected.IsEnabled = false;
+            btnUpdate.IsEnabled = false;
         }
         private void loadData()
         {
@@ -47,7 +48,7 @@ namespace PerpusPCS
             OracleCommand cmd = new OracleCommand();
             da = new OracleDataAdapter();
             cmd.Connection = conn;
-            cmd.CommandText = "select PP.ID as " + '"' + "No" + '"' + ",U.nama,P.jenis," +
+            cmd.CommandText = "select PP.ID as " + '"' + "No" + '"' + ",U.username,U.nama,P.jenis," +
                 "case PP.status when 0 then 'Pending' when 1 then 'Accepted' when 2 then 'Rejected' end as " + '"' + "Status" + '"' + ",PP.metode_pembayaran as " + '"' + "Metode" + '"' + ",to_char(PP.created_at, 'dd/MM/yyyy') as " + '"' + "Tanggal Buat" + '"' + " from pembelian_premium PP, users U, premium P where PP.id_user = U.ID and PP.id_premium = p.ID order by 1 asc";
             conn.Close();
             conn.Open();
@@ -74,6 +75,20 @@ namespace PerpusPCS
             cmdFunction.ExecuteNonQuery();
             tbID.Text = cmdFunction.Parameters["id_pembelian_premium"].Value.ToString();
             conn.Close();
+            btnInsert.IsEnabled = true;
+            tbUsername.Text = "";
+            tbUsername.IsEnabled = true;
+            cbPremium.IsEnabled = true;
+            cbMetodePembayaran.IsEnabled = true;
+            cbPremium.SelectedIndex = -1;
+            cbMetodePembayaran.SelectedIndex = -1;
+            rbAccepted.IsChecked = false;
+            rbPending.IsChecked = false;
+            rbRejected.IsChecked = false;
+            rbAccepted.IsEnabled = false;
+            rbPending.IsEnabled = false;
+            rbRejected.IsEnabled = false;
+            btnUpdate.IsEnabled = false;
         }
 
         private void btnBackToMenu_Click(object sender, RoutedEventArgs e)
@@ -108,65 +123,69 @@ namespace PerpusPCS
             {
                 try
                 {
+                    tbUsername.IsEnabled = false;
+                    cbPremium.IsEnabled = false;
+                    cbMetodePembayaran.IsEnabled = false;
                     btnInsert.IsEnabled = false;
                     rbAccepted.IsEnabled = true;
                     rbPending.IsEnabled = true;
                     rbRejected.IsEnabled = true;
+                    btnUpdate.IsEnabled = true;
                     int index = dgvPremium.SelectedIndex;
                     tbID.Text = ds.Rows[index][0].ToString();
-                    tbNamaUser.Text = ds.Rows[index][1].ToString();
+                    tbUsername.Text = ds.Rows[index][1].ToString();
                     //selected index premium
-                    if(ds.Rows[index][2].ToString()== "NewComer")
+                    if(ds.Rows[index][3].ToString()== "NewComer")
                     {
                         cbPremium.SelectedIndex = 0;
                     }
-                    else if (ds.Rows[index][2].ToString() == "Regular")
+                    else if (ds.Rows[index][3].ToString() == "Regular")
                     {
                         cbPremium.SelectedIndex = 1;
                     }
-                    else if (ds.Rows[index][2].ToString() == "Double")
+                    else if (ds.Rows[index][3].ToString() == "Double")
                     {
                         cbPremium.SelectedIndex = 2;
                     }
-                    else if (ds.Rows[index][2].ToString() == "Triple")
+                    else if (ds.Rows[index][3].ToString() == "Triple")
                     {
                         cbPremium.SelectedIndex = 3;
                     }
-                    else if (ds.Rows[index][2].ToString() == "Semester")
+                    else if (ds.Rows[index][3].ToString() == "Semester")
                     {
                         cbPremium.SelectedIndex = 4;
                     }
-                    else if (ds.Rows[index][2].ToString() == "Yearly")
+                    else if (ds.Rows[index][3].ToString() == "Yearly")
                     {
                         cbPremium.SelectedIndex = 5;
                     }
-                    else if (ds.Rows[index][2].ToString() == "TriYear")
+                    else if (ds.Rows[index][3].ToString() == "TriYear")
                     {
                         cbPremium.SelectedIndex = 6;
                     }
-                    else if (ds.Rows[index][2].ToString() == "Permanent")
+                    else if (ds.Rows[index][3].ToString() == "Permanent")
                     {
                         cbPremium.SelectedIndex = 7;
                     }
 
                     //selected index metode pembayaran
-                    if (ds.Rows[index][4].ToString() == "BCA")
+                    if (ds.Rows[index][5].ToString() == "BCA")
                     {
                         cbMetodePembayaran.SelectedIndex = 0;
                     }
-                    else if (ds.Rows[index][4].ToString() == "OVO")
+                    else if (ds.Rows[index][5].ToString() == "OVO")
                     {
                         cbMetodePembayaran.SelectedIndex = 1;
                     }
-                    else if (ds.Rows[index][4].ToString() == "DANA")
+                    else if (ds.Rows[index][5].ToString() == "DANA")
                     {
                         cbMetodePembayaran.SelectedIndex = 2;
                     }
-                    else if (ds.Rows[index][4].ToString() == "Gopay")
+                    else if (ds.Rows[index][5].ToString() == "Gopay")
                     {
                         cbMetodePembayaran.SelectedIndex = 3;
                     }
-                    string tempStatus = ds.Rows[index][3].ToString();
+                    string tempStatus = ds.Rows[index][4].ToString();
                     if (tempStatus == "Pending")
                     {
                         rbPending.IsChecked = true;
@@ -204,7 +223,7 @@ namespace PerpusPCS
         {
             loadData();
             btnInsert.IsEnabled = true;
-            tbNamaUser.Text = "";
+            tbUsername.Text = "";
             cbPremium.SelectedIndex = -1;
             cbMetodePembayaran.SelectedIndex = -1;
             rbAccepted.IsChecked = false;
@@ -253,9 +272,9 @@ namespace PerpusPCS
 
         private bool cekKondisi()
         {
-            if(tbNamaUser.Text == "")
+            if(tbUsername.Text == "")
             {
-                MessageBox.Show("Nama user wajib diisi");
+                MessageBox.Show("Username wajib diisi");
                 return false;
             }
             else if(cbPremium.SelectedIndex == -1)
@@ -297,11 +316,11 @@ namespace PerpusPCS
                     //MessageBox.Show("sebelom try catch");
                     try
                     {
-                        string namaLengkap = tbNamaUser.Text;
+                        string username = tbUsername.Text;
                         OracleCommand cmd = new OracleCommand();
                         cmd.Connection = conn;
                         cmd.Transaction = transaksi;
-                        cmd.CommandText = $"select id from users where nama = '{namaLengkap}'";
+                        cmd.CommandText = $"select id from users where username = '{username}'";
                         int id_user = Convert.ToInt32(cmd.ExecuteScalar());
                         int id_nota = Convert.ToInt32(tbID.Text);
                         ComboBoxItem selectedMetodePembayaran = (ComboBoxItem)cbMetodePembayaran.SelectedItem;

@@ -42,7 +42,7 @@ namespace PerpusPCS
             da = new OracleDataAdapter();
             cmd.Connection = conn;
             cmd.CommandText = "select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + ", password as " + '"' + "Password" + '"' + "," +
-                "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users";
+                "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users order by id";
             conn.Open();
             cmd.ExecuteReader();
             da.SelectCommand = cmd;
@@ -159,8 +159,8 @@ namespace PerpusPCS
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();
-                loadData();
                 clear();
+                loadData();
             }
             catch (Exception ex)
             {
@@ -188,12 +188,42 @@ namespace PerpusPCS
                     String notelp = tbNoTelp.Text;
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = conn;
-                    cmd.CommandText = $"insert into users values({id}, '{username}', '{password}', '{nama}', to_date('{tanggallahir}', 'dd/MM/yyyy'), '{notelp}')";
+                    cmd.CommandText = "select count(*) from users";
                     conn.Open();
-                    cmd.ExecuteNonQuery();
+                    int jumlah = Convert.ToInt32(cmd.ExecuteScalar());
+                    String[] daftaruser = new string[jumlah];
                     conn.Close();
-                    loadData();
+                    cmd.CommandText = "select username from users";
+                    conn.Open();
+                    OracleDataReader reader = cmd.ExecuteReader();
+                    int ctr = 0;
+                    while (reader.Read())
+                    {
+                        daftaruser[ctr] = reader.GetString(0);
+                        ctr++;
+                    }
+                    conn.Close();
+                    bool userada = false;
+                    for (int i = 0; i < daftaruser.Length; i++)
+                    {
+                        if (username.Equals(daftaruser[i]))
+                        {
+                            userada = true;
+                        }
+                    }
+                    if (userada)
+                    {
+                        MessageBox.Show("Username pernah dipakai");
+                    }
+                    else
+                    {
+                        cmd.CommandText = $"insert into users values({id}, '{username}', '{password}', '{nama}', to_date('{tanggallahir}', 'dd/MM/yyyy'), '{notelp}')";
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
                     clear();
+                    loadData();
                 }
                 catch (Exception ex)
                 {
@@ -244,8 +274,8 @@ namespace PerpusPCS
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     conn.Close();
-                    loadData();
                     clear();
+                    loadData();
                 }
                 catch (Exception ex)
                 {

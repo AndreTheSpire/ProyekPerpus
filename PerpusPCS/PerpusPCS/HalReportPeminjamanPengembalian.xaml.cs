@@ -70,11 +70,11 @@ namespace PerpusPCS
             }
             conn.Close();
 
-            //rpdb.SetParameterValue("idusercari", idcari);
-            //rpdb.SetParameterValue("usernameusercari", usernamee);
-            //rpdb.SetParameterValue("namausercari", namaa);
-            //rpdb.SetParameterValue("tgllahitusercari", tanggallahir);
-            //rpdb.SetParameterValue("notelpusecarir", notelp);
+            rpdb.SetParameterValue("idusercari", idcari);
+            rpdb.SetParameterValue("usernameusercari", usernamee);
+            rpdb.SetParameterValue("namausercari", namaa);
+            rpdb.SetParameterValue("tgllahitusercari", tanggallahir);
+            rpdb.SetParameterValue("notelpusecarir", notelp);
 
             creport.ViewerCore.ReportSource = rpdb;
         }

@@ -70,17 +70,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="HalReportPeminjamanPengembalian.xaml.cs">
-      <DependentUpon>HalReportPeminjamanPengembalian.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MasterKategoriBuku.xaml.cs">
       <DependentUpon>MasterKategoriBuku.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ReportPinjamDanBeli.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ReportPinjamDanBeli.rpt</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="TransaksiPembelian.xaml.cs">
       <DependentUpon>TransaksiPembelian.xaml</DependentUpon>
@@ -91,10 +82,6 @@
     <Page Include="ConnectionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="HalReportPeminjamanPengembalian.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
@@ -161,10 +148,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportPinjamDanBeli.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ReportPinjamDanBeli.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

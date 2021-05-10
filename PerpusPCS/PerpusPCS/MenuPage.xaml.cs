@@ -65,8 +65,7 @@ namespace PerpusPCS
 
         private void pinjamdanbeli_Click(object sender, RoutedEventArgs e)
         {
-            HalReportPeminjamanPengembalian HRPP = new HalReportPeminjamanPengembalian();
-            HRPP.ShowDialog();
+            
         }
     }
 }

@@ -236,37 +236,123 @@ namespace PerpusPCS
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            try
+            int index = dgvPremium.SelectedIndex;
+            int status = -1;
+            if(ds.Rows[index][4].ToString() == "Rejected")
             {
-                int index = dgvPremium.SelectedIndex;
-                int status = -1;
-                if (rbAccepted.IsChecked == true)
+                if(rbAccepted.IsChecked == true)
                 {
-                    status = 1;
+                    MessageBox.Show("Status sudah rejected");
+                    rbAccepted.IsChecked = false;
+                    rbRejected.IsChecked = true;
                 }
-                else if (rbPending.IsChecked == true)
+                else
                 {
-                    status = 0;
+                    try
+                    {
+                        if (rbAccepted.IsChecked == true)
+                        {
+                            status = 1;
+                        }
+                        else if (rbPending.IsChecked == true)
+                        {
+                            status = 0;
+                        }
+                        else if (rbRejected.IsChecked == true)
+                        {
+                            status = 2;
+                        }
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = conn;
+                        conn.Close();
+                        conn.Open();
+                        cmd.CommandText = $"select id from pembelian_premium";
+                        int idPembelian = Convert.ToInt32(ds.Rows[index][0]);
+                        cmd.CommandText = $"update pembelian_premium set status = '{status}' where id = {idPembelian}";
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        clear();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                else if (rbRejected.IsChecked == true)
-                {
-                    status = 2;
-                }
-                OracleCommand cmd = new OracleCommand();
-                cmd.Connection = conn;
-                conn.Close();
-                conn.Open();
-                cmd.CommandText = $"select id from pembelian_premium";
-                int idPembelian = Convert.ToInt32(ds.Rows[index][0]);
-                cmd.CommandText = $"update pembelian_premium set status = '{status}' where id = {idPembelian}";
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                clear();
             }
-            catch(Exception ex)
+            else if (ds.Rows[index][4].ToString() == "Accepted")
             {
-                MessageBox.Show(ex.Message);
+                if (rbRejected.IsChecked == true)
+                {
+                    MessageBox.Show("Status sudah di accept");
+                    rbAccepted.IsChecked = true;
+                    rbRejected.IsChecked = false;
+                }
+                else
+                {
+                    try
+                    {
+                        if (rbAccepted.IsChecked == true)
+                        {
+                            status = 1;
+                        }
+                        else if (rbPending.IsChecked == true)
+                        {
+                            status = 0;
+                        }
+                        else if (rbRejected.IsChecked == true)
+                        {
+                            status = 2;
+                        }
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = conn;
+                        conn.Close();
+                        conn.Open();
+                        cmd.CommandText = $"select id from pembelian_premium";
+                        int idPembelian = Convert.ToInt32(ds.Rows[index][0]);
+                        cmd.CommandText = $"update pembelian_premium set status = '{status}' where id = {idPembelian}";
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        clear();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
             }
+            else
+            {
+                try
+                {
+                    if (rbAccepted.IsChecked == true)
+                    {
+                        status = 1;
+                    }
+                    else if (rbPending.IsChecked == true)
+                    {
+                        status = 0;
+                    }
+                    else if (rbRejected.IsChecked == true)
+                    {
+                        status = 2;
+                    }
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = conn;
+                    conn.Close();
+                    conn.Open();
+                    cmd.CommandText = $"select id from pembelian_premium";
+                    int idPembelian = Convert.ToInt32(ds.Rows[index][0]);
+                    cmd.CommandText = $"update pembelian_premium set status = '{status}' where id = {idPembelian}";
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    clear();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            
             
         }
 

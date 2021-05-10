@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PerpusPCS"
         xmlns:Viewer="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer" x:Class="PerpusPCS.HalReportPeminjamanPengembalian"
         mc:Ignorable="d"
-        Title="HalReportPeminjamanPengembalian" Height="450" Width="800">
+        Title="HalReportPeminjamanPengembalian" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -31,7 +31,7 @@
         </StackPanel>
 
 
-        <Viewer:CrystalReportsViewer Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="340" Margin="10,10,0,0" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" Width="752" />
+        <Viewer:CrystalReportsViewer Name="creport" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="340" Margin="10,10,0,0" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" Width="752" />
         <Button x:Name="btncari" Grid.Column="3" Grid.Row="0" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btncari_Click">Cari</Button>
         <Button x:Name="btnback" Grid.Column="3" Grid.Row="4" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btnback_Click">Back</Button>
 

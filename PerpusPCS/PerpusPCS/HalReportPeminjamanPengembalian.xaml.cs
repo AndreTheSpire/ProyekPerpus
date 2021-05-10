@@ -26,7 +26,7 @@ namespace PerpusPCS
         {
             InitializeComponent();
             this.conn = ConnectionPage.conn;
-            loaduser();
+            
         }
         public void loaduser()
         {
@@ -50,12 +50,45 @@ namespace PerpusPCS
 
         private void btncari_Click(object sender, RoutedEventArgs e)
         {
+            ReportPinjamDanBeli rpdb = new ReportPinjamDanBeli();
+            rpdb.SetDatabaseLogon(ConnectionPage.userId, ConnectionPage.pass, ConnectionPage.source, "");
 
+            int idcari = cbuser.SelectedIndex;
+            string usernamee=" ", namaa=" ", notelp=" ";
+            DateTime tanggallahir=DateTime.Now;
+            OracleCommand cmd2 = new OracleCommand();
+            cmd2.Connection = conn;
+            conn.Open();
+            cmd2.CommandText = $"select * from users where ID={idcari}";
+            OracleDataReader reader2 = cmd2.ExecuteReader();
+            while (reader2.Read())
+            {
+
+                usernamee = reader2.GetValue(1).ToString();
+                namaa = reader2.GetValue(3).ToString();
+                tanggallahir = Convert.ToDateTime(reader2.GetValue(4));
+                notelp = reader2.GetValue(5).ToString();
+            }
+            conn.Close();
+
+            rpdb.SetParameterValue("idusercari", idcari);
+            rpdb.SetParameterValue("usernameusercari", usernamee);
+            rpdb.SetParameterValue("namausercari", namaa);
+            rpdb.SetParameterValue("tgllahitusercari", tanggallahir);
+            rpdb.SetParameterValue("notelpusecarir", notelp);
+
+            creport.ViewerCore.ReportSource = rpdb;
         }
 
         private void btnback_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            creport.Owner = Window.GetWindow(this);
+            loaduser();
         }
     }
 }

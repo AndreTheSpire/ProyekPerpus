@@ -27,6 +27,7 @@ namespace PerpusPCS
         public TransaksiPengembalianBuku()
         {
             InitializeComponent();
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
             LoadData(null, null);
         }
@@ -37,9 +38,8 @@ namespace PerpusPCS
             OracleDataAdapter da = new OracleDataAdapter();
 
             string str_kode = "";
-            if (username!=null) str_kode = $"and username like '%{username}%'";
-            if (nama != null && username == null) str_kode = $"and nama like '%{nama}%'";
-            else if (nama != null && username != null) str_kode = str_kode + " and " + $"nama like '%{nama}%'";
+            if (username!=null) str_kode += $"and upper(username) like upper('%{username}%')";
+            if (nama != null) str_kode += $"and upper(nama) like upper('%{nama}%')";
 
             OracleCommand cmd = new OracleCommand();
             cmd.Connection = conn;
@@ -100,6 +100,50 @@ namespace PerpusPCS
             {
                 MessageBox.Show("Pilih Dahulu kumpulan buku yang mau dikembalikan");
             }
+        }
+
+        private void btnBackToMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnKembalikan_Click(object sender, RoutedEventArgs e)
+        {
+            if (true)
+            {
+
+            }
+            if (MessageBox.Show("Periksa Kembali Buku Yang Dikembalikan ?", "Kembalikan Buku", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                conn.Close();
+                conn.Open();
+                using (OracleTransaction trans = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        //periksa user premium atau tidak
+                        //hitung denda
+                        //masukkan data
+                        trans.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        trans.Rollback();
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                conn.Close();
+            }
+            
+        }
+
+        private void dgvPengembalianBuku_Loaded(object sender, RoutedEventArgs e)
+        {
+            dgvPengembalianBuku.Columns[0].Width = DataGridLength.Auto;
+            dgvPengembalianBuku.Columns[1].Width = DataGridLength.Auto;
+            dgvPengembalianBuku.Columns[1].Header = "Username";
+            dgvPengembalianBuku.Columns[2].Header = "Nama";
+            dgvPengembalianBuku.Columns[3].Header = "Tanggal Pinjam";
         }
     }
 }

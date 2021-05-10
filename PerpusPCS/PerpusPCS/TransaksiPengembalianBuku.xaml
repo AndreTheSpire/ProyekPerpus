@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="2">
             <Label>Data User Yang Belum Mengembalikan Buku</Label>
-            <DataGrid x:Name="dgvPengembalianBuku" MinHeight="240" Width="Auto" ColumnWidth="*"/>
+            <DataGrid x:Name="dgvPengembalianBuku" MinHeight="240" Width="Auto" ColumnWidth="*" Loaded="dgvPengembalianBuku_Loaded"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="2">
             <Label>Kumpulan Buku Yang Dipinjam</Label>
@@ -30,7 +30,7 @@
        
         <Button x:Name="btnTampilkanBuku" Margin="12" Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Click="btnTampilkanBuku_Click">
             <TextBlock TextWrapping="Wrap" TextAlignment="Center">Tampilkan Detail Buku</TextBlock></Button>
-        <Button x:Name="btnKembalikan" Margin="12" Grid.Column="3" Grid.Row="1" VerticalAlignment="Top">
+        <Button x:Name="btnKembalikan" Margin="12" Grid.Column="3" Grid.Row="1" VerticalAlignment="Top" Click="btnKembalikan_Click">
             <TextBlock TextWrapping="Wrap" TextAlignment="Center">Pengembalian Buku</TextBlock>
         </Button>
         <StackPanel Grid.Row="0" Grid.Column="1" Margin="0 10 0 0">
@@ -46,6 +46,6 @@
             <Button x:Name="btnCari" HorizontalAlignment="Center" MinWidth="200" Content="Cari" Margin="10 10 10 0" Click="btnCari_Click"></Button>
             <Button x:Name="btnResetPencarian" HorizontalAlignment="Center" MinWidth="200" Content="Reset Pencarian" Margin="10 4 10 0" Click="btnResetPencarian_Click"></Button>
         </StackPanel>
-        <Button Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" MinWidth="100" Margin="3" Content="Back To Menu"></Button>
+        <Button x:Name="btnBackToMenu" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" MinWidth="100" Margin="3" Content="Back To Menu" Click="btnBackToMenu_Click"></Button>
     </Grid>
 </Window>

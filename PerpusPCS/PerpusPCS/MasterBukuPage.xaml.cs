@@ -30,12 +30,12 @@ namespace PerpusPCS
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
-            loadData();
+            loadData(null);
             btnUpdate.IsEnabled = false;
             btnDelete.IsEnabled = false;
         }
 
-        private void loadData()
+        private void loadData(string kode)
         {
             dgvBuku.SelectedIndex = -1;
             ds = new DataTable();
@@ -43,7 +43,15 @@ namespace PerpusPCS
             da = new OracleDataAdapter();
 
             cmd.Connection = conn;
-            cmd.CommandText = "select * from buku";
+            if (kode == null)
+            {
+                cmd.CommandText = $"select id, judul, author, penerbit, halaman, case status_premium when 0 then 'Free' when 1 then 'Premium' end, bahasa from buku where status_delete = 0";
+            }
+            else
+            {
+                cmd.CommandText = kode;
+            }
+            
 
 
             conn.Open();
@@ -53,7 +61,18 @@ namespace PerpusPCS
             dgvBuku.ItemsSource = ds.DefaultView;
             conn.Close();
         }
-
+        private void dgvBuku_Loaded(object sender, RoutedEventArgs e)
+        {
+            dgvBuku.Columns[0].Width = DataGridLength.SizeToCells;
+            dgvBuku.Columns[4].Width = DataGridLength.Auto;
+            dgvBuku.Columns[0].Header = "ID";
+            dgvBuku.Columns[1].Header = "Judul";
+            dgvBuku.Columns[2].Header = "Author";
+            dgvBuku.Columns[3].Header = "Penerbit";
+            dgvBuku.Columns[4].Header = "Halaman";
+            dgvBuku.Columns[5].Header = "Premium";
+            dgvBuku.Columns[6].Header = "Bahasa";
+        }
         private void btnBackToMenu_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -111,7 +130,7 @@ namespace PerpusPCS
             btnInsert.IsEnabled = true;
             btnUpdate.IsEnabled = false;
             btnDelete.IsEnabled = false;
-            loadData();
+            loadData(null);
         }
 
         private void autogenID()
@@ -177,7 +196,7 @@ namespace PerpusPCS
                     string bahasa = txtBahasa.Text;
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = conn;
-                    cmd.CommandText = $"insert into buku values({id},'{judul}','{author}','{penerbit}',{halaman},{status},'{bahasa}')";
+                    cmd.CommandText = $"insert into buku values({id},'{judul}','{author}','{penerbit}',{halaman},{status},'{bahasa}',0)";
                     conn.Close();
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -247,7 +266,7 @@ namespace PerpusPCS
                     conn.Open();
 
                     //melakukan delete buku
-                    cmd.CommandText = $"delete from buku where id = {id}";
+                    cmd.CommandText = $"update buku set status_delete = 1 where id = {id}";
                     cmd.ExecuteNonQuery();
 
                     conn.Close();
@@ -259,6 +278,17 @@ namespace PerpusPCS
                 }
                 
             }
+        }
+
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            string kode = "select id, judul, author, penerbit, halaman, case status_premium when 0 then 'Free' when 1 then 'Premium' end, bahasa from buku where status_delete = 0";
+            if (txtFilterJudul.Text.Length > 0) kode += $" and upper(judul) like upper('%{txtFilterJudul.Text}%')";
+            if (txtFilterAuthor.Text.Length > 0) kode += $" and upper(author) like upper('%{txtFilterAuthor.Text}%')";
+            if (txtFilterPenerbit.Text.Length > 0) kode += $" and upper(penerbit) like upper('%{txtFilterPenerbit.Text}%')";
+            if (txtFilterBahasa.Text.Length > 0) kode += $" and upper(bahasa) like upper('%{txtFilterBahasa.Text}%')";
+            loadData(kode);
+            dgvBuku_Loaded(sender, e);
         }
     }
 }

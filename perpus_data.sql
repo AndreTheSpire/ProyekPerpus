@@ -18,7 +18,8 @@ create table Buku(
     penerbit varchar2(100),
     halaman number(10),
     status_premium number(1),
-    bahasa varchar2(100)
+    bahasa varchar2(100),
+    status_delete number(1)
 );
 create table Kategori_Buku(
     ID number(6) PRIMARY KEY,
@@ -72,16 +73,17 @@ create table pengembalian(
 --insert data
 --insert into buku values(ID,'judul','author','penerbit',halaman,status_premium,'bahasa');
 --status premium (0 free, 1 premium)
-insert into buku values(0,'Bikin mading lebih keren','Pramana Sukmajati','Info komputer',97,0,'Indonesia');
-insert into buku values(1,'Ice breaker','Adi Soenarno','Penerbit Andi',56,0,'Inggris');
-insert into buku values(2,'Resign','Susan Piver','Gramedia',110,0,'Indonesia');
-insert into buku values(3,'Seni berbicara','Larry king','Gramedia',78,1,'Inggris');
-insert into buku values(4,'Mencari Jodoh','Samuel','Penerbit Andi',8,1,'Indonesia');
-insert into buku values(5,'Dont sweat the small stuff for teens','Richard Carlson','Gramedia',20,0,'Inggris');
-insert into buku values(6,'Crayon sinchan 46','Yoshito usui','Gramedia',24,0,'Indonesia');
-insert into buku values(7,'Crayon sinchan 25','Yoshito usui','Gramedia',26,0,'Indonesia');
-insert into buku values(8,'skill with people','les giblin','Gramedia',103,1,'Inggris');
-insert into buku values(9,'the art of dealing with people','les giblin','Gramedia',62,0,'Inggris');
+--status delete (0 belum, 1 sudah)
+insert into buku values(0,'Bikin mading lebih keren','Pramana Sukmajati','Info komputer',97,0,'Indonesia',0);
+insert into buku values(1,'Ice breaker','Adi Soenarno','Penerbit Andi',56,0,'Inggris',0);
+insert into buku values(2,'Resign','Susan Piver','Gramedia',110,0,'Indonesia',0);
+insert into buku values(3,'Seni berbicara','Larry king','Gramedia',78,1,'Inggris',0);
+insert into buku values(4,'Mencari Jodoh','Samuel','Penerbit Andi',8,1,'Indonesia',0);
+insert into buku values(5,'Dont sweat the small stuff for teens','Richard Carlson','Gramedia',20,0,'Inggris',0);
+insert into buku values(6,'Crayon sinchan 46','Yoshito usui','Gramedia',24,0,'Indonesia',0);
+insert into buku values(7,'Crayon sinchan 25','Yoshito usui','Gramedia',26,0,'Indonesia',0);
+insert into buku values(8,'skill with people','les giblin','Gramedia',103,1,'Inggris',0);
+insert into buku values(9,'the art of dealing with people','les giblin','Gramedia',62,0,'Inggris',0);
 
 --insert into kategori_buku values(ID,id_buku,'genre');
 insert into kategori_buku values(0,0,'Educational');

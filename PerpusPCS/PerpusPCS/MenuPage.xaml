@@ -64,7 +64,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                        <MenuItem Header="Peminjaman dan Pengembalian Buku"></MenuItem>
+                        <MenuItem x:Name="pinjamdanbeli"  Header="Peminjaman dan Pengembalian Buku" Click="pinjamdanbeli_Click"></MenuItem>
                     </StackPanel>
                 </MenuItem>
                 <MenuItem x:Name="btnLogOut" HorizontalAlignment="Right" Margin="0 0 3 0" Header="LogOut" Height="30" BorderBrush="#FF707070" Background="#FFDDDDDD" BorderThickness="1 1 1 1" Click="btnLogOut_Click"/>

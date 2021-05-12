@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OracleClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
+using Oracle.DataAccess.Client;
 
 namespace PerpusPCS
 {
@@ -43,7 +44,7 @@ namespace PerpusPCS
 
             OracleCommand cmd = new OracleCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"select hp.id,u.username as Username, u.nama as Nama, hp.tanggal_peminjaman from users u left join h_peminjaman hp on hp.id_user = u.id where 1 = 1 {str_kode} and hp.id not in (select id_h_peminjaman from pengembalian)";
+            cmd.CommandText = $"select hp.id,u.username as Username, u.nama as Nama, hp.tanggal_peminjaman, u.id from users u left join h_peminjaman hp on hp.id_user = u.id where 1 = 1 {str_kode} and hp.id not in (select id_h_peminjaman from pengembalian)";
 
             conn.Close();
             conn.Open();
@@ -109,9 +110,10 @@ namespace PerpusPCS
 
         private void btnKembalikan_Click(object sender, RoutedEventArgs e)
         {
-            if (true)
+            if (dgvPengembalianBuku.SelectedIndex == -1)
             {
-
+                MessageBox.Show("Pilih Salah Satu Item pada Datagrid Pengembalian Buku !");
+                return;
             }
             if (MessageBox.Show("Periksa Kembali Buku Yang Dikembalikan ?", "Kembalikan Buku", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
@@ -121,10 +123,46 @@ namespace PerpusPCS
                 {
                     try
                     {
+                        int idx = dgvPengembalianBuku.SelectedIndex;
+                        int user_id = Convert.ToInt32(ds.Rows[idx][4]);
                         //periksa user premium atau tidak
+                        OracleCommand cmd = new OracleCommand()
+                        {
+                            CommandType = CommandType.StoredProcedure,
+                            Connection = conn,
+                            CommandText = "cekValidPremiumKembalikan"
+                        };
+                        cmd.Parameters.Add(new OracleParameter()
+                        {
+                            Direction = ParameterDirection.Input,
+                            ParameterName = "p_id",
+                            OracleDbType = OracleDbType.Int32,
+                            Size = 20,
+                            Value = user_id
+                        });
+                        cmd.Parameters.Add(new OracleParameter()
+                        {
+                            Direction = ParameterDirection.Input,
+                            ParameterName = "tanggal_pinjam",
+                            OracleDbType = OracleDbType.Date,
+                            Size = 20,
+                            Value = Convert.ToDateTime(ds.Rows[idx][3])
+                        });
+                        cmd.Parameters.Add(new OracleParameter()
+                        {
+                            Direction = ParameterDirection.ReturnValue,
+                            ParameterName = "returnval",
+                            OracleDbType = OracleDbType.Int32,
+                            Size = 20,
+                            Value = Convert.ToDateTime(ds.Rows[idx][3])
+                        });
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show(Convert.ToInt32(cmd.Parameters["returnval"].Value).ToString());
                         //hitung denda
                         //masukkan data
                         trans.Commit();
+                        dgvPengembalianBuku.SelectedIndex = -1;
+                        dgvDetailPeminjaman.SelectedIndex = -1;
                     }
                     catch (Exception ex)
                     {
@@ -144,6 +182,7 @@ namespace PerpusPCS
             dgvPengembalianBuku.Columns[1].Header = "Username";
             dgvPengembalianBuku.Columns[2].Header = "Nama";
             dgvPengembalianBuku.Columns[3].Header = "Tanggal Pinjam";
+            dgvPengembalianBuku.Columns[4].Visibility = Visibility.Hidden;
         }
     }
 }

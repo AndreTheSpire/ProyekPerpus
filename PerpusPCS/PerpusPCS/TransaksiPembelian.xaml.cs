@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OracleClient;
+using Oracle.DataAccess.Client;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,7 +68,7 @@ namespace PerpusPCS
             {
                 Direction = ParameterDirection.ReturnValue,
                 ParameterName = "id_pembelian_premium",
-                OracleType = OracleType.VarChar,
+                OracleDbType = OracleDbType.Varchar2,
                 Size = 100
             });
             conn.Open();

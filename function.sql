@@ -67,3 +67,81 @@ begin
 end;
 /
 show err;
+
+--function untuk mengetahui apakah masih aktif atau tidak
+create or replace function cekValidPremium(p_id number)
+return number
+is
+    s_user users%rowtype;
+    c_pernahBeli number(10);
+    var_waktu number(10);
+    coba number(10);
+begin
+    -- 0 false, 1 true
+    select * into s_user from users where id = p_id;
+    select count(*) into c_pernahBeli from pembelian_premium where id_user = p_id and status = 1;
+    if c_pernahBeli = 0 then 
+    return 0; --false
+    end if;
+    --mencari kapan terakhir beli
+    for i in (
+        select * from pembelian_premium 
+        where id_user = p_id 
+        order by created_at desc
+    ) loop
+        --apakah masih aktif ?
+        --mengambil berapa hari waktu aktif
+        select waktu * 30 into var_waktu from premium where i.id_premium = id;
+        --membandingkan waktu
+        select sysdate - created_at diff into coba from pembelian_premium where id_user = p_id and rownum = 1 order by created_at desc;
+        DBMS_OUTPUT.PUT_LINE(var_waktu);
+        if  var_waktu >= coba then
+        return 1;
+        else 
+        return 0;
+        end if;
+    end loop;
+end;
+/
+show err;
+
+select cekValidPremium(1) from dual;
+
+create or replace function cekValidPremiumKembalikan(p_id number,tanggal_pinjam date)
+return number
+is
+    s_user users%rowtype;
+    c_pernahBeli number(10);
+    var_waktu number(10);
+    coba number(10);
+begin
+    -- 0 false, 1 true
+    select * into s_user from users where id = p_id;
+    select count(*) into c_pernahBeli from pembelian_premium where id_user = p_id and status = 1;
+    if c_pernahBeli = 0 then 
+    return 0; --false
+    end if;
+    --mencari kapan terakhir beli
+    for i in (
+        select * from pembelian_premium 
+        where id_user = p_id 
+        order by created_at desc
+    ) loop
+        --apakah masih aktif ?
+        --mengambil berapa hari waktu aktif
+        select waktu * 30 into var_waktu from premium where i.id_premium = id;
+        --membandingkan waktu
+        select tanggal_pinjam - created_at diff into coba from pembelian_premium where id_user = p_id and rownum = 1 order by created_at desc;
+        DBMS_OUTPUT.PUT_LINE('waktu :'||var_waktu);
+        DBMS_OUTPUT.PUT_LINE('diff :'||coba);
+        if  var_waktu >= coba and coba >= 0 then
+        return 1;
+        else 
+        return 0;
+        end if;
+    end loop;
+end;
+/
+show err;
+
+select cekValidPremiumKembalikan(0,to_date('13/11/2019','dd/mm/yyyy')) from dual;

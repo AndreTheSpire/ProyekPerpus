@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data.OracleClient;
+using Oracle.DataAccess.Client;
 using System.Data;
 
 namespace PerpusPCS
@@ -67,7 +67,7 @@ namespace PerpusPCS
             {
                 Direction = ParameterDirection.ReturnValue,
                 ParameterName = "id_user",
-                OracleType = OracleType.VarChar,
+                OracleDbType = OracleDbType.Varchar2,
                 Size = 100
             });
             conn.Open();

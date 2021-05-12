@@ -107,6 +107,7 @@ show err;
 
 select cekValidPremium(1) from dual;
 
+--function untuk mengetahui apakah masih aktif atau tidak untuk transaksi kembalian
 create or replace function cekValidPremiumKembalikan(p_id number,tanggal_pinjam date)
 return number
 is
@@ -145,3 +146,21 @@ end;
 show err;
 
 select cekValidPremiumKembalikan(0,to_date('13/11/2019','dd/mm/yyyy')) from dual;
+
+
+--hitung denda
+create or replace trigger T_pengembalian_autogen
+before insert on pengembalian
+for each row
+declare
+    var_id number(10);
+begin
+    var_id := 0;
+    select count(id) into var_id from pengembalian;
+    if var_id = null then
+    var_id := 0;
+    end if;
+    :new.id := var_id;
+    :new.tanggal_pengembalian := sysdate;
+end;
+/

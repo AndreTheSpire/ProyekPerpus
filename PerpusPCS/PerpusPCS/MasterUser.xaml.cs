@@ -29,20 +29,27 @@ namespace PerpusPCS
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
-            loadData();
+            loadData(null);
             tbID.IsEnabled = false;
             btnDelete.IsEnabled = false;
             btnInsert.IsEnabled = true;
             btnUpdate.IsEnabled = false;
         }
-        private void loadData()
+        private void loadData(String kode)
         {
             ds = new DataTable();
             OracleCommand cmd = new OracleCommand();
             da = new OracleDataAdapter();
             cmd.Connection = conn;
-            cmd.CommandText = "select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + ", password as " + '"' + "Password" + '"' + "," +
-                "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users";
+            if (kode == null)
+            {
+                cmd.CommandText = "select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + ", password as " + '"' + "Password" + '"' + "," +
+                    "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users where status_delete = 0";
+            }
+            else
+            {
+                cmd.CommandText = kode;
+            }
             conn.Open();
             cmd.ExecuteReader();
             da.SelectCommand = cmd;
@@ -121,46 +128,12 @@ namespace PerpusPCS
                 int id = Convert.ToInt32(tbID.Text);
                 OracleCommand cmd = new OracleCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = $"delete from pembelian_premium where id_user = '{id}'";
+                cmd.CommandText = $"update users set status_delete = 1 where id = {id}";
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();
-                cmd.CommandText = $"select count(id) from h_peminjaman where id_user = '{id}'";
-                conn.Open();
-                int idpeminjaman = Convert.ToInt32(cmd.ExecuteScalar());
-                int[] hpeminjamke = new int[idpeminjaman];
-                int ctr = 0;
-                conn.Close();
-                cmd.CommandText = $"select id from h_peminjaman where id_user = '{id}'";
-                conn.Open();
-                OracleDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    hpeminjamke[ctr] = Convert.ToInt32(reader.GetValue(0));
-                    ctr++;
-                }
-                conn.Close();
-                for (int i = 0; i < hpeminjamke.Length; i++)
-                {
-                    cmd.CommandText = $"delete from d_peminjaman where id_h_peminjaman = '{hpeminjamke[i]}'";
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    cmd.CommandText = $"delete from pengembalian where id_h_peminjaman = '{hpeminjamke[i]}'";
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    cmd.CommandText = $"delete from h_peminjaman where id = '{hpeminjamke[i]}'";
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                }
-                cmd.CommandText = $"delete from users where id = '{id}'";
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                loadData();
                 clear();
+                loadData(null);
             }
             catch (Exception ex)
             {
@@ -192,8 +165,8 @@ namespace PerpusPCS
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     conn.Close();
-                    loadData();
                     clear();
+                    loadData(null);
                 }
                 catch (Exception ex)
                 {
@@ -244,14 +217,44 @@ namespace PerpusPCS
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     conn.Close();
-                    loadData();
                     clear();
+                    loadData(null);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            string kode = "select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + ", password as " + '"' + "Password" + '"' + "," +
+                "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users where status_delete = 0";
+            if (tbFilterUsername.Text.Length > 0)
+            {
+                kode += $" and username like '%{tbFilterUsername.Text}%'";
+            }
+            if (tbFilterNama.Text.Length > 0)
+            {
+                kode += $" and upper(nama) like upper('%{tbFilterNama.Text}%')";
+            }
+            if (DPFilterTgl.SelectedDate != null)
+            {
+                String[] pecah = DPFilterTgl.SelectedDate.Value.ToString().Split(' ');
+                String[] pecahtanggallahir = pecah[0].Split('/');
+                String tanggallahir = pecahtanggallahir[1] + "/" + pecahtanggallahir[0] + "/" + pecahtanggallahir[2];
+                kode += $" and tanggal_lahir = to_date('{tanggallahir}', 'dd/MM/yyyy')";
+            }
+            if (tbFilterNoTelp.Text.Length > 0)
+            {
+                kode += $" and no_telp like '%{tbFilterNoTelp.Text}%'";
+            }
+            loadData(kode);
+            tbFilterNoTelp.Text = "";
+            tbFilterNama.Text = "";
+            tbFilterUsername.Text = "";
+            DPFilterTgl.SelectedDate = null;
         }
     }
 }

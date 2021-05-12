@@ -5,22 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpusPCS"
         mc:Ignorable="d"
-        Title="MasterUser" Height="450" Width="800">
+        Title="MasterUser" Height="700" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dgvUser" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Height="300" SelectionChanged="dgvUser_SelectionChanged" ColumnWidth="*"/>
+        <DataGrid x:Name="dgvUser" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" SelectionChanged="dgvUser_SelectionChanged" ColumnWidth="*" Margin="10"/>
         <StackPanel  Grid.Column="1" Grid.Row="2" >
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="ID" MinWidth="100"></Label>
@@ -56,8 +57,28 @@
             <Button x:Name="btnDelete" MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0" Click="btnDelete_Click">Delete</Button>
             <Button x:Name="btnClear" MinWidth="100" MaxWidth="150" Width="Auto" Margin="0 4 0 0" Click="btnClear_Click">Clear</Button>
         </StackPanel>
-        <Grid Grid.Column="3" Grid.Row="3">
+        <Grid Grid.Column="4" Grid.Row="3">
             <Button x:Name="btnBackToMenu" MinWidth="100" MaxWidth="150" HorizontalAlignment="Right" Margin="0 0 0 2" Click="btnBackToMenu_Click">Back to Menu</Button>
         </Grid>
+        <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" Grid.ColumnSpan="1">
+            <Label Content="Filtering" FontSize="15" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="Username" MinWidth="100"></Label>
+                <TextBox x:Name="tbFilterUsername" MinWidth="150" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="Nama" MinWidth="100"></Label>
+                <TextBox x:Name="tbFilterNama" MinWidth="150" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="Tgl Lahir" MinWidth="100"></Label>
+                <DatePicker x:Name="DPFilterTgl" MinWidth="150" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
+                <Label Content="No Telp" MinWidth="100"></Label>
+                <TextBox x:Name="tbFilterNoTelp" MinWidth="150" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <Button x:Name="btnFilter" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btnFilter_Click">Filter</Button>
+        </StackPanel>
     </Grid>
 </Window>

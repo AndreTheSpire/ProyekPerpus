@@ -32,7 +32,8 @@ create table users (
     password varchar2(100),
     nama varchar2(100),
     tanggal_lahir date,
-    no_telp varchar2(15)
+    no_telp varchar2(15),
+	status_delete number(1)
 );
 create table premium(
     ID number(6) PRIMARY KEY,
@@ -103,14 +104,15 @@ insert into kategori_buku values(13,8,'Economics');
 insert into kategori_buku values(14,9,'Economics');
 
 --insert into users values(id,'username','password','nama',tanggal_lahir,no_telp);
-insert into users values(0, 'windah' , 'windah123', 'Windah Basudara', TO_DATE('16/09/2001', 'DD/MM/YYYY'), '081231234123');
-insert into users values(1, 'jokohtampan' , 'jokoh', 'Joko Bodo', TO_DATE('21/03/2002', 'DD/MM/YYYY'), '082948239032');
-insert into users values(2, 'budisakti' , 'budicepek', 'Budi Budiman', TO_DATE('30/11/2000', 'DD/MM/YYYY'), '089231238754');
-insert into users values(3, 'andre2' , 'andre2', 'Andre Taulany', TO_DATE('01/02/1999', 'DD/MM/YYYY'), '081895234323');
-insert into users values(4, 'petlick' , 'spongebob', 'Patrick Star', TO_DATE('06/09/2000', 'DD/MM/YYYY'), '085123897123');
-insert into users values(5, 'deankok' , 'dewakipas', 'Dean Sudahan', TO_DATE('28/04/1989', 'DD/MM/YYYY'), '082157298434');
-insert into users values(6, 'tessa' , 'tissue', 'Tessa Facial Tissue', TO_DATE('30/12/1990', 'DD/MM/YYYY'), '089890001234');
-insert into users values(7, 'kaptenvincent' , 'pesawat', 'Vincent Raditya', TO_DATE('28/01/1980', 'DD/MM/YYYY'), '081672987264');
+--status delete (0 belum, 1 sudah)
+insert into users values(0, 'windah' , 'windah123', 'Windah Basudara', TO_DATE('16/09/2001', 'DD/MM/YYYY'), '081231234123', 0);
+insert into users values(1, 'jokohtampan' , 'jokoh', 'Joko Bodo', TO_DATE('21/03/2002', 'DD/MM/YYYY'), '082948239032', 0);
+insert into users values(2, 'budisakti' , 'budicepek', 'Budi Budiman', TO_DATE('30/11/2000', 'DD/MM/YYYY'), '089231238754', 0);
+insert into users values(3, 'andre2' , 'andre2', 'Andre Taulany', TO_DATE('01/02/1999', 'DD/MM/YYYY'), '081895234323', 0);
+insert into users values(4, 'petlick' , 'spongebob', 'Patrick Star', TO_DATE('06/09/2000', 'DD/MM/YYYY'), '085123897123', 0);
+insert into users values(5, 'deankok' , 'dewakipas', 'Dean Sudahan', TO_DATE('28/04/1989', 'DD/MM/YYYY'), '082157298434', 0);
+insert into users values(6, 'tessa' , 'tissue', 'Tessa Facial Tissue', TO_DATE('30/12/1990', 'DD/MM/YYYY'), '089890001234', 0);
+insert into users values(7, 'kaptenvincent' , 'pesawat', 'Vincent Raditya', TO_DATE('28/01/1980', 'DD/MM/YYYY'), '081672987264', 0);
 
 --insert into premium values(id,'jenis',harga,waktu);
 --waktu dalam bulan

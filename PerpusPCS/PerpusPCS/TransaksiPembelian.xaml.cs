@@ -358,7 +358,48 @@ namespace PerpusPCS
 
         private bool cekKondisi()
         {
-            if(tbUsername.Text == "")
+            int index = dgvPremium.SelectedIndex;
+            string nama = tbUsername.Text;
+            OracleCommand cmd1 = new OracleCommand();
+            cmd1.Connection = conn;
+            conn.Close();
+            conn.Open();
+            cmd1.CommandText = $"select id from users where username = '{nama}'";
+            int id_user = Convert.ToInt32(cmd1.ExecuteScalar());
+            OracleCommand cmd = new OracleCommand()
+            {
+                CommandType = CommandType.StoredProcedure,
+                Connection = conn,
+                CommandText = "cekValidPremium"
+            };
+            cmd.Parameters.Add(new OracleParameter()
+            {
+                Direction = ParameterDirection.ReturnValue,
+                ParameterName = "returnval",
+                OracleDbType = OracleDbType.Int32,
+                Size = 20
+            });
+            cmd.Parameters.Add(new OracleParameter()
+            {
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_id",
+                OracleDbType = OracleDbType.Int32,
+                Size = 20,
+                Value = id_user
+            });
+            cmd.ExecuteNonQuery();
+            int cekValid = Convert.ToInt32(cmd.Parameters["returnval"].Value.ToString());
+            //MessageBox.Show(cekValid.ToString());
+            if(cekValid == 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+            if (tbUsername.Text == "")
             {
                 MessageBox.Show("Username wajib diisi");
                 return false;
@@ -438,6 +479,10 @@ namespace PerpusPCS
                         MessageBox.Show(ex.Message);
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show("User sudah memiliki premium yang aktif");
             }
             
         }

@@ -22,15 +22,17 @@ namespace PerpusPCS
     /// </summary>
     public partial class TransaksiPembelian : Window
     {
-        DataTable ds;
+        DataTable ds, dUser;
         OracleDataAdapter da;
         OracleConnection conn;
+        string username = "";
         public TransaksiPembelian()
         {
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
             loadData();
+            loadDataUser();
             isiKategoriPremium();
             cbMetodePembayaran.Items.Add(new ComboBoxItem { Name = "BCA", Content = "BCA" });
             cbMetodePembayaran.Items.Add(new ComboBoxItem { Name = "OVO", Content = "OVO" });
@@ -91,6 +93,22 @@ namespace PerpusPCS
             btnUpdate.IsEnabled = false;
         }
 
+        private void loadDataUser()
+        {
+            dUser = new DataTable();
+            OracleCommand cmd = new OracleCommand();
+            da = new OracleDataAdapter();
+            cmd.Connection = conn;
+            cmd.CommandText = "select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + "," +
+                    "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users where status_delete = 0";
+            conn.Open();
+            cmd.ExecuteReader();
+            da.SelectCommand = cmd;
+            da.Fill(dUser);
+            dgvUser.ItemsSource = dUser.DefaultView;
+            conn.Close();
+        }
+
         private void btnBackToMenu_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -110,7 +128,7 @@ namespace PerpusPCS
                 {
                     Name = reader.GetValue(1).ToString(),
                     Content = reader.GetValue(1).ToString()
-                }) ;  
+                });
             }
             cbPremium.SelectedValuePath = "Name";
             cbPremium.SelectedIndex = -1;
@@ -119,7 +137,7 @@ namespace PerpusPCS
 
         private void dgvPremium_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(dgvPremium.SelectedIndex != -1)
+            if (dgvPremium.SelectedIndex != -1)
             {
                 try
                 {
@@ -135,7 +153,7 @@ namespace PerpusPCS
                     tbID.Text = ds.Rows[index][0].ToString();
                     tbUsername.Text = ds.Rows[index][1].ToString();
                     //selected index premium
-                    if(ds.Rows[index][3].ToString()== "NewComer")
+                    if (ds.Rows[index][3].ToString() == "NewComer")
                     {
                         cbPremium.SelectedIndex = 0;
                     }
@@ -205,13 +223,13 @@ namespace PerpusPCS
                         rbRejected.IsChecked = true;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-                
+
             }
-            
+
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -238,9 +256,9 @@ namespace PerpusPCS
         {
             int index = dgvPremium.SelectedIndex;
             int status = -1;
-            if(ds.Rows[index][4].ToString() == "Rejected")
+            if (ds.Rows[index][4].ToString() == "Rejected")
             {
-                if(rbAccepted.IsChecked == true)
+                if (rbAccepted.IsChecked == true)
                 {
                     MessageBox.Show("Status sudah rejected");
                     rbAccepted.IsChecked = false;
@@ -352,8 +370,8 @@ namespace PerpusPCS
                     MessageBox.Show(ex.Message);
                 }
             }
-            
-            
+
+
         }
 
         private bool cekKondisi()
@@ -390,7 +408,7 @@ namespace PerpusPCS
             cmd.ExecuteNonQuery();
             int cekValid = Convert.ToInt32(cmd.Parameters["returnval"].Value.ToString());
             //MessageBox.Show(cekValid.ToString());
-            if(cekValid == 1)
+            if (cekValid == 1)
             {
                 return false;
             }
@@ -404,7 +422,7 @@ namespace PerpusPCS
                 MessageBox.Show("Username wajib diisi");
                 return false;
             }
-            else if(cbPremium.SelectedIndex == -1)
+            else if (cbPremium.SelectedIndex == -1)
             {
                 MessageBox.Show("Jenis premium wajib diisi");
                 return false;
@@ -414,7 +432,7 @@ namespace PerpusPCS
                 MessageBox.Show("Metode pembayaran wajib diisi");
                 return false;
             }
-            else if(tbID.Text == "")
+            else if (tbID.Text == "")
             {
                 MessageBox.Show("ID wajib diisi");
                 return false;
@@ -423,12 +441,12 @@ namespace PerpusPCS
             {
                 return true;
             }
-            
+
         }
 
         private void rbAccepted_Checked(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void btnInsert_Click(object sender, RoutedEventArgs e)
@@ -473,7 +491,7 @@ namespace PerpusPCS
                         clear();
 
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         transaksi.Rollback();
                         MessageBox.Show(ex.Message);
@@ -484,7 +502,76 @@ namespace PerpusPCS
             {
                 MessageBox.Show("User sudah memiliki premium yang aktif");
             }
+
+        }
+
+        private void dgvUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int idx = dgvUser.SelectedIndex;
+            if (idx != -1)
+            {
+                username = dUser.Rows[idx][1].ToString();
+                //mengatur judul
+                //IDbuku = Convert.ToInt32(dUser.Rows[idx][0]);
+                //judulbuku = dUser.Rows[idx][1].ToString();
+            }
+        }
+
+        private void btnMasuk_Click(object sender, RoutedEventArgs e)
+        {
+            tbUsername.Text = username;
+            tbUsername.IsEnabled = false;
+        }
+
+        private void btnCari_Click(object sender, RoutedEventArgs e)
+        {
+            cari();
+            tbKeyword.Text = "";
+            rbUsername.IsChecked = false;
+            rbNamaLengkap.IsChecked = false;
+        }
+
+        private void cari()
+        {
+            dUser = new DataTable();
+            OracleCommand cmd = new OracleCommand();
+            da = new OracleDataAdapter();
+            int cekprem = 0;
+            cmd.Connection = conn;
+            cmd.CommandText = $"select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + "," +
+                    "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users";
+            string comm = " where";
+            string keyword = Convert.ToString(tbKeyword.Text);
+            string berdasarkan = "username";
+
+            if (rbUsername.IsChecked == true)
+            {
+                berdasarkan = "username";
+            }
+            else if (rbNamaLengkap.IsChecked == true)
+            {
+                berdasarkan = "nama";
+            }
             
+            
+            
+            comm += $" upper({berdasarkan}) like upper('%{keyword}%')";
+
+            
+            
+
+
+
+            comm += $" order by ID";
+            cmd.CommandText += comm;
+            Console.WriteLine(cmd.CommandText);
+            conn.Close();
+            conn.Open();
+            cmd.ExecuteReader();
+            da.SelectCommand = cmd;
+            da.Fill(dUser);
+            dgvUser.ItemsSource = dUser.DefaultView;
+            conn.Close();
         }
     }
 }

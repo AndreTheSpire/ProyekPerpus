@@ -134,7 +134,7 @@ namespace PerpusPCS
                 conn.Open();
                 using(OracleTransaction trans = conn.BeginTransaction())
                 {
-                    //try
+                    try
                     {
                         int idx = dgvUser.SelectedIndex;
                         int user_id = Convert.ToInt32(dt.Rows[idx][0]);
@@ -189,11 +189,11 @@ namespace PerpusPCS
                         dgvBuku.SelectedIndex = -1;
                         dgvUser.SelectedIndex = -1;
                     }
-                    //catch (Exception ex)
-                    //{
-                    //    trans.Rollback();
-                    //    MessageBox.Show(ex.Message);
-                    //}
+                    catch (Exception ex)
+                    {
+                        trans.Rollback();
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
             conn.Close();

@@ -88,8 +88,17 @@
       <DependentUpon>ReportPinjamDanBeli.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RPpinjam.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPpinjam.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TransaksiPembelian.xaml.cs">
       <DependentUpon>TransaksiPembelian.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TransaksiPeminjaman.xaml.cs">
+      <DependentUpon>TransaksiPeminjaman.xaml</DependentUpon>
     </Compile>
     <Compile Include="TransaksiPengembalianBuku.xaml.cs">
       <DependentUpon>TransaksiPengembalianBuku.xaml</DependentUpon>
@@ -144,6 +153,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TransaksiPeminjaman.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TransaksiPengembalianBuku.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -179,6 +192,10 @@
     <EmbeddedResource Include="ReportPinjamDanBeli.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReportPinjamDanBeli.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RPpinjam.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPpinjam.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

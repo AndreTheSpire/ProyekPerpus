@@ -68,5 +68,11 @@ namespace PerpusPCS
             HalReportPeminjamanPengembalian report = new HalReportPeminjamanPengembalian();
             report.ShowDialog();
         }
+
+        private void btnPeminjamanBuku_Click(object sender, RoutedEventArgs e)
+        {
+            TransaksiPeminjaman pinjam = new TransaksiPeminjaman();
+            pinjam.ShowDialog();
+        }
     }
 }

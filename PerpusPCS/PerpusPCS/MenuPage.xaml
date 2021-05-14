@@ -46,7 +46,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                        <MenuItem Header="Peminjaman Buku"></MenuItem>
+                        <MenuItem x:Name="btnPeminjamanBuku" Header="Peminjaman Buku" Click="btnPeminjamanBuku_Click"></MenuItem>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="placeholder.png" Width="20" Height="20"></Image>

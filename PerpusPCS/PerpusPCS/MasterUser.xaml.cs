@@ -34,6 +34,7 @@ namespace PerpusPCS
             btnDelete.IsEnabled = false;
             btnInsert.IsEnabled = true;
             btnUpdate.IsEnabled = false;
+            tbPassword.IsEnabled = false;
         }
         private void loadData(String kode)
         {
@@ -43,8 +44,7 @@ namespace PerpusPCS
             cmd.Connection = conn;
             if (kode == null)
             {
-                cmd.CommandText = "select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + ", password as " + '"' + "Password" + '"' + "," +
-                    "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users where status_delete = 0";
+                cmd.CommandText = "select id, username, password, nama, to_char(tanggal_lahir, 'dd/MM/yyyy'), no_telp from users where status_delete = 0";
             }
             else
             {
@@ -229,8 +229,7 @@ namespace PerpusPCS
 
         private void btnFilter_Click(object sender, RoutedEventArgs e)
         {
-            string kode = "select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + ", password as " + '"' + "Password" + '"' + "," +
-                "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users where status_delete = 0";
+            String kode = "select id, username, password, nama, to_char(tanggal_lahir, 'dd/MM/yyyy'), no_telp from users where status_delete = 0";
             if (tbFilterUsername.Text.Length > 0)
             {
                 kode += $" and username like '%{tbFilterUsername.Text}%'";
@@ -255,6 +254,22 @@ namespace PerpusPCS
             tbFilterNama.Text = "";
             tbFilterUsername.Text = "";
             DPFilterTgl.SelectedDate = null;
+        }
+
+        private void tbUsername_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            tbPassword.Text = tbUsername.Text;
+        }
+
+        private void dgvUser_Loaded(object sender, RoutedEventArgs e)
+        {
+            dgvUser.Columns[0].Width = DataGridLength.SizeToCells;
+            dgvUser.Columns[0].Header = "ID";
+            dgvUser.Columns[1].Header = "Username";
+            dgvUser.Columns[2].Header = "Password";
+            dgvUser.Columns[3].Header = "Nama";
+            dgvUser.Columns[4].Header = "Tanggal Lahir";
+            dgvUser.Columns[5].Header = "No Telp";
         }
     }
 }

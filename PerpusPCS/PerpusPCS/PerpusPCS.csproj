@@ -85,6 +85,9 @@
     <Compile Include="TransaksiPembelian.xaml.cs">
       <DependentUpon>TransaksiPembelian.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TransaksiPeminjaman.xaml.cs">
+      <DependentUpon>TransaksiPeminjaman.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TransaksiPengembalianBuku.xaml.cs">
       <DependentUpon>TransaksiPengembalianBuku.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TransaksiPembelian.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TransaksiPeminjaman.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

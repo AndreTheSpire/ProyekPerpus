@@ -44,7 +44,7 @@ namespace PerpusPCS
             cmd.Connection = conn;
             if (kode == null)
             {
-                cmd.CommandText = "select id, username, password, nama, to_char(tanggal_lahir, 'dd/MM/yyyy'), no_telp from users where status_delete = 0";
+                cmd.CommandText = "select id, username, password, nama, to_char(tanggal_lahir, 'dd/MM/yyyy'), no_telp from users where status_delete = 0 order by id";
             }
             else
             {
@@ -96,6 +96,7 @@ namespace PerpusPCS
                     btnDelete.IsEnabled = true;
                     btnInsert.IsEnabled = false;
                     btnUpdate.IsEnabled = true;
+                    tbPassword.IsEnabled = true;
                 }
             }
             catch (Exception ex)
@@ -107,6 +108,8 @@ namespace PerpusPCS
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             clear();
+            loadData(null);
+            dgvUser_Loaded(sender, e);
         }
         private void clear()
         {
@@ -119,6 +122,7 @@ namespace PerpusPCS
             btnDelete.IsEnabled = false;
             btnInsert.IsEnabled = true;
             btnUpdate.IsEnabled = false;
+            tbPassword.IsEnabled = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -134,6 +138,7 @@ namespace PerpusPCS
                 conn.Close();
                 clear();
                 loadData(null);
+                dgvUser_Loaded(sender, e);
             }
             catch (Exception ex)
             {
@@ -149,29 +154,68 @@ namespace PerpusPCS
             }
             else
             {
-                try
+                //try
                 {
-                    int id = Convert.ToInt32(tbID.Text);
-                    String username = tbUsername.Text;
-                    String password = tbPassword.Text;
-                    String nama = tbNama.Text;
-                    String[] pecah = DPTglLahir.SelectedDate.Value.ToString().Split(' ');
-                    String[] pecahtanggallahir = pecah[0].Split('/');
-                    String tanggallahir = pecahtanggallahir[1] + "/" + pecahtanggallahir[0] + "/" + pecahtanggallahir[2];
-                    String notelp = tbNoTelp.Text;
-                    OracleCommand cmd = new OracleCommand();
-                    cmd.Connection = conn;
-                    cmd.CommandText = $"insert into users values({id}, '{username}', '{password}', '{nama}', to_date('{tanggallahir}', 'dd/MM/yyyy'), '{notelp}')";
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    clear();
-                    loadData(null);
+                    if (DPTglLahir.SelectedDate > DateTime.Now)
+                    {
+                        MessageBox.Show("Tanggal Lahir Tidak Boleh Melebihi Hari Ini");
+                    }
+                    else
+                    {
+                        OracleCommand cmd = new OracleCommand();
+                        cmd.Connection = conn;
+                        cmd.CommandText = "select count(*) from users";
+                        conn.Open();
+                        int jumlah = Convert.ToInt32(cmd.ExecuteScalar());
+                        String[] daftaruser = new string[jumlah];
+                        conn.Close();
+                        cmd.CommandText = "select username from users";
+                        conn.Open();
+                        OracleDataReader reader = cmd.ExecuteReader();
+                        int ctr = 0;
+                        while (reader.Read())
+                        {
+                            daftaruser[ctr] = reader.GetString(0);
+                            ctr++;
+                        }
+                        conn.Close();
+                        bool userada = false;
+                        for (int i = 0; i < daftaruser.Length; i++)
+                        {
+                            if (tbUsername.Text.Equals(daftaruser[i]))
+                            {
+                                userada = true;
+                            }
+                        }
+                        if (userada)
+                        {
+                            MessageBox.Show("Username pernah dipakai");
+                        }
+                        else
+                        {
+                            int id = Convert.ToInt32(tbID.Text);
+                            String username = tbUsername.Text;
+                            String password = tbPassword.Text;
+                            String nama = tbNama.Text;
+                            String[] pecah = DPTglLahir.SelectedDate.Value.ToString().Split(' ');
+                            String[] pecahtanggallahir = pecah[0].Split('/');
+                            String tanggallahir = pecahtanggallahir[1] + "/" + pecahtanggallahir[0] + "/" + pecahtanggallahir[2];
+                            String notelp = tbNoTelp.Text;
+                            cmd.Connection = conn;
+                            cmd.CommandText = $"insert into users values({id}, '{username}', '{password}', '{nama}', to_date('{tanggallahir}', 'dd/MM/yyyy'), '{notelp}', 0)";
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                            clear();
+                            loadData(null);
+                            dgvUser_Loaded(sender, e);
+                        }
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message);
+                //}
             }
         }
 
@@ -219,6 +263,7 @@ namespace PerpusPCS
                     conn.Close();
                     clear();
                     loadData(null);
+                    dgvUser_Loaded(sender, e);
                 }
                 catch (Exception ex)
                 {
@@ -256,11 +301,6 @@ namespace PerpusPCS
             DPFilterTgl.SelectedDate = null;
         }
 
-        private void tbUsername_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            tbPassword.Text = tbUsername.Text;
-        }
-
         private void dgvUser_Loaded(object sender, RoutedEventArgs e)
         {
             dgvUser.Columns[0].Width = DataGridLength.SizeToCells;
@@ -270,6 +310,14 @@ namespace PerpusPCS
             dgvUser.Columns[3].Header = "Nama";
             dgvUser.Columns[4].Header = "Tanggal Lahir";
             dgvUser.Columns[5].Header = "No Telp";
+        }
+
+        private void tbUsername_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbPassword.IsEnabled == false)
+            {
+                tbPassword.Text = tbUsername.Text;
+            }
         }
     }
 }

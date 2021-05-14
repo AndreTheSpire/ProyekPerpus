@@ -29,7 +29,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="Username" MinWidth="100"></Label>
-                <TextBox x:Name="tbUsername" MinWidth="150" HorizontalAlignment="Center" TextChanged="tbUsername_TextChanged"></TextBox>
+                <TextBox x:Name="tbUsername" MinWidth="150" HorizontalAlignment="Center" TextChanged="tbUsername_TextChanged"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="Password" MinWidth="100"></Label>

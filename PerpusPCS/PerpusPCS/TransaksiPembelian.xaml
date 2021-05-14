@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpusPCS"
         mc:Ignorable="d"
-        Title="TransaksiPembelian" Height="930" Width="1020">
+        Title="TransaksiPembelian" Height="750" Width="1020">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.4*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -38,8 +38,8 @@
         <StackPanel Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1">
             <Button x:Name="btnMasuk" MinWidth="100" MaxWidth="150" HorizontalAlignment="Right" Margin="0 4 20 2" Click="btnMasuk_Click">Insert</Button>
         </StackPanel>
-        <DataGrid x:Name="dgvUser" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Row="1" Height="300" SelectionChanged="dgvUser_SelectionChanged"/>
-        <DataGrid x:Name="dgvPremium" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Row="3" Height="300"  SelectionChanged="dgvPremium_SelectionChanged"/>
+        <DataGrid x:Name="dgvUser" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Row="1" SelectionChanged="dgvUser_SelectionChanged"/>
+        <DataGrid x:Name="dgvPremium" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Row="3"  SelectionChanged="dgvPremium_SelectionChanged"/>
         <StackPanel  Grid.Column="1" Grid.Row="4" >
             <StackPanel Orientation="Horizontal" Margin="20 15 0 0">
                 <Label Content="ID" MinWidth="100"></Label>
@@ -57,7 +57,7 @@
                 <Label Content="Metode" MinWidth="100"></Label>
                 <ComboBox x:Name="cbMetodePembayaran" MinWidth="150" HorizontalAlignment="Center"></ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
+            <StackPanel Orientation="Horizontal" Margin="0 15 0 0" Height="44">
                 <Button x:Name="btnInsert" MinWidth="100" MaxWidth="150" Width="Auto" Margin="20 15 0 0" Click="btnInsert_Click">Beli</Button>
                 <Button x:Name="btnClear" MinWidth="100" MaxWidth="150" Width="Auto" Margin="50 15 0 0" Click="btnClear_Click">Clear</Button>
             </StackPanel>
@@ -71,7 +71,7 @@
                 <RadioButton x:Name="rbRejected" Content="Rejected" MinWidth="100" HorizontalAlignment="Center" Margin="0 8 0 0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                <Button x:Name="btnUpdate" MinWidth="100" MaxWidth="150" Width="Auto" Margin="150 10 0 0" Click="btnUpdate_Click">Update</Button>
+                <Button x:Name="btnUpdate" MinWidth="100" MaxWidth="150" Width="Auto" Margin="150 10 0 0" Click="btnUpdate_Click" Height="26">Update</Button>
             </StackPanel>
 
         </StackPanel>

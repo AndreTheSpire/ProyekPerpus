@@ -132,7 +132,7 @@ namespace PerpusPCS
                 cmd.Connection = conn;
                 conn.Close();
                 conn.Open();
-                cmd.CommandText = "select max(id)+1 from kategori_buku";
+                cmd.CommandText = "select nvl(max(id),0)+1 from kategori_buku";
                 txtID.Text = Convert.ToString(cmd.ExecuteScalar());
                 conn.Close();
             }

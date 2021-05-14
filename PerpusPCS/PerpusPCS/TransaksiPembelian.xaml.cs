@@ -32,7 +32,7 @@ namespace PerpusPCS
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
             loadData();
-            loadDataUser();
+            //loadDataUser();
             isiKategoriPremium();
             cbMetodePembayaran.Items.Add(new ComboBoxItem { Name = "BCA", Content = "BCA" });
             cbMetodePembayaran.Items.Add(new ComboBoxItem { Name = "OVO", Content = "OVO" });
@@ -93,21 +93,21 @@ namespace PerpusPCS
             btnUpdate.IsEnabled = false;
         }
 
-        private void loadDataUser()
-        {
-            dUser = new DataTable();
-            OracleCommand cmd = new OracleCommand();
-            da = new OracleDataAdapter();
-            cmd.Connection = conn;
-            cmd.CommandText = "select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + "," +
-                    "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users where status_delete = 0";
-            conn.Open();
-            cmd.ExecuteReader();
-            da.SelectCommand = cmd;
-            da.Fill(dUser);
-            dgvUser.ItemsSource = dUser.DefaultView;
-            conn.Close();
-        }
+        //private void loadDataUser()
+        //{
+        //    dUser = new DataTable();
+        //    OracleCommand cmd = new OracleCommand();
+        //    da = new OracleDataAdapter();
+        //    cmd.Connection = conn;
+        //    cmd.CommandText = "select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + "," +
+        //            "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users where status_delete = 0";
+        //    conn.Open();
+        //    cmd.ExecuteReader();
+        //    da.SelectCommand = cmd;
+        //    da.Fill(dUser);
+        //    dgvUser.ItemsSource = dUser.DefaultView;
+        //    conn.Close();
+        //}
 
         private void btnBackToMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -140,7 +140,7 @@ namespace PerpusPCS
             if (dgvPremium.SelectedIndex != -1)
             {
                 try
-                {
+                { 
                     tbUsername.IsEnabled = false;
                     cbPremium.IsEnabled = false;
                     cbMetodePembayaran.IsEnabled = false;
@@ -222,6 +222,21 @@ namespace PerpusPCS
                         rbAccepted.IsChecked = false;
                         rbRejected.IsChecked = true;
                     }
+
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = conn;
+                    cmd.CommandText = $"Select ID,username,password,nama,to_char(tanggal_lahir,'DD/MM/YYYY'),no_telp,status_delete from users where username = '{tbUsername.Text}'";
+                    conn.Close();
+                    conn.Open();
+                    OracleDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        lblUsername.Text = reader.GetString(1);
+                        lblNama.Text = reader.GetString(3);
+                        lblTanggalLahir.Text = reader.GetString(4);
+                        lblNoTelp.Text = reader.GetString(5);
+                    }
+                    conn.Close();
                 }
                 catch (Exception ex)
                 {
@@ -250,6 +265,19 @@ namespace PerpusPCS
             rbAccepted.IsEnabled = false;
             rbPending.IsEnabled = false;
             rbRejected.IsEnabled = false;
+
+             user_id = -1;
+             user_username = "";
+             user_password = "";
+             user_nama = "";
+             user_tanggal_lahir = "";
+             user_no_telp = "";
+
+            lblUsername.Text = user_username.ToString();
+            lblNama.Text = user_nama.ToString();
+            lblTanggalLahir.Text = user_tanggal_lahir.ToString();
+            lblNoTelp.Text = user_no_telp.ToString();
+            tbUsername.Text = user_username;
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
@@ -505,17 +533,17 @@ namespace PerpusPCS
 
         }
 
-        private void dgvUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int idx = dgvUser.SelectedIndex;
-            if (idx != -1)
-            {
-                username = dUser.Rows[idx][1].ToString();
-                //mengatur judul
-                //IDbuku = Convert.ToInt32(dUser.Rows[idx][0]);
-                //judulbuku = dUser.Rows[idx][1].ToString();
-            }
-        }
+        //private void dgvUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    int idx = dgvUser.SelectedIndex;
+        //    if (idx != -1)
+        //    {
+        //        username = dUser.Rows[idx][1].ToString();
+        //        //mengatur judul
+        //        //IDbuku = Convert.ToInt32(dUser.Rows[idx][0]);
+        //        //judulbuku = dUser.Rows[idx][1].ToString();
+        //    }
+        //}
 
         private void btnMasuk_Click(object sender, RoutedEventArgs e)
         {
@@ -525,53 +553,72 @@ namespace PerpusPCS
 
         private void btnCari_Click(object sender, RoutedEventArgs e)
         {
-            cari();
-            tbKeyword.Text = "";
-            rbUsername.IsChecked = false;
-            rbNamaLengkap.IsChecked = false;
+            //cari();
+            //tbKeyword.Text = "";
+            //rbUsername.IsChecked = false;
+            //rbNamaLengkap.IsChecked = false;
         }
-
-        private void cari()
+        int user_id = -1;
+        string user_username = "";
+        string user_password = "";
+        string user_nama = "";
+        string user_tanggal_lahir = "";
+        string user_no_telp = "";
+        private void btnPilihUser_Click(object sender, RoutedEventArgs e)
         {
-            dUser = new DataTable();
-            OracleCommand cmd = new OracleCommand();
-            da = new OracleDataAdapter();
-            int cekprem = 0;
-            cmd.Connection = conn;
-            cmd.CommandText = $"select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + "," +
-                    "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users";
-            string comm = " where";
-            string keyword = Convert.ToString(tbKeyword.Text);
-            string berdasarkan = "username";
-
-            if (rbUsername.IsChecked == true)
-            {
-                berdasarkan = "username";
-            }
-            else if (rbNamaLengkap.IsChecked == true)
-            {
-                berdasarkan = "nama";
-            }
-            
-            
-            
-            comm += $" upper({berdasarkan}) like upper('%{keyword}%')";
-
-            
-            
-
-
-
-            comm += $" order by ID";
-            cmd.CommandText += comm;
-            Console.WriteLine(cmd.CommandText);
-            conn.Close();
-            conn.Open();
-            cmd.ExecuteReader();
-            da.SelectCommand = cmd;
-            da.Fill(dUser);
-            dgvUser.ItemsSource = dUser.DefaultView;
-            conn.Close();
+            PilihUser pu = new PilihUser();
+            pu.ShowDialog();
+            clear();
+            user_id = pu.id;
+            user_username = pu.username;
+            user_password = pu.password;
+            user_nama = pu.nama;
+            user_tanggal_lahir = pu.tanggal_lahir;
+            user_no_telp = pu.no_telp;
+            lblUsername.Text = user_username.ToString();
+            lblNama.Text = user_nama.ToString();
+            lblTanggalLahir.Text = user_tanggal_lahir.ToString();
+            lblNoTelp.Text = user_no_telp.ToString();
+            tbUsername.Text = user_username;
+            tbUsername.IsEnabled = false;
         }
+
+        //private void cari()
+        //{
+        //    dUser = new DataTable();
+        //    OracleCommand cmd = new OracleCommand();
+        //    da = new OracleDataAdapter();
+        //    int cekprem = 0;
+        //    cmd.Connection = conn;
+        //    cmd.CommandText = $"select id as " + '"' + "No" + '"' + ", username as " + '"' + "Username" + '"' + "," +
+        //            "nama as " + '"' + "Nama" + '"' + ", to_char(tanggal_lahir, 'dd/MM/yyyy') as " + '"' + "Tanggal Lahir" + '"' + ", no_telp as " + '"' + "No Telp" + '"' + "from users";
+        //    string comm = " where";
+        //    string keyword = Convert.ToString(tbKeyword.Text);
+        //    string berdasarkan = "username";
+
+        //    if (rbUsername.IsChecked == true)
+        //    {
+        //        berdasarkan = "username";
+        //    }
+        //    else if (rbNamaLengkap.IsChecked == true)
+        //    {
+        //        berdasarkan = "nama";
+        //    }
+            
+            
+            
+        //    comm += $" upper({berdasarkan}) like upper('%{keyword}%')";
+
+        //    comm += $" order by ID";
+        //    cmd.CommandText += comm;
+        //    Console.WriteLine(cmd.CommandText);
+        //    conn.Close();
+        //    conn.Open();
+        //    cmd.ExecuteReader();
+        //    da.SelectCommand = cmd;
+        //    da.Fill(dUser);
+        //    dgvUser.ItemsSource = dUser.DefaultView;
+        //    conn.Close();
+        //}
     }
 }

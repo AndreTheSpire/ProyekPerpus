@@ -63,7 +63,7 @@ namespace PerpusPCS
         }
         private void dgvBuku_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvBuku.Columns[0].Width = DataGridLength.SizeToCells;
+            dgvBuku.Columns[0].Width = DataGridLength.Auto;
             dgvBuku.Columns[4].Width = DataGridLength.Auto;
             dgvBuku.Columns[0].Header = "ID";
             dgvBuku.Columns[1].Header = "Judul";

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpusPCS"
         mc:Ignorable="d"
-        Title="TransaksiPembelian" Height="750" Width="1020">
+        Title="TransaksiPembelian" Height="750" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -14,33 +14,42 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.4*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="86*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="325*"/>
+            <RowDefinition Height="238*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">
-            <StackPanel Orientation="Horizontal" Margin="20 15 0 0">
-                <Label Content="Keyword" MinWidth="100"></Label>
-                <TextBox x:Name="tbKeyword" Text="" MinWidth="300" HorizontalAlignment="Center"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="20 15 0 0">
-                <Label Content="Cari Berdasarkan" MinWidth="100"></Label>
-                <RadioButton x:Name="rbUsername" Content="Username" HorizontalAlignment="Left" Margin="20,8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-                <RadioButton x:Name="rbNamaLengkap" Content="Nama Lengkap" HorizontalAlignment="Left" Margin="23,8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-            </StackPanel>
-        </StackPanel>
-        <StackPanel Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1">
-            <Button x:Name="btnCari" MinWidth="100" MaxWidth="150" HorizontalAlignment="Right" Margin="0 40 450 2" Click="btnCari_Click">Cari</Button>
-        </StackPanel>
-        <StackPanel Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1">
-            <Button x:Name="btnMasuk" MinWidth="100" MaxWidth="150" HorizontalAlignment="Right" Margin="0 4 20 2" Click="btnMasuk_Click">Insert</Button>
-        </StackPanel>
-        <DataGrid x:Name="dgvUser" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Row="1" SelectionChanged="dgvUser_SelectionChanged"/>
-        <DataGrid x:Name="dgvPremium" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Row="3"  SelectionChanged="dgvPremium_SelectionChanged"/>
-        <StackPanel  Grid.Column="1" Grid.Row="4" >
+        <DockPanel Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock DockPanel.Dock="Top" FontWeight="Bold" FontSize="15">Data User Terpilih</TextBlock>
+            <DockPanel DockPanel.Dock="Bottom" Margin="0 10 0 0">
+                <DockPanel DockPanel.Dock="Top">
+                    <DockPanel DockPanel.Dock="Left" >
+                        <TextBlock DockPanel.Dock="Left">Username :</TextBlock>
+                        <TextBlock x:Name="lblUsername" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock DockPanel.Dock="Left">Nama Lengkap :</TextBlock>
+                        <TextBlock x:Name="lblNama" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Bottom" Margin="0 10 0 0">
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock DockPanel.Dock="Left">Tanggal Lahir :</TextBlock>
+                        <TextBlock x:Name="lblTanggalLahir" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock DockPanel.Dock="Left">No Telp :</TextBlock>
+                        <TextBlock x:Name="lblNoTelp" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                </DockPanel>
+
+            </DockPanel>
+
+        </DockPanel>
+        <Button x:Name="btnPilihUser" Grid.Column="2" VerticalAlignment="Center" Margin="10,4,10,16" Height="20" Click="btnPilihUser_Click" Grid.Row="1">Pilih User</Button>
+        <DataGrid x:Name="dgvPremium" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Grid.Row="2"  SelectionChanged="dgvPremium_SelectionChanged"/>
+        <StackPanel  Grid.Column="1" Grid.Row="3" >
             <StackPanel Orientation="Horizontal" Margin="20 15 0 0">
                 <Label Content="ID" MinWidth="100"></Label>
                 <TextBox x:Name="tbID" Text="PlaceHolder" MinWidth="150" HorizontalAlignment="Center"></TextBox>
@@ -63,7 +72,7 @@
             </StackPanel>
 
         </StackPanel>
-        <StackPanel  Grid.Column="2" Grid.Row="4" >
+        <StackPanel  Grid.Column="2" Grid.Row="3" >
             <StackPanel Orientation="Horizontal" Margin="20 15 0 0">
                 <Label Content="Status" MinWidth="100"></Label>
                 <RadioButton x:Name="rbAccepted" Content="Accepted" MinWidth="100" HorizontalAlignment="Center" Margin="0 8 0 0" Checked="rbAccepted_Checked"/>
@@ -75,9 +84,9 @@
             </StackPanel>
 
         </StackPanel>
-        <Grid Grid.Column="2" Grid.Row="5">
+        <Grid Grid.Column="2" Grid.Row="4">
             <Button x:Name="btnBackToMenu" MinWidth="100" MaxWidth="150" HorizontalAlignment="Right" Margin="0 0 0 2" Click="btnBackToMenu_Click">Back to Menu</Button>
         </Grid>
-        
+
     </Grid>
 </Window>

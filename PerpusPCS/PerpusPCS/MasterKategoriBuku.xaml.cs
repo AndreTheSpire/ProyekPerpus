@@ -26,7 +26,7 @@ namespace PerpusPCS
         DataTable kosongan;
         OracleDataAdapter da;
         OracleConnection conn;
-        int IDbuku = 0;
+        //int IDbuku = 0;
         string judulbuku = "";
         public MasterKategoriBuku()
         {
@@ -43,7 +43,7 @@ namespace PerpusPCS
         }
         private void loadData()
         {
-            dgvBuku.SelectedIndex = -1;
+            //dgvBuku.SelectedIndex = -1;
             ds1 = new DataTable();
             OracleCommand cmd = new OracleCommand();
             da = new OracleDataAdapter();
@@ -55,7 +55,7 @@ namespace PerpusPCS
             cmd.ExecuteReader();
             da.SelectCommand = cmd;
             da.Fill(ds1);
-            dgvBuku.ItemsSource = ds1.DefaultView;
+            //dgvBuku.ItemsSource = ds1.DefaultView;
             conn.Close();
         }
         private void isicb()
@@ -81,8 +81,8 @@ namespace PerpusPCS
             da = new OracleDataAdapter();
 
             cmd.Connection = conn;
-            cmd.CommandText = $"select KB.ID,B.Judul as " + '"' + $"Judul Buku" + '"' + $",KB.genre from Kategori_Buku KB,Buku B where KB.id_buku=B.ID and KB.id_buku='{IDbuku}' order by ID";
-
+            cmd.CommandText = $"select KB.ID,B.Judul as " + '"' + $"Judul Buku" + '"' + $",KB.genre from Kategori_Buku KB,Buku B where KB.id_buku=B.ID and KB.id_buku='{Buku_ID}' order by ID";
+            conn.Close();
             conn.Open();
             cmd.ExecuteReader();
             da.SelectCommand = cmd;
@@ -96,35 +96,48 @@ namespace PerpusPCS
         }
         private void resetTampilan()
         {
+            resetForm();
             txtID.Text = "-";
             txtJudul.Text = "";
-            cbGenre.SelectedIndex = -1;
-            btnInsert.IsEnabled = true;
-            btnUpdate.IsEnabled = false;
-            btnDelete.IsEnabled = false;
-            btnInsertbook.IsEnabled = true;
-            keycari.Text = "";
-            dotjudul.IsChecked = false;
-            dotauthor.IsChecked = false;
-            dotpener.IsChecked = false;
-            dotbahas.IsChecked = false;
-            dotprem.IsChecked = false;
-            dotnonprem.IsChecked = false;
-            dotsemua.IsChecked = false;
-            loadData();
+            //btnInsertbook.IsEnabled = true;
+            //keycari.Text = "";
+            //dotjudul.IsChecked = false;
+            //dotauthor.IsChecked = false;
+            //dotpener.IsChecked = false;
+            //dotbahas.IsChecked = false;
+            //dotprem.IsChecked = false;
+            //dotnonprem.IsChecked = false;
+            //dotsemua.IsChecked = false;
+            //loadData();
+            //loadDataKat();
             dgvKatBuku.SelectedIndex = -1;
             ds2 = new DataTable();
             dgvKatBuku.ItemsSource = ds2.DefaultView;
             conn.Close();
 
+            lblAuthor.Text = "";
+            lblBahasa.Text = "";
+            lblHalaman.Text = "";
+            lblJudul.Text = "";
+            lblPenerbit.Text = "";
+            lblPremium.Text = "";
+
+            Buku_ID = -1;
+            Buku_judul = "";
+            Buku_author = "";
+            Buku_penerbit = "";
+            Buku_halaman = -1;
+            Buku_status_premium = "";
+            Buku_bahasa = "";
+            Buku_status_delete = -1;
         }
 
         private void autogenID()
         {
-            if (txtID.Text != "-")
-            {
-                return;
-            }
+            //if (txtID.Text != "-")
+            //{
+            //    return;
+            //}
             //mengatur ID
             try
             {
@@ -146,13 +159,13 @@ namespace PerpusPCS
         private void dgvBuku_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
-            int idx = dgvBuku.SelectedIndex;
-            if (idx != -1)
-            {
-                //mengatur judul
-                IDbuku = Convert.ToInt32(ds1.Rows[idx][0]);
-                judulbuku = ds1.Rows[idx][1].ToString();
-            }
+            //int idx = dgvBuku.SelectedIndex;
+            //if (idx != -1)
+            //{
+            //    //mengatur judul
+            //    IDbuku = Convert.ToInt32(ds1.Rows[idx][0]);
+            //    judulbuku = ds1.Rows[idx][1].ToString();
+            //}
                
         }
         private void btnInsertBook_Click(object sender, RoutedEventArgs e)
@@ -179,7 +192,7 @@ namespace PerpusPCS
                 conn.Close();
 
                 string genre = ds2.Rows[idx][2].ToString();
-                IDbuku = idbaru;
+                Buku_ID = idbaru;
                 if (genre == "Educational")
                 {
                     cbGenre.SelectedIndex = 0;
@@ -226,7 +239,7 @@ namespace PerpusPCS
                 }
 
                 btnInsert.IsEnabled = false;
-                btnInsertbook.IsEnabled = false;
+                //btnInsertbook.IsEnabled = false;
                 btnUpdate.IsEnabled = true;
                 btnDelete.IsEnabled = true;
                 btnClear.IsEnabled = true;
@@ -245,7 +258,7 @@ namespace PerpusPCS
             string genre = selectedPembayaran.Name.ToString();
             OracleCommand cmd = new OracleCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"select count(*) from kategori_buku where id_buku={IDbuku} and genre='{genre}'";
+            cmd.CommandText = $"select count(*) from kategori_buku where id_buku={Buku_ID} and genre='{genre}'";
             conn.Close();
             conn.Open();
             int sama = Convert.ToInt32(cmd.ExecuteScalar());
@@ -269,7 +282,7 @@ namespace PerpusPCS
                     string genre = selectedPembayaran.Name.ToString();
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = conn;
-                    cmd.CommandText = $"insert into kategori_buku values({id},'{IDbuku}','{genre}')";
+                    cmd.CommandText = $"insert into kategori_buku values({id},'{Buku_ID}','{genre}')";
                     conn.Close();
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -286,7 +299,8 @@ namespace PerpusPCS
             {
                 MessageBox.Show("tidak boleh ada data yang kosong/tidak bole data kembar");
             }
-            resetTampilan();
+            loadDataKat();
+            resetForm();
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
@@ -317,7 +331,8 @@ namespace PerpusPCS
             {
                 MessageBox.Show("tidak boleh ada data yang kosong/tidak boleh data kembar");
             }
-            resetTampilan();
+            loadDataKat();
+            resetForm();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -348,7 +363,8 @@ namespace PerpusPCS
             {
                 MessageBox.Show("tidak boleh ada data yang kosong");
             }
-            resetTampilan();
+            loadDataKat();
+            resetForm();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -356,74 +372,83 @@ namespace PerpusPCS
             resetTampilan();
         }
 
+        private void resetForm()
+        {
+            autogenID();
+            cbGenre.SelectedIndex = -1;
+            btnInsert.IsEnabled = true;
+            btnUpdate.IsEnabled = false;
+            btnDelete.IsEnabled = false;
+        }
+
         private void btnCari_Click(object sender, RoutedEventArgs e)
         {
-            if ( (dotauthor.IsChecked == true || dotbahas.IsChecked == true || dotjudul.IsChecked == true || dotpener.IsChecked == true)&&(dotprem.IsChecked==true||dotnonprem.IsChecked==true||dotsemua.IsChecked==true))
-            {
-                cari();
+            //if ( (dotauthor.IsChecked == true || dotbahas.IsChecked == true || dotjudul.IsChecked == true || dotpener.IsChecked == true)&&(dotprem.IsChecked==true||dotnonprem.IsChecked==true||dotsemua.IsChecked==true))
+            //{
+            //    cari();
 
-            }
-            else
-            {
-                MessageBox.Show("isi keyword dan jenis buku");
-            }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("isi keyword dan jenis buku");
+            //}
         }
         private void cari()
         {
-            ds1 = new DataTable();
-            OracleCommand cmd = new OracleCommand();
-            da = new OracleDataAdapter();
-            int cekprem = 0;
-            cmd.Connection = conn;
-            cmd.CommandText = $"select ID,judul,author,penerbit,halaman,case status_premium when 1 then 'Premium' when 0 then 'Non-Premium' end as {'"' + "Status Premium" + '"'},bahasa from buku";
-            string comm = " where";
-            string keyword = Convert.ToString(keycari.Text);
-            string berdasarkan = "username";
+            //ds1 = new DataTable();
+            //OracleCommand cmd = new OracleCommand();
+            //da = new OracleDataAdapter();
+            //int cekprem = 0;
+            //cmd.Connection = conn;
+            //cmd.CommandText = $"select ID,judul,author,penerbit,halaman,case status_premium when 1 then 'Premium' when 0 then 'Non-Premium' end as {'"' + "Status Premium" + '"'},bahasa from buku";
+            //string comm = " where";
+            //string keyword = Convert.ToString(keycari.Text);
+            //string berdasarkan = "username";
 
-            if (dotprem.IsChecked == true)
-            {
-                cekprem = 1;
-            }else if (dotnonprem.IsChecked == true)
-            {
-                cekprem = 0;
-            }
-            if (dotjudul.IsChecked == true)
-            {
-                berdasarkan = "judul";
-            }
-            else if (dotauthor.IsChecked == true)
-            {
-                berdasarkan = "author";
-            }
-            else if (dotpener.IsChecked == true)
-            {
-                berdasarkan = "penerbit";
-            }
-            else if (dotbahas.IsChecked == true)
-            {
-                berdasarkan = "bahasa";
-            }
-            if ((dotauthor.IsChecked == true || dotbahas.IsChecked == true || dotjudul.IsChecked == true || dotpener.IsChecked == true)&&(dotprem.IsChecked==true||dotnonprem.IsChecked==true))
-            {
-                comm += $" upper({berdasarkan}) like upper('%{keyword}%') and status_premium={cekprem}";
+            //if (dotprem.IsChecked == true)
+            //{
+            //    cekprem = 1;
+            //}else if (dotnonprem.IsChecked == true)
+            //{
+            //    cekprem = 0;
+            //}
+            //if (dotjudul.IsChecked == true)
+            //{
+            //    berdasarkan = "judul";
+            //}
+            //else if (dotauthor.IsChecked == true)
+            //{
+            //    berdasarkan = "author";
+            //}
+            //else if (dotpener.IsChecked == true)
+            //{
+            //    berdasarkan = "penerbit";
+            //}
+            //else if (dotbahas.IsChecked == true)
+            //{
+            //    berdasarkan = "bahasa";
+            //}
+            //if ((dotauthor.IsChecked == true || dotbahas.IsChecked == true || dotjudul.IsChecked == true || dotpener.IsChecked == true)&&(dotprem.IsChecked==true||dotnonprem.IsChecked==true))
+            //{
+            //    comm += $" upper({berdasarkan}) like upper('%{keyword}%') and status_premium={cekprem}";
 
-            }else if ((dotauthor.IsChecked == true || dotbahas.IsChecked == true || dotjudul.IsChecked == true || dotpener.IsChecked == true) && (dotsemua.IsChecked == true))
-            {
-                comm += $" upper({berdasarkan}) like upper('%{keyword}%')";
-            }
+            //}else if ((dotauthor.IsChecked == true || dotbahas.IsChecked == true || dotjudul.IsChecked == true || dotpener.IsChecked == true) && (dotsemua.IsChecked == true))
+            //{
+            //    comm += $" upper({berdasarkan}) like upper('%{keyword}%')";
+            //}
 
 
 
-                comm += $" order by ID";
-            cmd.CommandText += comm;
-            Console.WriteLine(cmd.CommandText);
-            conn.Close();
-            conn.Open();
-            cmd.ExecuteReader();
-            da.SelectCommand = cmd;
-            da.Fill(ds1);
-            dgvBuku.ItemsSource = ds1.DefaultView;
-            conn.Close();
+            //    comm += $" order by ID";
+            //cmd.CommandText += comm;
+            //Console.WriteLine(cmd.CommandText);
+            //conn.Close();
+            //conn.Open();
+            //cmd.ExecuteReader();
+            //da.SelectCommand = cmd;
+            //da.Fill(ds1);
+            //dgvBuku.ItemsSource = ds1.DefaultView;
+            //conn.Close();
         }
 
         private void btnsearchkat_click(object sender, RoutedEventArgs e)
@@ -433,20 +458,53 @@ namespace PerpusPCS
 
         private void dotprem_Checked(object sender, RoutedEventArgs e)
         {
-            dotnonprem.IsChecked = false;
-            dotsemua.IsChecked = false;
+            //dotnonprem.IsChecked = false;
+            //dotsemua.IsChecked = false;
         }
 
         private void dotnonprem_Checked(object sender, RoutedEventArgs e)
         {
-            dotprem.IsChecked = false;
-            dotsemua.IsChecked = false;
+            //dotprem.IsChecked = false;
+            //dotsemua.IsChecked = false;
         }
 
         private void dotsemua_Checked(object sender, RoutedEventArgs e)
         {
-            dotnonprem.IsChecked = false;
-            dotprem.IsChecked = false;
+            //dotnonprem.IsChecked = false;
+            //dotprem.IsChecked = false;
+        }
+        int Buku_ID = -1;
+        string Buku_judul = "";
+        string Buku_author = "";
+        string Buku_penerbit = "";
+        int Buku_halaman = -1;
+        string Buku_status_premium = "";
+        string Buku_bahasa = "";
+        int Buku_status_delete = -1;
+        private void btnPilihBuku_Click(object sender, RoutedEventArgs e)
+        {
+            PilihBuku pb = new PilihBuku();
+            pb.ShowDialog();
+            Buku_ID = pb.ID;
+            Buku_judul = pb.judul;
+            Buku_author = pb.author;
+            Buku_penerbit = pb.penerbit;
+            Buku_halaman = pb.halaman;
+            Buku_status_premium = pb.status_premium;
+            Buku_bahasa = pb.bahasa;
+            Buku_status_delete = pb.status_delete;
+
+            lblAuthor.Text = Buku_author.ToString();
+            lblBahasa.Text = Buku_bahasa.ToString();
+            lblHalaman.Text = Buku_halaman.ToString();
+            lblJudul.Text = Buku_judul.ToString();
+            lblPenerbit.Text = Buku_penerbit.ToString();
+            lblPremium.Text = Buku_status_premium.ToString();
+
+            //txtID.Text = Buku_ID.ToString();
+            txtJudul.Text = Buku_judul;
+            autogenID();
+            loadDataKat();
         }
     }
 }

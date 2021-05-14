@@ -134,7 +134,7 @@ namespace PerpusPCS
                 conn.Open();
                 using(OracleTransaction trans = conn.BeginTransaction())
                 {
-                    try
+                    //try
                     {
                         int idx = dgvUser.SelectedIndex;
                         int user_id = Convert.ToInt32(dt.Rows[idx][0]);
@@ -164,7 +164,9 @@ namespace PerpusPCS
                         int isValid = Convert.ToInt32(cmd.Parameters["returnval"].Value.ToString());
                         String statusbuku = dt2.Rows[dgvBuku.SelectedIndex][5].ToString();
                         int row_buku = Convert.ToInt32(dt2.Rows[dgvBuku.SelectedIndex][0]);
-                        cmd.CommandText = "select max(id) from h_peminjaman";
+                        cmd = new OracleCommand();
+                        cmd.Connection = conn;
+                        cmd.CommandText = $"select max(id) from h_peminjaman";
                         int idhpeminjaman = Convert.ToInt32(cmd.ExecuteScalar());
                         idhpeminjaman++;
                         if ((isValid == 0 && statusbuku.Equals("Free")) || (isValid == 1 && (statusbuku.Equals("Premium") || statusbuku.Equals("Free"))))
@@ -187,11 +189,11 @@ namespace PerpusPCS
                         dgvBuku.SelectedIndex = -1;
                         dgvUser.SelectedIndex = -1;
                     }
-                    catch (Exception ex)
-                    {
-                        trans.Rollback();
-                        MessageBox.Show(ex.Message);
-                    }
+                    //catch (Exception ex)
+                    //{
+                    //    trans.Rollback();
+                    //    MessageBox.Show(ex.Message);
+                    //}
                 }
             }
             conn.Close();

@@ -10,33 +10,48 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="90"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">
-            <StackPanel Orientation="Horizontal" Margin="20 15 0 0">
-                <Label Content="Keyword" MinWidth="100"></Label>
-                <TextBox x:Name="tbKeyword" Text="" MinWidth="400" Margin="30 0 0 0" HorizontalAlignment="Center"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="20 10 0 0">
-                <Label Content="Cari Berdasarkan" MinWidth="100"></Label>
-                <RadioButton x:Name="rbUsername" Content="Username" HorizontalAlignment="Left" Margin="30,8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-                <RadioButton x:Name="rbNamaLengkap" Content="Nama Lengkap" HorizontalAlignment="Left" Margin="23,8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-            </StackPanel>
-        </StackPanel>
-        <Button x:Name="btncari" VerticalAlignment="Center" Grid.Column="3" Grid.Row="0" MinHeight="70" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btncari_Click" Content="Cari"/>
-        <Button x:Name="btnMasuk"  Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="1" MinWidth="100" MaxWidth="200" HorizontalAlignment="Center" Margin="0 4 0 0" Click="btnMasuk_Click">Create Report</Button>
-        <DataGrid x:Name="dgvUser" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="3" Grid.Row="1" SelectionChanged="dgvUser_SelectionChanged"/>
-        <Button x:Name="btnback" Grid.Column="3" Grid.Row="4" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btnback_Click" Content="Back"/>
-        <Viewer:CrystalReportsViewer  Name="creport" Grid.Column="1" Grid.ColumnSpan="3"   HorizontalAlignment="Left"  Margin="10,10,0,0" Grid.Row="3" Grid.RowSpan="1" VerticalAlignment="Top"  />
+        <DockPanel Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock DockPanel.Dock="Top" FontWeight="Bold" FontSize="15">Data User Terpilih</TextBlock>
+            <DockPanel DockPanel.Dock="Bottom" Margin="0 10 0 0">
+                <DockPanel DockPanel.Dock="Top">
+                    <DockPanel DockPanel.Dock="Left" >
+                        <TextBlock DockPanel.Dock="Left">Username :</TextBlock>
+                        <TextBlock x:Name="lblUsername" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock DockPanel.Dock="Left">Nama Lengkap :</TextBlock>
+                        <TextBlock x:Name="lblNama" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Bottom" Margin="0 10 0 0">
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock DockPanel.Dock="Left">Tanggal Lahir :</TextBlock>
+                        <TextBlock x:Name="lblTanggalLahir" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock DockPanel.Dock="Left">No Telp :</TextBlock>
+                        <TextBlock x:Name="lblNoTelp" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                </DockPanel>
+
+            </DockPanel>
+
+        </DockPanel>
+        <DockPanel Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" >
+            <Button x:Name="btncari"  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" MinWidth="100" MaxWidth="200" HorizontalAlignment="Center" Margin="100 4 0 0" Click="btncari_Click">Pilih User</Button>
+            <Button x:Name="btnMasuk"  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" MinWidth="100" MaxWidth="200" HorizontalAlignment="Center" Margin="0 4 0 0" Click="btnMasuk_Click">Create Report</Button>
+        </DockPanel>
+        <Button x:Name="btnback" Grid.Column="2" Grid.Row="3" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btnback_Click" Content="Back"/>
+        <Viewer:CrystalReportsViewer  Name="creport" Grid.Column="1" Grid.ColumnSpan="3"   HorizontalAlignment="Left"  Margin="10,10,0,0" Grid.Row="2" Grid.RowSpan="1" VerticalAlignment="Top"  />
     </Grid>
 </Window>

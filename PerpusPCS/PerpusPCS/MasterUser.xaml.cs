@@ -303,7 +303,7 @@ namespace PerpusPCS
 
         private void dgvUser_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvUser.Columns[0].Width = DataGridLength.SizeToCells;
+            dgvUser.Columns[0].Width = DataGridLength.Auto;
             dgvUser.Columns[0].Header = "ID";
             dgvUser.Columns[1].Header = "Username";
             dgvUser.Columns[2].Header = "Password";

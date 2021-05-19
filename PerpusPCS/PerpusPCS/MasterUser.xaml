@@ -21,7 +21,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dgvUser" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" SelectionChanged="dgvUser_SelectionChanged" ColumnWidth="*" Margin="10" Loaded="dgvUser_Loaded"/>
+        <DataGrid x:Name="dgvUser" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" SelectionChanged="dgvUser_SelectionChanged" ColumnWidth="*" Margin="10" Loaded="dgvUser_Loaded" CanUserAddRows="False"/>
         <StackPanel  Grid.Column="1" Grid.Row="2" >
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="ID" MinWidth="100"></Label>

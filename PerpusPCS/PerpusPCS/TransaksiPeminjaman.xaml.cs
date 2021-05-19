@@ -162,10 +162,20 @@ namespace PerpusPCS
                         });
                         cmd.ExecuteNonQuery();
                         int isValid = Convert.ToInt32(cmd.Parameters["returnval"].Value.ToString());
-                        String statusbuku = dt2.Rows[dgvBuku.SelectedIndex][5].ToString();
-                        int row_buku = Convert.ToInt32(dt2.Rows[dgvBuku.SelectedIndex][0]);
                         cmd = new OracleCommand();
                         cmd.Connection = conn;
+                        cmd.CommandText = "select count(*) from buku where status_delete = 0";
+                        int data = Convert.ToInt32(cmd.ExecuteScalar());
+                        bool[] pilihdata = new bool[data];
+                        String[] statusbuku = new String[data];
+                        int[] row_buku = new int[data];
+                        for (int i = 0; i < dgvBuku.Items.Count; i++)
+                        {
+                            for (int j = 0; j < dgvBuku.Columns.Count; j++)
+                            {                     
+                                    }
+                        }
+                        
                         cmd.CommandText = $"select max(id) from h_peminjaman";
                         int idhpeminjaman = Convert.ToInt32(cmd.ExecuteScalar());
                         idhpeminjaman++;
@@ -219,6 +229,13 @@ namespace PerpusPCS
             cmd.ExecuteReader();
             da.SelectCommand = cmd;
             da.Fill(dt2);
+            dt2.Columns.Add("Pilih", typeof(bool));
+            cmd.CommandText = "select count(*) from buku where status_delete = 0";
+            int data = Convert.ToInt32(cmd.ExecuteScalar());
+            for (int i = 0; i < data; i++)
+            {
+                dt2.Rows[i]["Pilih"] = false;
+            }
             dgvBuku.ItemsSource = dt2.DefaultView;
             conn.Close();
         }

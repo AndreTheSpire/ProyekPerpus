@@ -22,12 +22,11 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="2">Data User</Label>
-        <DataGrid  Grid.Row="1" Grid.Column="2" x:Name="dgvUser" Width="Auto" ColumnWidth="*" Loaded="dgvUser_Loaded"/>
+        <DataGrid  Grid.Row="1" Grid.Column="2" x:Name="dgvUser" Width="Auto" ColumnWidth="*" Loaded="dgvUser_Loaded" CanUserAddRows="False"/>
         <Label  Grid.Row="2" Grid.Column="2">Data Buku</Label>
-        <DataGrid Grid.Row="3" Grid.Column="2" x:Name="dgvBuku" Width="Auto" ColumnWidth="*" Loaded="dgvBuku_Loaded"/>
-
+        <DataGrid Grid.Row="3" Grid.Column="2" x:Name="dgvBuku" Width="Auto" ColumnWidth="*" Loaded="dgvBuku_Loaded" CanUserAddRows="False"/>
         <Button x:Name="btnPinjam" Margin="12" Grid.Column="3" Grid.Row="0" Grid.RowSpan="5" VerticalAlignment="Center" Click="btnPinjam_Click">
-            <TextBlock TextWrapping="Wrap" TextAlignment="Center">Pinjam</TextBlock>
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Pinjam</TextBlock>
         </Button>
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 10 0 0">
             <Label Content="Pencarian User" FontSize="15" HorizontalAlignment="Center" Margin="10"/>

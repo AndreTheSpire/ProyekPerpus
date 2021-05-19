@@ -75,7 +75,7 @@ namespace PerpusPCS
             {
                 cmd.CommandText = kode;
             }
-
+            conn.Close();
             conn.Open();
             cmd.ExecuteReader();
             da.SelectCommand = cmd;
@@ -94,10 +94,6 @@ namespace PerpusPCS
             if (MessageBox.Show($"Yakin Pilih User : {username}", "Pilih User", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Pilihan Dibatalkan!");
             }
         }
 

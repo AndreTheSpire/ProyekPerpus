@@ -156,11 +156,22 @@ declare
     var_id number(10);
 begin
     var_id := 0;
-    select count(id) into var_id from pengembalian;
-    if var_id = null then
-    var_id := 0;
-    end if;
+    select nvl(count(id),0) into var_id from pengembalian;
     :new.id := var_id;
     :new.tanggal_pengembalian := sysdate;
+end;
+/
+
+--Trigger insert untuk transaksiPembelian
+create or replace trigger T_pembelian
+before insert on pembelian_premium
+for each row
+declare
+	var_id number(10);
+begin
+	select nvl(count(id),0) into var_id from pembelian_premium;
+	:new.id := var_id;
+	:new.status := 0;
+	:new.created_at := sysdate;
 end;
 /

@@ -69,10 +69,8 @@
             <DockPanel Margin="0 0 0 4">
                 <Button DockPanel.Dock="Right" x:Name="btnBackToMenu" MinWidth="100" MaxWidth="150" HorizontalAlignment="Center" Margin="0 0 0 2" Click="btnBackToMenu_Click">Back to Menu</Button>
                 <Button DockPanel.Dock="Left" HorizontalAlignment="Center" x:Name="btnSimpan" MinWidth="100" MaxWidth="150" Click="btnSimpan_Click" >Simpan</Button>
-
             </DockPanel>
-
         </Grid>
-
+        <Button x:Name="btnToUpdatePembelianPremium" Grid.Row="4" Grid.Column="1" Margin="10 0 10 4" HorizontalAlignment="Center" Click="btnToUpdatePembelianPremium_Click">Go To Update Pembelian Premium</Button>
     </Grid>
 </Window>

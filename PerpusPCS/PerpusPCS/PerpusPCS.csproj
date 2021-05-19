@@ -103,6 +103,9 @@
     <Compile Include="TransaksiPengembalianBuku.xaml.cs">
       <DependentUpon>TransaksiPengembalianBuku.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UpdatePembelianPremium.xaml.cs">
+      <DependentUpon>UpdatePembelianPremium.xaml</DependentUpon>
+    </Compile>
     <Page Include="ConnectionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -158,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TransaksiPengembalianBuku.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdatePembelianPremium.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

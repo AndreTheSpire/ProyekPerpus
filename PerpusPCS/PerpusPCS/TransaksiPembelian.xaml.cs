@@ -27,6 +27,7 @@ namespace PerpusPCS
         OracleConnection conn;
         OracleCommandBuilder builder;
         int ctr = 0;
+        int basectr = 0;
         public TransaksiPembelian()
         {
             InitializeComponent();
@@ -57,6 +58,7 @@ namespace PerpusPCS
             dgvPremium.ItemsSource = dt.DefaultView;
             OracleCommand cmd = new OracleCommand("select nvl(count(id),0) from pembelian_premium",conn);
             ctr = Convert.ToInt32(cmd.ExecuteScalar());
+            basectr = ctr;
             conn.Close();
         }
         private void dgvPremium_Loaded(object sender, RoutedEventArgs e)
@@ -109,6 +111,11 @@ namespace PerpusPCS
                     {
                         int idx = dgvPremium.SelectedIndex;
                         dt.Rows.Remove(dt.Rows[idx]);
+                        ctr = basectr;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            row[0] = ctr++;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -201,11 +208,12 @@ namespace PerpusPCS
             if (cekKondisi())
             {
                 DataRow dr = dt.NewRow();
-                dr[0] = ctr++;
+                dr[0] = ctr;
                 dr[1] = user_id;
                 dr[2] = cbPremium.SelectedIndex;
                 dr[3] = 0;
-                dr[4] = cbMetodePembayaran.SelectedIndex;
+                ComboBoxItem cb = (ComboBoxItem)cbMetodePembayaran.SelectedItem;
+                dr[4] = cb.Content;
                 dr[5] = DateTime.Now;
 
                 bool isTambah = true;
@@ -219,6 +227,7 @@ namespace PerpusPCS
                 if (isTambah)
                 {
                     dt.Rows.Add(dr);
+                    ctr++;
                 }
                 else
                 {
@@ -274,5 +283,10 @@ namespace PerpusPCS
             dgvPremium_Loaded(sender, e);
         }
 
+        private void btnToUpdatePembelianPremium_Click(object sender, RoutedEventArgs e)
+        {
+            UpdatePembelianPremium upp = new UpdatePembelianPremium();
+            upp.ShowDialog();
+        }
     }
 }

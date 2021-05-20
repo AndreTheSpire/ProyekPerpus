@@ -134,17 +134,37 @@ namespace PerpusPCS
         }
         private void btnMasuk_Click(object sender, RoutedEventArgs e)
         {
+            ReportPinjamDanBeli rpdb = new ReportPinjamDanBeli();
+            rpdb.SetDatabaseLogon(ConnectionPage.userId, ConnectionPage.pass, ConnectionPage.source, "");
+
             if (user_id == -1)
             {
                 MessageBox.Show("pilihlah user terlebih dahulu");
                 return;
             }
+            if (tglawalinp.SelectedDate != null && tglawalinp.SelectedDate < tglakhirinp.SelectedDate)
+            {
+                DateTime tanggalAwal = (DateTime)tglawalinp.SelectedDate;
+                rpdb.SetParameterValue("tanggalawalinp", tanggalAwal.ToString("dd-MMM-yyyy"));
+            }
+            else
+            {
+                MessageBox.Show("Tanggal tidak boleh kosong atau tanggal awal tidak boleh melebihi tanggal akhir");
+                return;
+            }
+
+            if (tglakhirinp.SelectedDate != null && tglawalinp.SelectedDate < tglakhirinp.SelectedDate)
+            {
+                DateTime tanggalAkhir = (DateTime)tglakhirinp.SelectedDate;
+                rpdb.SetParameterValue("tanggalakhirinp", tanggalAkhir.ToString("dd-MMM-yyyy"));
+            }
+            else
+            {
+                MessageBox.Show("Tanggal tidak boleh kosong atau tanggal awal tidak boleh melebihi tanggal akhir");
+                return;
+            }
             if (MessageBox.Show($"create report User : {user_username} ?", "Pilih User", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-
-                ReportPinjamDanBeli rpdb = new ReportPinjamDanBeli();
-                rpdb.SetDatabaseLogon(ConnectionPage.userId, ConnectionPage.pass, ConnectionPage.source, "");
-
                 int idcari = iduser;
                 string usernamee = " ", namaa = " ", notelp = " ";
                 DateTime tanggallahir = DateTime.Now;

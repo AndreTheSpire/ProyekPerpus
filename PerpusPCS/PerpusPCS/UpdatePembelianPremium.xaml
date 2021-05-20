@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpusPCS"
         mc:Ignorable="d"
-        Title="UpdatePembelianPremium" Height="600" Width="800">
+        Title="UpdatePembelianPremium" Height="600" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="9*"/>
-            <ColumnDefinition Width="437*"/>
-            <ColumnDefinition Width="433*"/>
-            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="387*"/>
+            <ColumnDefinition Width="482*"/>
+            <ColumnDefinition Width="14*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="8*"/>
@@ -19,11 +19,13 @@
             <RowDefinition Height="251*"/>
             <RowDefinition Height="33*"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="0 0 0 10"></DataGrid>
-        <Button x:Name="btnBack" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right" Margin="10 0 0 4" Click="btnBack_Click">Back to Menu</Button>
+        <DataGrid x:Name="dgvPembelianPremium" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="0 0 0 10" ColumnWidth="*" Loaded="dgvPembelianPremium_Loaded"></DataGrid>
+        <Button x:Name="btnBack" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right" Margin="0,0,0,4" Click="btnBack_Click" Width="77">Back</Button>
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="10">
+
+            
             <DockPanel DockPanel.Dock="Top" >
-                <TextBlock DockPanel.Dock="Top" FontWeight="Bold" FontSize="15">Filter</TextBlock>
+                    <TextBlock DockPanel.Dock="Top" FontWeight="Bold" FontSize="15">Filter</TextBlock>
                 <DockPanel DockPanel.Dock="Top" Margin="0 10 0 0">
                     <TextBlock MinWidth="90">Username</TextBlock>
                     <TextBox Margin="10 0 10 0"></TextBox>
@@ -41,15 +43,34 @@
                     <ComboBox Margin="10 0 10 0" Name="cbStatus"></ComboBox>
                 </DockPanel>
                 <DockPanel DockPanel.Dock="Top" Margin="0 10 0 0">
-                    <TextBlock MinWidth="90">Tanggal</TextBlock>
-                    <DatePicker x:Name="tglAwal" Margin="10 0 0 0"></DatePicker>
-                    <TextBlock VerticalAlignment="Center" MinWidth="50" TextAlignment="Center">S/D</TextBlock>
-                    <DatePicker x:Name="tglAkhir" Margin="0 0 10 0"></DatePicker>
-                    
+                    <TextBlock DockPanel.Dock="Left" MinWidth="90">Tanggal</TextBlock>
+                    <DockPanel DockPanel.Dock="Left">
+                        <DatePicker DockPanel.Dock="Top" x:Name="tglAwal" Margin="10 0 10 0"></DatePicker>
+                        <TextBlock DockPanel.Dock="Top" VerticalAlignment="Center" MinWidth="50" TextAlignment="Center">S/D</TextBlock>
+                        <DatePicker DockPanel.Dock="Top" x:Name="tglAkhir" Margin="10 0 10 0"></DatePicker>
+                    </DockPanel>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Top" Margin="0 10 0 0">
+                    <Button x:Name="btnClear" DockPanel.Dock="Right" HorizontalAlignment="Center" MinWidth="100" Margin="0 0 50 0" Click="btnClear_Click">Clear</Button>
+                    <Button x:Name="btnFilter" DockPanel.Dock="Left" HorizontalAlignment="Center" MinWidth="100" Click="btnFilter_Click">Filter</Button>
                 </DockPanel>
             </DockPanel>
-            <DockPanel DockPanel.Dock="Bottom">
-
+            <DockPanel DockPanel.Dock="Bottom" Margin="0 10 0 0">
+                <DockPanel DockPanel.Dock="Top" >
+                    <TextBlock  FontWeight="Bold" FontSize="15">Update Pembelian Premium</TextBlock>
+                </DockPanel>
+                <DockPanel  DockPanel.Dock="Top" Margin="0 10 0 0">
+                    <TextBlock Text="ID Pembayaran yang terpilih" MinWidth="100"></TextBlock>
+                    <TextBlock Text=":" MinWidth="50" TextAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="txtIdPembayaranTerpilih" TextAlignment="Center">-</TextBlock>
+                </DockPanel>
+                <DockPanel  DockPanel.Dock="Top" Margin="0 10 0 0">
+                    <RadioButton HorizontalAlignment="Center" VerticalAlignment="Top" Margin="70 0 0 0">Accepted</RadioButton>
+                    <RadioButton HorizontalAlignment="Center" VerticalAlignment="Top">Pending</RadioButton>
+                </DockPanel>
+                <DockPanel  DockPanel.Dock="Top" Margin="0 10 0 0">
+                    <Button x:Name="btnUpdate" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="100" Click="btnUpdate_Click">Update</Button>
+                </DockPanel>
             </DockPanel>
         </DockPanel>
     </Grid>

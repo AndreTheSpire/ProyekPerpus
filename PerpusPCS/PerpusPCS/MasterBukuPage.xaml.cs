@@ -98,24 +98,32 @@ namespace PerpusPCS
 
         private void isiEditor()
         {
-            int idx = dgvBuku.SelectedIndex;
-            //mengatur judul
-            txtID.Text = ds.Rows[idx][0].ToString();
-            txtJudul.Text = ds.Rows[idx][1].ToString();
-            txtAuthor.Text = ds.Rows[idx][2].ToString();
-            txtPenerbit.Text = ds.Rows[idx][3].ToString();
-            txtHalaman.Text = ds.Rows[idx][4].ToString();
-            if (Convert.ToInt32(ds.Rows[idx][5]) == 0)
+            try
             {
-                rbFree.IsChecked = true;
-                rbPremium.IsChecked = false;
+                int idx = dgvBuku.SelectedIndex;
+                //mengatur judul
+                txtID.Text = ds.Rows[idx][0].ToString();
+                txtJudul.Text = ds.Rows[idx][1].ToString();
+                txtAuthor.Text = ds.Rows[idx][2].ToString();
+                txtPenerbit.Text = ds.Rows[idx][3].ToString();
+                txtHalaman.Text = ds.Rows[idx][4].ToString();
+                if (ds.Rows[idx][5].ToString().ToLower() == "free")
+                {
+                    rbFree.IsChecked = true;
+                    rbPremium.IsChecked = false;
+                }
+                else
+                {
+                    rbFree.IsChecked = false;
+                    rbPremium.IsChecked = true;
+                }
+                txtBahasa.Text = ds.Rows[idx][6].ToString();
             }
-            else
+            catch (Exception ex)
             {
-                rbFree.IsChecked = false;
-                rbPremium.IsChecked = true;
+                MessageBox.Show(ex.Message);
             }
-            txtBahasa.Text = ds.Rows[idx][6].ToString();
+            
         }
         private void resetTampilan()
         {

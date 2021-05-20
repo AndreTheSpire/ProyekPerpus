@@ -22,9 +22,9 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="2">Data User Yang Belum Mengembalikan Buku</Label>
-        <DataGrid  Grid.Row="1" Grid.Column="2" x:Name="dgvPengembalianBuku" Width="Auto" ColumnWidth="*" Loaded="dgvPengembalianBuku_Loaded"/>
+        <DataGrid  Grid.Row="1" Grid.Column="2" x:Name="dgvPengembalianBuku" Width="Auto" ColumnWidth="*" Loaded="dgvPengembalianBuku_Loaded" CanUserAddRows="False"/>
         <Label  Grid.Row="2" Grid.Column="2">Kumpulan Buku Yang Dipinjam</Label>
-        <DataGrid Grid.Row="3" Grid.Column="2" x:Name="dgvDetailPeminjaman" Width="Auto" ColumnWidth="*"/>
+        <DataGrid Grid.Row="3" Grid.Column="2" x:Name="dgvDetailPeminjaman" Width="Auto" ColumnWidth="*" CanUserAddRows="False"/>
 
         <Button x:Name="btnTampilkanBuku" Margin="12" Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top" Click="btnTampilkanBuku_Click">
             <TextBlock TextWrapping="Wrap" TextAlignment="Center">Tampilkan Detail Buku</TextBlock></Button>

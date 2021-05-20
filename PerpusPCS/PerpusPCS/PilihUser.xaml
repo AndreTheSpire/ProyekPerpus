@@ -15,7 +15,7 @@
             <RowDefinition Height="341*"></RowDefinition>
             <RowDefinition Height="32*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dgvUser" Grid.Column="0" Loaded="dgvUser_Loaded" Margin="10 10 0 0" ColumnWidth="*" SelectionChanged="dgvUser_SelectionChanged"></DataGrid>
+        <DataGrid x:Name="dgvUser" Grid.Column="0" Loaded="dgvUser_Loaded" Margin="10 10 0 0" ColumnWidth="*" SelectionChanged="dgvUser_SelectionChanged" CanUserAddRows="False"></DataGrid>
         <DockPanel Grid.Column="1">
             <TextBlock DockPanel.Dock="Top" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center">Filtering</TextBlock>
             <DockPanel DockPanel.Dock="Top" Margin="10 5">

@@ -19,7 +19,7 @@
             <RowDefinition Height="251*"/>
             <RowDefinition Height="33*"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dgvPembelianPremium" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="0 0 0 10" ColumnWidth="*" Loaded="dgvPembelianPremium_Loaded"></DataGrid>
+        <DataGrid x:Name="dgvPembelianPremium" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="0 0 0 10" ColumnWidth="*" Loaded="dgvPembelianPremium_Loaded" CanUserAddRows="False"></DataGrid>
         <Button x:Name="btnBack" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right" Margin="0,0,0,4" Click="btnBack_Click" Width="77">Back</Button>
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="10">
 

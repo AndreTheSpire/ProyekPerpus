@@ -15,37 +15,58 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.4*"/>
             <RowDefinition Height="0.15*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.15*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="2">Data User</Label>
-        <DataGrid  Grid.Row="1" Grid.Column="2" x:Name="dgvUser" Width="Auto" ColumnWidth="*" Loaded="dgvUser_Loaded" CanUserAddRows="False"/>
-        <Label  Grid.Row="2" Grid.Column="2">Data Buku</Label>
-        <DataGrid Grid.Row="3" Grid.Column="2" x:Name="dgvBuku" Width="Auto" ColumnWidth="*" Loaded="dgvBuku_Loaded" CanUserAddRows="False"/>
-        <Button x:Name="btnPinjam" Margin="12" Grid.Column="3" Grid.Row="0" Grid.RowSpan="5" VerticalAlignment="Center" Click="btnPinjam_Click">
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Pinjam</TextBlock>
+        <DockPanel Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock DockPanel.Dock="Top" FontWeight="Bold" FontSize="15">Data User Terpilih</TextBlock>
+            <DockPanel DockPanel.Dock="Bottom" Margin="0 10 0 0">
+                <DockPanel DockPanel.Dock="Top">
+                    <DockPanel DockPanel.Dock="Left" >
+                        <TextBlock DockPanel.Dock="Left">Username :</TextBlock>
+                        <TextBlock x:Name="lblUsername" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock DockPanel.Dock="Left">Nama Lengkap :</TextBlock>
+                        <TextBlock x:Name="lblNama" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Bottom" Margin="0 10 0 0">
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock DockPanel.Dock="Left">Tanggal Lahir :</TextBlock>
+                        <TextBlock x:Name="lblTanggalLahir" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock DockPanel.Dock="Left">No Telp :</TextBlock>
+                        <TextBlock x:Name="lblNoTelp" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
+                    </DockPanel>
+                </DockPanel>
+            </DockPanel>
+        </DockPanel>
+        <Button x:Name="btnPilihUser" Grid.Column="3" MinWidth="75"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 5 10 4" Height="25" Click="btnPilihUser_Click" Grid.Row="0">Pilih User</Button>
+        <Label Grid.Row="1" Grid.Column="2">Data Buku</Label>
+        <DataGrid  Grid.Row="2" Grid.Column="2" x:Name="dgvBuku" Width="Auto" ColumnWidth="*" CanUserAddRows="False" Loaded="dgvBuku_Loaded"/>
+        <Label  Grid.Row="3" Grid.Column="2">Data Buku yang Dipilih</Label>
+        <DataGrid Grid.Row="4" Grid.Column="2" x:Name="dgvPilih" Width="Auto" ColumnWidth="*" CanUserAddRows="False" Loaded="dgvPilih_Loaded"/>
+        <Button x:Name="btnPilih" Margin="12" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Click="btnPilih_Click">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center">Pilih</TextBlock>
         </Button>
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 10 0 0">
-            <Label Content="Pencarian User" FontSize="15" HorizontalAlignment="Center" Margin="10"/>
-            <StackPanel Orientation="Horizontal" Margin="10 5" HorizontalAlignment="Center">
-                <Label Content="Nama" MinWidth="70"/>
-                <TextBox x:Name="tbNama" MinWidth="130" Width="Auto"/>
-            </StackPanel>
-            <Button x:Name="btnCariUser" HorizontalAlignment="Center" MinWidth="200" Content="Cari" Margin="10 10 10 0" Click="btnCariUser_Click"/>
-            <Button x:Name="btnResetPencarianUser" HorizontalAlignment="Center" MinWidth="200" Content="Reset Pencarian" Margin="10 4 10 0" Click="btnResetPencarianUser_Click"/>
-        </StackPanel>
-        <StackPanel Grid.Row="3" Grid.Column="1" Margin="0 10 0 0">
-            <Label Content="Pencarian Buku" FontSize="15" HorizontalAlignment="Center" Margin="10"/>
-            <StackPanel Orientation="Horizontal" Margin="10 5" HorizontalAlignment="Center">
-                <Label Content="Judul" MinWidth="70"/>
-                <TextBox x:Name="tbJudul" MinWidth="130" Width="Auto"/>
-            </StackPanel>
-            <Button x:Name="btnCariBuku" HorizontalAlignment="Center" MinWidth="200" Content="Cari" Margin="10 10 10 0" Click="btnCariBuku_Click"/>
-            <Button x:Name="btnResetPencarianBuku" HorizontalAlignment="Center" MinWidth="200" Content="Reset Pencarian" Margin="10 4 10 0" Click="btnResetPencarianBuku_Click"/>
-        </StackPanel>
-        <Button x:Name="btnBackToMenu" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Right" MinWidth="100" Margin="3" Content="Back To Menu" Click="btnBackToMenu_Click"/>
+        <Button x:Name="btnPinjam" Margin="12" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center">Pinjam</TextBlock>
+        </Button>
+        <DockPanel Grid.Row="2" Grid.Column="1" Margin="0 10 0 0">
+            <Label Content="Pencarian Buku" FontSize="15" DockPanel.Dock="Top" Margin="10"/>
+            <DockPanel DockPanel.Dock="Top" Margin="10 5">
+                <Label DockPanel.Dock="Left" Content="Judul" MinWidth="70"/>
+                <TextBox x:Name="tbJudul" MinWidth="130" Width="Auto" DockPanel.Dock="Left"/>
+            </DockPanel>
+            <Button DockPanel.Dock="Top" x:Name="btnCariBuku"  Content="Cari" Margin="10 20 10 0" Click="btnCariBuku_Click" Height="25"/>
+            <Button DockPanel.Dock="Bottom" x:Name="btnResetPencarianBuku" Content="Reset Pencarian" Margin="10 20 10 10" Click="btnResetPencarianBuku_Click" Height="25"/>
+        </DockPanel>
+        <Button x:Name="btnBackToMenu" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Center" Margin="3" Content="Back To Menu" Click="btnBackToMenu_Click"/>
     </Grid>
 </Window>

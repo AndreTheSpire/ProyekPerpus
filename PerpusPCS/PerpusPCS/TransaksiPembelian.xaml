@@ -48,7 +48,7 @@
 
         </DockPanel>
         <Button x:Name="btnPilihUser" Grid.Column="2" VerticalAlignment="Center" Margin="10,5,10,4" Height="20" Click="btnPilihUser_Click" Grid.Row="1">Pilih User</Button>
-        <DataGrid x:Name="dgvPremium" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1" Grid.Row="2"  SelectionChanged="dgvPremium_SelectionChanged" Loaded="dgvPremium_Loaded" ColumnWidth="*" Margin="0 10 0 10"/>
+        <DataGrid x:Name="dgvPremium" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1" Grid.Row="2"  SelectionChanged="dgvPremium_SelectionChanged" Loaded="dgvPremium_Loaded" ColumnWidth="*" Margin="0 10 0 10" CanUserAddRows="False"/>
         <DockPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2">
             <DockPanel DockPanel.Dock="Top" Margin="20 15 0 0">
                 <Label DockPanel.Dock="Left" Content="Premium" MinWidth="100"></Label>

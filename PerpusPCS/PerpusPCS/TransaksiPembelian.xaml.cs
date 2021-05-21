@@ -254,7 +254,8 @@ namespace PerpusPCS
                 {
                     da.Update(dt);
                     trans.Commit();
-                    MessageBox.Show("Berhasil Menyimpan","Success",MessageBoxButton.OK,MessageBoxImage.Information);
+                    MessageBox.Show("Berhasil Menyimpan", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    clear();
                 }
                 catch (Exception ex)
                 {
@@ -263,6 +264,7 @@ namespace PerpusPCS
                 }
             }
             conn.Close();
+            
         }
 
         private void btnPilihUser_Click(object sender, RoutedEventArgs e)

@@ -186,6 +186,7 @@ namespace PerpusPCS
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             resetTampilan();
+            dgvBuku_Loaded(sender, e);
         }
 
         private void btnInsert_Click(object sender, RoutedEventArgs e)

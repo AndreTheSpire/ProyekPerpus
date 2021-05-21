@@ -70,6 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HalReportPembelian.xaml.cs">
+      <DependentUpon>HalReportPembelian.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HalReportPeminjamanPengembalian.xaml.cs">
       <DependentUpon>HalReportPeminjamanPengembalian.xaml</DependentUpon>
     </Compile>
@@ -109,6 +112,10 @@
     <Page Include="ConnectionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HalReportPembelian.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HalReportPeminjamanPengembalian.xaml">
       <SubType>Designer</SubType>

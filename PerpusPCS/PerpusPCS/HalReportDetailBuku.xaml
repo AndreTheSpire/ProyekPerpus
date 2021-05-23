@@ -48,7 +48,7 @@
                 <ComboBox x:Name="cbBahasa" Margin="12 0 0 0"></ComboBox>
             </DockPanel>
             <DockPanel DockPanel.Dock="Top">
-                <Button x:Name="btnClear"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin=" 5 0 0 5" Padding="10 2">Clear</Button>
+                <Button x:Name="btnClear"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin=" 5 0 0 5" Padding="10 2" Click="btnClear_Click">Clear</Button>
                 <Button x:Name="btnCreateReport"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin=" 0 0 5 5" Padding="10 2" Click="btnCreateReport_Click">Create Report</Button>
             </DockPanel>
 
@@ -58,9 +58,9 @@
             <DockPanel DockPanel.Dock="Top">
                 <TextBlock  DockPanel.Dock="Left">Halaman</TextBlock>
                 <DockPanel DockPanel.Dock="Left" Margin="12 0 0 0">
-                    <TextBox x:Name="txtHalamanAwal" DockPanel.Dock="Top"></TextBox>
+                    <TextBox x:Name="txtHalamanAwal" DockPanel.Dock="Top" PreviewTextInput="txtHalamanAwal_PreviewTextInput"/>
                     <TextBlock DockPanel.Dock="Top" TextAlignment="Center">S/D</TextBlock>
-                    <TextBox x:Name="txtHalamanAkhir" DockPanel.Dock="Top"></TextBox>
+                    <TextBox x:Name="txtHalamanAkhir" DockPanel.Dock="Top" PreviewTextInput="txtHalamanAkhir_PreviewTextInput"></TextBox>
                 </DockPanel>
             </DockPanel>
             <TextBlock DockPanel.Dock="Top" Visibility="Hidden" >Test3</TextBlock>

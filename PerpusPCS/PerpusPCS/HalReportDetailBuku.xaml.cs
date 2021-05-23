@@ -94,62 +94,91 @@ namespace PerpusPCS
             //parameter author
             if (txtAuthor.Text.Length > 0)
             {//pengecekan author ada atau tidak
+                conn.Close();
                 conn.Open();
-                OracleCommand cmd = new OracleCommand($"select count(*) from buku where author = {txtAuthor.Text}", conn);
+                OracleCommand cmd = new OracleCommand($"select count(*) from buku where author = '{txtAuthor.Text}'", conn);
                 int temp_ctr = 0;
                 temp_ctr = Convert.ToInt32(cmd.ExecuteScalar());
                 if (temp_ctr == 0)
                 {
-                    OracleCommand cmd2 = new OracleCommand($"select Author from buku where author like %{txtAuthor.Text}%");
+
+                    OracleCommand cmd2 = new OracleCommand($"select count(*) from buku where upper(author) like upper('%{txtAuthor.Text}%')",conn);
+                    int jum_author = Convert.ToInt32(cmd2.ExecuteScalar());
+                    //MessageBox.Show('"'+txtAuthor.Text+'"');
+                    if (jum_author == 0)
+                    {
+                        MessageBox.Show("Tidak Ditemukan Author, Periksa Kembali", "Author Not Found(1)");
+                        return;
+                    }
+
+                    cmd2.CommandText = $"select Author from buku where upper(author) like upper('%{txtAuthor.Text}%')";
                     string possible = cmd2.ExecuteScalar().ToString();
                     if (possible.Length == 0)
                     {//bila tidak ditemukan author di database (atau typo ditengah")
-                        MessageBox.Show("Tidak Ditemukan Author, Periksa Kembali", "Author Not Found");
+                        MessageBox.Show("Tidak Ditemukan Author, Periksa Kembali", "Author Not Found(2)");
                         return;
                     }
                     else
                     {//ditemukan author menggunakan like
-                        if (MessageBox.Show($"Tidak Ditemukan Author, Apakah yang dikmaksud : {possible}", "Author Not Found", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (MessageBox.Show($"Tidak Ditemukan Author, Apakah yang dikmaksud : '{possible}'", "Author Not Found", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
                             author = possible;
+                            txtAuthor.Text = possible;
                         }
                         else
                         {
-                            MessageBox.Show("Tidak Ditemukan Author, Periksa Kembali", "Author Not Found");
+                            MessageBox.Show("Tidak Ditemukan Author, Periksa Kembali", "Author Not Found(3)");
                             return;
                         }
                     }
+                }
+                else
+                {
+                    author = txtAuthor.Text;
                 }
                 conn.Close();
             }
             //parameter Penerbit
             if (txtPenerbit.Text.Length > 0)
             {//pengecekan Penerbit ada atau tidak
+                conn.Close();
                 conn.Open();
-                OracleCommand cmd = new OracleCommand($"select count(*) from buku where Penerbit = {txtPenerbit.Text}", conn);
+                OracleCommand cmd = new OracleCommand($"select count(*) from buku where Penerbit = '{txtPenerbit.Text}'", conn);
                 int temp_ctr = 0;
                 temp_ctr = Convert.ToInt32(cmd.ExecuteScalar());
                 if (temp_ctr == 0)
                 {
-                    OracleCommand cmd2 = new OracleCommand($"select Penerbit from buku where Penerbit like %{txtPenerbit.Text}%");
+                    OracleCommand cmd2 = new OracleCommand($"select count(*) from buku where upper(Penerbit) like upper('%{txtPenerbit.Text}%')", conn);
+                    int jumlah_penerbit = Convert.ToInt32(cmd2.ExecuteScalar());
+                    if (jumlah_penerbit == 0)
+                    {
+                        MessageBox.Show("Tidak Ditemukan Penerbit, Periksa Kembali", "Penerbit Not Found(1)");
+                        return;
+                    }
+                    cmd2.CommandText = $"select penerbit from buku where upper(penerbit) like upper('%{txtPenerbit.Text}%')";
                     string possible = cmd2.ExecuteScalar().ToString();
                     if (possible.Length == 0)
                     {//bila tidak ditemukan Penerbit di database (atau typo ditengah")
-                        MessageBox.Show("Tidak Ditemukan Penerbit, Periksa Kembali", "Penerbit Not Found");
+                        MessageBox.Show("Tidak Ditemukan Penerbit, Periksa Kembali", "Penerbit Not Found(2)");
                         return;
                     }
                     else
                     {//ditemukan Penerbit menggunakan like
-                        if (MessageBox.Show($"Tidak Ditemukan Author, Apakah yang dikmaksud : {possible}", "Penerbit Not Found", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (MessageBox.Show($"Tidak Ditemukan Penerbit, Apakah yang dikmaksud : {possible}", "Penerbit Not Found", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
-                            author = possible;
+                            penerbit = possible;
+                            txtPenerbit.Text = possible;
                         }
                         else
                         {
-                            MessageBox.Show("Tidak Ditemukan Author, Periksa Kembali", "Penerbit Not Found");
+                            MessageBox.Show("Tidak Ditemukan Penerbit, Periksa Kembali", "Penerbit Not Found(3)");
                             return;
                         }
                     }
+                }
+                else
+                {
+                    penerbit = txtPenerbit.Text;
                 }
                 conn.Close();
             }
@@ -183,8 +212,33 @@ namespace PerpusPCS
 
             //memasukkan parameter
             //rptDB.SetParameterValue(nameParam,Value);
-            //rptDB.SetParameterValue(nameParam,Value);
+            rptDB.SetParameterValue("Author", author);
+            rptDB.SetParameterValue("status", status);
+            rptDB.SetParameterValue("Penerbit", penerbit);
+            rptDB.SetParameterValue("halamanAwal", halaman_awal);
+            rptDB.SetParameterValue("HalamanAkhir", halaman_akhir);
+            rptDB.SetParameterValue("Bahasa", bahasa);
+            rptDB.SetParameterValue("Genre", genre);
             crvReport.ViewerCore.ReportSource = rptDB;
+        }
+
+        private void txtHalamanAwal_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
+
+        private void txtHalamanAkhir_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            tampilanAwal();
+            cbBahasa.SelectedIndex = -1;
+            cbGenre.SelectedIndex = -1;
         }
     }
 }

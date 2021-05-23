@@ -34,7 +34,6 @@ namespace PerpusPCS
             loadDataBuku(null);
         
         }
-        bool pernah = false;
         private void dgvBuku_Loaded(object sender, RoutedEventArgs e)
         {
             dgvBuku.Columns[0].Width = DataGridLength.SizeToCells;
@@ -70,101 +69,19 @@ namespace PerpusPCS
         {
             this.Close();
         }
-
-        //private void btnPinjam_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (dgvUser.SelectedIndex == -1 || dgvBuku.SelectedIndex == -1)
-        //    {
-        //        MessageBox.Show("Harus Pilih Item pada Masing-Masing DataGrid");
-        //        return;
-        //    }
-        //    if (MessageBox.Show("Yakin Pinjam Buku?", "Pinjam Buku", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-        //    {
-        //        conn.Close();
-        //        conn.Open();
-        //        using(OracleTransaction trans = conn.BeginTransaction())
-        //        {
-        //            try
-        //            {
-        //                int idx = dgvUser.SelectedIndex;
-        //                int user_id = Convert.ToInt32(dt.Rows[idx][0]);
-        //                //periksa user premium atau tidak
-        //                OracleCommand cmd = new OracleCommand()
-        //                {
-        //                    CommandType = CommandType.StoredProcedure,
-        //                    Connection = conn,
-        //                    CommandText = "cekValidPremium"
-        //                };
-        //                cmd.Parameters.Add(new OracleParameter()
-        //                {
-        //                    Direction = ParameterDirection.ReturnValue,
-        //                    ParameterName = "returnval",
-        //                    OracleDbType = OracleDbType.Int32,
-        //                    Size = 20
-        //                });
-        //                cmd.Parameters.Add(new OracleParameter()
-        //                {
-        //                    Direction = ParameterDirection.Input,
-        //                    ParameterName = "p_id",
-        //                    OracleDbType = OracleDbType.Int32,
-        //                    Size = 20,
-        //                    Value = user_id
-        //                });
-        //                cmd.ExecuteNonQuery();
-        //                int isValid = Convert.ToInt32(cmd.Parameters["returnval"].Value.ToString());
-        //                cmd = new OracleCommand();
-        //                cmd.Connection = conn;
-        //                cmd.CommandText = "select count(*) from buku where status_delete = 0";
-        //                int data = Convert.ToInt32(cmd.ExecuteScalar());
-        //                bool[] pilihdata = new bool[data];
-        //                String[] statusbuku = new String[data];
-        //                int[] row_buku = new int[data];
-        //                for (int i = 0; i < dgvBuku.Items.Count; i++)
-        //                {
-        //                    for (int j = 0; j < dgvBuku.Columns.Count; j++)
-        //                    {                     
-        //                            }
-        //                }
-                        
-        //                cmd.CommandText = $"select max(id) from h_peminjaman";
-        //                int idhpeminjaman = Convert.ToInt32(cmd.ExecuteScalar());
-        //                idhpeminjaman++;
-        //                if ((isValid == 0 && statusbuku.Equals("Free")) || (isValid == 1 && (statusbuku.Equals("Premium") || statusbuku.Equals("Free"))))
-        //                {
-        //                    cmd.CommandText = $"insert into h_peminjaman values({idhpeminjaman}, {user_id}, sysdate)";
-        //                    cmd.ExecuteNonQuery();
-        //                    cmd.CommandText = $"select max(id) from h_peminjaman";
-        //                    int idhpeminjamanlagi = Convert.ToInt32(cmd.ExecuteScalar());
-        //                    cmd.CommandText = $"select max(id) from d_peminjaman";
-        //                    int iddpeminjaman = Convert.ToInt32(cmd.ExecuteScalar());
-        //                    iddpeminjaman++;
-        //                    cmd.CommandText = $"insert into d_peminjaman values({iddpeminjaman}, {idhpeminjamanlagi}, {row_buku})";
-        //                    cmd.ExecuteNonQuery();
-        //                }
-        //                else
-        //                {
-        //                    MessageBox.Show("User Tidak Memiliki Status Premium (Tidak Pinjam Buku Premium)");
-        //                }
-        //                trans.Commit();
-        //                dgvBuku.SelectedIndex = -1;\
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                trans.Rollback();
-        //                MessageBox.Show(ex.Message);
-        //            }
-        //        }
-        //    }
-        //    conn.Close();\
-        //    dgvBuku.SelectedIndex = -1;
-        //}
         int user_id = -1;
+        int userlama = -1;
         String user_username = "";
         String user_nama = "";
         String user_tanggal_lahir = "";
         String user_no_telp = "";
+        bool pilihuser = false;
         private void btnPilihUser_Click(object sender, RoutedEventArgs e)
         {
+            if (pilihuser) 
+            {
+                userlama = user_id;
+            }
             PilihUser pu = new PilihUser();
             pu.ShowDialog();
             user_id = pu.id;
@@ -178,6 +95,17 @@ namespace PerpusPCS
             lblNoTelp.Text = user_no_telp.ToString();
             dgvBuku_Loaded(sender, e);
             dgvPilih_Loaded(sender, e);
+            if (userlama == user_id)
+            {
+                pilihuser = true;
+                loadDataBuku(null);
+            }
+            else
+            {
+                pilihuser = false;
+                loadDataBuku(null);
+            }
+            pilihuser = true;
         }
 
         private void loadDataBuku(String kode)
@@ -200,10 +128,10 @@ namespace PerpusPCS
             da.Fill(dt);
             dgvBuku.ItemsSource = dt.DefaultView;
             conn.Close();
-            if (!pernah)
+            if (!pilihuser)
             {
                 dt2 = new DataTable();
-                cmd.CommandText = $"select id, judul, author, penerbit, halaman, case status_premium when 0 then 'Free' when 1 then 'Premium' end, bahasa from buku where 1 = 2";
+                cmd.CommandText = $"select id, judul, author, penerbit, halaman, bahasa from buku where 1 = 2";
                 conn.Open();
                 cmd.ExecuteReader();
                 da.SelectCommand = cmd;
@@ -211,43 +139,101 @@ namespace PerpusPCS
                 dgvPilih.ItemsSource = dt2.DefaultView;
                 conn.Close();
             }
-            pernah = true;
         }
 
         private void btnPilih_Click(object sender, RoutedEventArgs e)
         {
             DataRow dr = dt2.NewRow();
-            dr["ID"] = dt.Rows[dgvBuku.SelectedIndex][0];
-            dr["Judul"] = dt.Rows[dgvBuku.SelectedIndex][1];
-            dr["Author"] = dt.Rows[dgvBuku.SelectedIndex][2];
-            dr["Penerbit"] = dt.Rows[dgvBuku.SelectedIndex][3];
-            dr["Halaman"] = dt.Rows[dgvBuku.SelectedIndex][4];
-            //if (dt.Rows[dgvBuku.SelectedIndex][5].Equals("Free"))
-            //{
-            //    dr["Premium"] = "0";
-            //}
-            //else
-            //{
-            //    dr["Premium"] = "1";
-            //}
-            dr["Bahasa"] = dt.Rows[dgvBuku.SelectedIndex][6];
-            dt2.Rows.Add(dr);
-        }
+            try
+            {
+                conn.Close();
+                conn.Open();
+                //pengecekan user udah pernah dipilih atau belum
+                if (user_id == -1)
+                {
+                    MessageBox.Show("Belum Memilih User", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
 
+                OracleCommand cmd = new OracleCommand()
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = conn,
+                    CommandText = "cekValidPremium"
+                };
+                cmd.Parameters.Add(new OracleParameter()
+                {
+                    Direction = ParameterDirection.ReturnValue,
+                    ParameterName = "returnval",
+                    OracleDbType = OracleDbType.Int32,
+                    Size = 20
+                });
+                cmd.Parameters.Add(new OracleParameter()
+                {
+                    Direction = ParameterDirection.Input,
+                    ParameterName = "p_id",
+                    OracleDbType = OracleDbType.Int32,
+                    Size = 20,
+                    Value = user_id
+                });
+                cmd.ExecuteNonQuery();
+                int cekValid = Convert.ToInt32(cmd.Parameters["returnval"].Value.ToString());
+                conn.Close();
+                String statusbuku = dt.Rows[dgvBuku.SelectedIndex][5].ToString();
+                int banyakbukupilihan = dgvPilih.Items.Count;
+                int[] daftarpilihan = new int[banyakbukupilihan];
+                for (int i = 0; i < dgvPilih.Items.Count; i++)
+                {
+                    daftarpilihan[i] = Convert.ToInt32(dt2.Rows[i][0]);
+                }
+                bool sudahada = false;
+                for (int i = 0; i < daftarpilihan.Length; i++)
+                {
+                    if (Convert.ToInt32(dt.Rows[dgvBuku.SelectedIndex][0]) == daftarpilihan[i])
+                    {
+                        sudahada = true;
+                    }
+                }
+                if (user_id != -1 && dgvBuku.SelectedIndex != -1)
+                {
+                    if ((cekValid == 0 && statusbuku.Equals("Free")) || (cekValid == 1 && (statusbuku.Equals("Free") || statusbuku.Equals("Premium"))))
+                    {
+                        if (!sudahada)
+                        {
+                            dr["ID"] = dt.Rows[dgvBuku.SelectedIndex][0];
+                            dr["Judul"] = dt.Rows[dgvBuku.SelectedIndex][1];
+                            dr["Author"] = dt.Rows[dgvBuku.SelectedIndex][2];
+                            dr["Penerbit"] = dt.Rows[dgvBuku.SelectedIndex][3];
+                            dr["Halaman"] = dt.Rows[dgvBuku.SelectedIndex][4];
+                            dr["Bahasa"] = dt.Rows[dgvBuku.SelectedIndex][6];
+                            dt2.Rows.Add(dr);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Buku Sudah Dipilih");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("User Tidak Memiliki Premium Tidak Bisa Pinjam Premium");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            dgvBuku.SelectedIndex = -1;
+        }
         private void dgvPilih_Loaded(object sender, RoutedEventArgs e)
         {
-            if (dgvPilih.Items.Count > 0)
-            {
-                dgvPilih.Columns[0].Width = DataGridLength.SizeToCells;
-                dgvPilih.Columns[4].Width = DataGridLength.Auto;
-                dgvPilih.Columns[0].Header = "ID";
-                dgvPilih.Columns[1].Header = "Judul";
-                dgvPilih.Columns[2].Header = "Author";
-                dgvPilih.Columns[3].Header = "Penerbit";
-                dgvPilih.Columns[4].Header = "Halaman";
-                dgvPilih.Columns[5].Header = "Premium";
-                dgvPilih.Columns[6].Header = "Bahasa";
-            }
+            dgvPilih.Columns[0].Width = DataGridLength.SizeToCells;
+            dgvPilih.Columns[4].Width = DataGridLength.Auto;
+            dgvPilih.Columns[0].Header = "ID";
+            dgvPilih.Columns[1].Header = "Judul";
+            dgvPilih.Columns[2].Header = "Author";
+            dgvPilih.Columns[3].Header = "Penerbit";
+            dgvPilih.Columns[4].Header = "Halaman";
+            dgvPilih.Columns[5].Header = "Bahasa";
         }
     }
 }

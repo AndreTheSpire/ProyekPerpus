@@ -80,5 +80,11 @@ namespace PerpusPCS
             HalReportPembelian beli = new HalReportPembelian();
             beli.ShowDialog();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            HalReportDetailBuku hrdb = new HalReportDetailBuku(); 
+            hrdb.ShowDialog();
+        }
     }
 }

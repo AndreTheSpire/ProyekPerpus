@@ -60,7 +60,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                        <MenuItem Header="Detail Buku"></MenuItem>
+                        <MenuItem Header="Detail Buku" Click="MenuItem_Click"></MenuItem>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="placeholder.png" Width="20" Height="20"></Image>

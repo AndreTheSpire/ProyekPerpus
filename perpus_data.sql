@@ -198,18 +198,19 @@ insert into d_peminjaman values(25,18,2);
 
 --insert into denda value(id,waktu,denda)
 --waktu dalam hari 
-insert into denda values(0, 1, 3000);
-insert into denda values(1, 2, 3000);
-insert into denda values(2, 3, 3000);
-insert into denda values(3, 4, 3000);
-insert into denda values(4, 5, 10000);
-insert into denda values(5, 6, 10000);
-insert into denda values(6, 7, 10000);
-insert into denda values(7, 8, 10000);
-insert into denda values(8, 9, 20000);
-insert into denda values(9, 10, 20000);
-insert into denda values(10, 11, 20000);
-insert into denda values(11, 12, 20000);
+insert into denda values(0, 0, 0);
+insert into denda values(1, 1, 3000);
+insert into denda values(2, 2, 3000);
+insert into denda values(3, 3, 3000);
+insert into denda values(4, 4, 3000);
+insert into denda values(5, 5, 10000);
+insert into denda values(6, 6, 10000);
+insert into denda values(7, 7, 10000);
+insert into denda values(8, 8, 10000);
+insert into denda values(9, 9, 20000);
+insert into denda values(10, 10, 20000);
+insert into denda values(11, 11, 20000);
+insert into denda values(12, 12, 20000);
 
 --insert into pengembalian values(id,id_h_peminjaman,tanggal_pengembalian,jumlah_denda)
 

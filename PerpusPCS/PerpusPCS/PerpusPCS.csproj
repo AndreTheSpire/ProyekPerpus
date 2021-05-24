@@ -88,6 +88,12 @@
     <Compile Include="MasterKategoriBuku.xaml.cs">
       <DependentUpon>MasterKategoriBuku.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pembelian.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pembelian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PilihBuku.xaml.cs">
       <DependentUpon>PilihBuku.xaml</DependentUpon>
     </Compile>
@@ -221,6 +227,10 @@
     <EmbeddedResource Include="DetailBuku.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>DetailBuku.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pembelian.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>pembelian.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

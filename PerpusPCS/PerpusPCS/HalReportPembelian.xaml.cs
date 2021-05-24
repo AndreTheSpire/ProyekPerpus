@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Oracle.DataAccess.Client;
 
 namespace PerpusPCS
 {
@@ -26,9 +27,13 @@ namespace PerpusPCS
         string user_nama = "";
         string user_tanggal_lahir = "";
         string user_no_telp = "";
+        OracleConnection conn;
         public HalReportPembelian()
         {
             InitializeComponent();
+            this.conn = ConnectionPage.conn;
+            loadComboBoxStatus();
+            loadComboBoxMetodePembayaran();
         }
 
         private void btnback_Click(object sender, RoutedEventArgs e)
@@ -38,7 +43,47 @@ namespace PerpusPCS
 
         private void btnMasuk_Click(object sender, RoutedEventArgs e)
         {
+            string status = "";
+            int id = -1;
+            string metode_pembayaran = "";
+            pembelian pembelian = new pembelian();
+            pembelian.SetDatabaseLogon(ConnectionPage.userId, ConnectionPage.pass, ConnectionPage.source, "");
+            if (cbStatus.SelectedIndex == 0)
+            {
+                status = "Pending";
+                id = 0;
+            }
+            else if (cbStatus.SelectedIndex == 1)
+            {
+                status = "Accepted";
+                id = 1;
+            }
+            else if (cbStatus.SelectedIndex == 2)
+            {
+                status = "Rejected";
+                id = 2;
+            }
 
+            if (cbMetode.SelectedIndex == 0)
+            {
+                metode_pembayaran = "BCA";
+            }
+            else if (cbMetode.SelectedIndex == 1)
+            {
+                metode_pembayaran = "OVO";
+            }
+            else if (cbMetode.SelectedIndex == 2)
+            {
+                metode_pembayaran = "DANA";
+            }
+            else if (cbMetode.SelectedIndex == 3)
+            {
+                metode_pembayaran = "Gopay";
+            }
+            pembelian.SetParameterValue("status",status);
+            pembelian.SetParameterValue("id_status",id);
+            pembelian.SetParameterValue("metode_pembayaran", metode_pembayaran);
+            crvReport.ViewerCore.ReportSource = pembelian;
         }
 
         private void btncari_Click(object sender, RoutedEventArgs e)
@@ -63,6 +108,24 @@ namespace PerpusPCS
             lblNoTelp.Text = user_no_telp.ToString();
             iduser = user_id;
         }
+
+        private void loadComboBoxStatus()
+        {
+            cbStatus.Items.Add(new ComboBoxItem { Name = "Pending", Content = "Pending" });
+            cbStatus.Items.Add(new ComboBoxItem { Name = "Accepted", Content = "Accepted" });
+            cbStatus.Items.Add(new ComboBoxItem { Name = "Rejected", Content = "Rejected" });
+            cbStatus.SelectedIndex = -1;
+        }
+
+        private void loadComboBoxMetodePembayaran()
+        {
+            cbMetode.Items.Add(new ComboBoxItem { Name = "BCA", Content = "BCA" });
+            cbMetode.Items.Add(new ComboBoxItem { Name = "OVO", Content = "OVO" });
+            cbMetode.Items.Add(new ComboBoxItem { Name = "DANA", Content = "DANA" });
+            cbMetode.Items.Add(new ComboBoxItem { Name = "Gopay", Content = "Gopay" });
+            cbMetode.SelectedIndex = -1;
+        }
+
         private void clear()
         {
 
@@ -72,7 +135,7 @@ namespace PerpusPCS
             user_nama = "";
             user_tanggal_lahir = "";
             user_no_telp = "";
-
+            cbStatus.SelectedIndex = -1;
             lblUsername.Text = user_username.ToString();
             lblNama.Text = user_nama.ToString();
             lblTanggalLahir.Text = user_tanggal_lahir.ToString();

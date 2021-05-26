@@ -224,6 +224,43 @@ namespace PerpusPCS
             }
             dgvBuku.SelectedIndex = -1;
         }
+
+        private void btnPinjam_Click(object sender, RoutedEventArgs e)
+        {
+            if (user_id == -1 || dgvPilih.Items.Count < 1)
+            {
+                MessageBox.Show("User atau Buku Belum Dipilih");
+            }
+            else
+            {
+                try
+                {
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = conn;
+                    cmd.CommandText = $"select count(*) from h_peminjaman where id_user = {user_id}";
+                    conn.Open();
+                    int banyakpinjam = Convert.ToInt32(cmd.ExecuteScalar());
+                    int ctr = 0;
+                    int[] idhpinjam = new int[banyakpinjam];
+                    conn.Close();
+                    cmd.CommandText = $"select id from h_peminjaman where id_user = {user_id}";
+                    conn.Open();
+                    OracleDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        idhpinjam[ctr] = Convert.ToInt32(reader.GetValue(0));
+                        ctr++;
+                    }
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            
+        }
+
         private void dgvPilih_Loaded(object sender, RoutedEventArgs e)
         {
             dgvPilih.Columns[0].Width = DataGridLength.SizeToCells;

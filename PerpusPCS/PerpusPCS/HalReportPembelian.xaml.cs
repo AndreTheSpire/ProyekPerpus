@@ -20,7 +20,7 @@ namespace PerpusPCS
     /// </summary>
     public partial class HalReportPembelian : Window
     {
-        int iduser = 0;
+        int iduser = -1;
         int user_id = -1;
         string user_username = "";
         string user_password = "";
@@ -45,9 +45,36 @@ namespace PerpusPCS
         {
             string status = "";
             int id = -1;
-            string metode_pembayaran = "";
+            string metode_pembayaran = "Semua";
             pembelian pembelian = new pembelian();
             pembelian.SetDatabaseLogon(ConnectionPage.userId, ConnectionPage.pass, ConnectionPage.source, "");
+            //if (user_id == -1)
+            //{
+            //    MessageBox.Show("pilihlah user terlebih dahulu");
+            //    return;
+            //}
+
+            if (tglawalinp.SelectedDate != null && tglawalinp.SelectedDate < tglakhirinp.SelectedDate)
+            {
+                DateTime tanggalAwal = (DateTime)tglawalinp.SelectedDate;
+                pembelian.SetParameterValue("tanggalawalinp", tanggalAwal.ToString("dd-MMM-yyyy"));
+            }
+            else
+            {
+                MessageBox.Show("Tanggal tidak boleh kosong atau tanggal awal tidak boleh melebihi tanggal akhir");
+                return;
+            }
+
+            if (tglakhirinp.SelectedDate != null && tglawalinp.SelectedDate < tglakhirinp.SelectedDate)
+            {
+                DateTime tanggalAkhir = (DateTime)tglakhirinp.SelectedDate;
+                pembelian.SetParameterValue("tanggalakhirinp", tanggalAkhir.ToString("dd-MMM-yyyy"));
+            }
+            else
+            {
+                MessageBox.Show("Tanggal tidak boleh kosong atau tanggal awal tidak boleh melebihi tanggal akhir");
+                return;
+            }
             if (cbStatus.SelectedIndex == 0)
             {
                 status = "Pending";
@@ -60,7 +87,7 @@ namespace PerpusPCS
             }
             else if (cbStatus.SelectedIndex == 2)
             {
-                status = "Rejected";
+               status = "Rejected";
                 id = 2;
             }
 
@@ -80,6 +107,7 @@ namespace PerpusPCS
             {
                 metode_pembayaran = "Gopay";
             }
+            pembelian.SetParameterValue("idusercari", iduser);
             pembelian.SetParameterValue("status",status);
             pembelian.SetParameterValue("id_status",id);
             pembelian.SetParameterValue("metode_pembayaran", metode_pembayaran);

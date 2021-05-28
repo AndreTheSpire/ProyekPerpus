@@ -51,7 +51,7 @@
         <Label Grid.Row="1" Grid.Column="2">Data Buku</Label>
         <DataGrid  Grid.Row="2" Grid.Column="2" x:Name="dgvBuku" Width="Auto" ColumnWidth="*" CanUserAddRows="False" Loaded="dgvBuku_Loaded"/>
         <Label  Grid.Row="3" Grid.Column="2">Data Buku yang Dipilih</Label>
-        <DataGrid Grid.Row="4" Grid.Column="2" x:Name="dgvPilih" Width="Auto" ColumnWidth="*" CanUserAddRows="False" Loaded="dgvPilih_Loaded"/>
+        <DataGrid Grid.Row="4" Grid.Column="2" x:Name="dgvPilih" Width="Auto" ColumnWidth="*" CanUserAddRows="False" Loaded="dgvPilih_Loaded" SelectionChanged="dgvPilih_SelectionChanged"/>
         <Button x:Name="btnPilih" Margin="12" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Click="btnPilih_Click">
             <TextBlock TextWrapping="Wrap" TextAlignment="Center">Pilih</TextBlock>
         </Button>

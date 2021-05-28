@@ -1,4 +1,3 @@
-
 --drop table
 DROP TABLE BUKU CASCADE CONSTRAINTS PURGE;
 DROP TABLE DENDA CASCADE CONSTRAINTS PURGE;
@@ -140,8 +139,7 @@ insert into pembelian_premium values(9,3,2,2,'OVO',to_date('11/04/2020', 'DD/MM/
 insert into pembelian_premium values(10,3,7,2,'BCA',to_date('24/07/2020', 'DD/MM/YYYY'));
 
 
---insert h_peminjaman values(id,id_user,tanggal_peminjaman,status_peminjaman)
---status peminjaman 0 belum kembali 1 kembali 
+--insert h_peminjaman values(id,id_user,tanggal_peminjaman)
 insert into h_peminjaman values(0, 0, TO_DATE('12/03/2018', 'DD/MM/YYYY'));
 insert into h_peminjaman values(1, 7, TO_DATE('01/07/2018', 'DD/MM/YYYY'));
 insert into h_peminjaman values(2, 6, TO_DATE('30/07/2018', 'DD/MM/YYYY'));

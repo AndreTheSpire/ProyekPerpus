@@ -93,8 +93,6 @@ namespace PerpusPCS
             lblNama.Text = user_nama.ToString();
             lblTanggalLahir.Text = user_tanggal_lahir.ToString();
             lblNoTelp.Text = user_no_telp.ToString();
-            dgvBuku_Loaded(sender, e);
-            dgvPilih_Loaded(sender, e);
             if (userlama == user_id)
             {
                 pilihuser = true;
@@ -105,6 +103,8 @@ namespace PerpusPCS
                 pilihuser = false;
                 loadDataBuku(null);
             }
+            dgvBuku_Loaded(sender, e);
+            dgvPilih_Loaded(sender, e);
             pilihuser = true;
         }
 
@@ -242,6 +242,11 @@ namespace PerpusPCS
                     int banyakpinjam = Convert.ToInt32(cmd.ExecuteScalar());
                     int ctr = 0;
                     int[] idhpinjam = new int[banyakpinjam];
+                    int[] idhpinjamkembali = new int[banyakpinjam];
+                    for (int i = 0; i < idhpinjamkembali.Length; i++)
+                    {
+                        idhpinjamkembali[i] = -1;
+                    }
                     conn.Close();
                     cmd.CommandText = $"select id from h_peminjaman where id_user = {user_id}";
                     conn.Open();
@@ -252,13 +257,107 @@ namespace PerpusPCS
                         ctr++;
                     }
                     conn.Close();
+                    ctr = 0;
+                    for (int i = 0; i < idhpinjam.Length; i++)
+                    {
+                        cmd.CommandText = $"select id_h_peminjaman from pengembalian where id_h_peminjaman = {idhpinjam[i]}";
+                        conn.Open();
+                        reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            idhpinjamkembali[ctr] = Convert.ToInt32(reader.GetValue(0));
+                            ctr++;
+                        }
+                        conn.Close();
+                    }
+                    bool bukusudahkembali = true;
+                    for (int i = 0; i < idhpinjam.Length; i++)
+                    {
+                        bool pernahkembali = false;
+                        for (int j = 0; j < idhpinjamkembali.Length; j++)
+                        {
+                            if (idhpinjam[i] == idhpinjamkembali[j])
+                            {
+                                pernahkembali = true;
+                            }
+                        }
+                        if (!pernahkembali)
+                        {
+                            cmd.CommandText = $"select id from d_peminjaman where id_h_peminjaman = {idhpinjam[i]}";
+                            conn.Open();
+                            reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                cmd.CommandText = $"select id_buku from d_peminjaman where id = {Convert.ToInt32(reader.GetValue(0))}";
+                                OracleDataReader reader2 = cmd.ExecuteReader();
+                                while (reader2.Read())
+                                {
+                                    for (int j = 0; j < dgvPilih.Items.Count; j++)
+                                    {
+                                        if (Convert.ToInt32(reader2.GetValue(0)) == Convert.ToInt32(dt2.Rows[j][0]))
+                                        {
+                                            bukusudahkembali = false;
+                                        }
+                                    }
+                                }
+                            }
+                            conn.Close();
+                        }
+                    }
+                    if (!bukusudahkembali)
+                    {
+                        MessageBox.Show("Ada Buku Belum Kembali. Transaksi Dibatalkan");
+                    }
+                    else
+                    {
+                        cmd.CommandText = "select max(id) from h_peminjaman";
+                        conn.Open();
+                        int idhpinjambaru = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
+                        conn.Close();
+                        cmd.CommandText = $"insert into h_peminjaman values({idhpinjambaru}, {user_id}, sysdate)";
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        for (int i = 0; i < dgvPilih.Items.Count; i++)
+                        {
+                            cmd.CommandText = "select max(id) from d_peminjaman";
+                            conn.Open();
+                            int iddpinjambaru = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
+                            conn.Close();
+                            cmd.CommandText = $"insert into d_peminjaman values({iddpinjambaru}, {idhpinjambaru}, {dt2.Rows[i][0]})";
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                            
+                        }
+                        for (int i = dgvPilih.Items.Count - 1; i >= 0; i--)
+                        {
+                            dt2.Rows[i].Delete();
+                        }
+                        MessageBox.Show("Transaksi Berhasil");
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
-            
+            conn.Close();
+        }
+
+        private void dgvPilih_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgvPilih.SelectedIndex == -1)
+            {
+                MessageBox.Show("Pilih Data Terlebih Dahulu");
+            }
+            else
+            {
+                if (MessageBox.Show($"Yakin Delete Buku Pilihan Ini?", "Delete Buku Pilihan", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    dt2.Rows[dgvPilih.SelectedIndex].Delete();
+                }
+            }
         }
 
         private void dgvPilih_Loaded(object sender, RoutedEventArgs e)

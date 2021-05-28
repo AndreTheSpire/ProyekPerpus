@@ -347,11 +347,7 @@ namespace PerpusPCS
 
         private void dgvPilih_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dgvPilih.SelectedIndex == -1)
-            {
-                MessageBox.Show("Pilih Data Terlebih Dahulu");
-            }
-            else
+            if (dgvPilih.SelectedIndex != -1)
             {
                 if (MessageBox.Show($"Yakin Delete Buku Pilihan Ini?", "Delete Buku Pilihan", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {

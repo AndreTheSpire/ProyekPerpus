@@ -289,5 +289,8 @@
   <ItemGroup>
     <Resource Include="return.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="perpus.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

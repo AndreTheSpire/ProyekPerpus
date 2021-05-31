@@ -26,7 +26,7 @@
             <DockPanel DockPanel.Dock="Bottom" Margin="0 10 0 0">
                 <DockPanel DockPanel.Dock="Top">
                     <DockPanel DockPanel.Dock="Left" >
-                        <TextBlock DockPanel.Dock="Left">Username :</TextBlock>
+                        <TextBlock DockPanel.Dock="Left">Username    :</TextBlock>
                         <TextBlock x:Name="lblUsername" DockPanel.Dock="Left" MinWidth="150" Padding="10 0 0 0"></TextBlock>
                     </DockPanel>
                     <DockPanel DockPanel.Dock="Left">

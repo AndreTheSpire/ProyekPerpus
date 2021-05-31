@@ -26,6 +26,7 @@ namespace PerpusPCS
         public HalReportDetailBuku()
         { 
             InitializeComponent();
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
             loadData();
         }

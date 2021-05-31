@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PerpusPCS"
         xmlns:Viewer="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer" x:Class="PerpusPCS.HalReportDetailBuku"
         mc:Ignorable="d"
-        Title="HalReportDetailBuku" Height="728" Width="1024">
+        Title="HalReportDetailBuku" Height="728" Width="1024" Icon="icon opac search.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="9*"/>

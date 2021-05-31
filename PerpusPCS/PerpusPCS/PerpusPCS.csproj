@@ -262,5 +262,32 @@
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="reading-hall-printed-books-university-library_157667-47.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="LoginPageBackGround.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon opac search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tags.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="book.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="coin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="shake.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="return.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

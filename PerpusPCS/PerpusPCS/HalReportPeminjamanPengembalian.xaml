@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PerpusPCS"
         xmlns:Viewer="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer" x:Class="PerpusPCS.HalReportPeminjamanPengembalian"
         mc:Ignorable="d"
-        Title="HalReportPeminjamanPengembalian" Height="700" Width="900" Loaded="Window_Loaded">
+        Title="HalReportPeminjamanPengembalian" Height="700" Width="900" Loaded="Window_Loaded" Icon="icon opac search.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>

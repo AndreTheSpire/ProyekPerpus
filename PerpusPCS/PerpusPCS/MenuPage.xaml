@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpusPCS"
         mc:Ignorable="d"
-        Title="MenuPage" Height="450" Width="800" Background="White">
+        Title="MenuPage" Height="450" Width="800" Icon="icon opac search.png">
+    <Window.Background>
+        <ImageBrush ImageSource="reading-hall-printed-books-university-library_157667-47.jpg" TileMode="Tile" Stretch="UniformToFill"/>
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"></ColumnDefinition>
@@ -13,64 +16,64 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="10"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="1" Grid.ColumnSpan="2">
-            <Image Source="placeholder.png" Stretch="Fill"></Image>
-        </Grid>
+        <!--<Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2">
+            --><!--<Image Source="reading-hall-printed-books-university-library_157667-47.jpg"/>--><!--
+        </Grid>-->
         <Grid Grid.Column="0" Grid.ColumnSpan="4">
-            <Menu Height="30" VerticalAlignment="Top" Width="Auto" Padding="10 0 0 0" Background="White">
+            <Menu Height="Auto" VerticalAlignment="Top" Width="Auto" Padding="10 10 0 0" Background="White">
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
                         <DockPanel HorizontalAlignment="Stretch"/>
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
                 <MenuItem x:Name="btnMaster" Margin="0 0 3 0" Header="Master" Height="30" Background="#FFDDDDDD" BorderBrush="#FF707070" BorderThickness="1 1 1 1">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                            <MenuItem x:Name="btnMasterBuku" Header="Buku" Click="btnMasterBuku_Click"></MenuItem>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                            <MenuItem  x:Name="BtnKategoriBuku" Header="Kategori Buku" Click="BtnKategoriBuku_click"></MenuItem>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                            <MenuItem x:Name="btnMasterUsers" Header="Users" Click="btnMasterUsers_Click"></MenuItem>
-                        </StackPanel>
-                    </MenuItem>
+                    <DockPanel>
+                        <Image Source="book.png" Width="20" Height="20" DockPanel.Dock="Left"></Image>
+                        <MenuItem x:Name="btnMasterBuku" Header="Buku" Click="btnMasterBuku_Click" DockPanel.Dock="Left"></MenuItem>
+                    </DockPanel>
+                    <DockPanel>
+                        <Image Source="tags.png" Width="20" Height="20"  DockPanel.Dock="Left"></Image>
+                        <MenuItem  x:Name="BtnKategoriBuku" Header="Kategori Buku" Click="BtnKategoriBuku_click"  DockPanel.Dock="Left"></MenuItem>
+                    </DockPanel>
+                    <DockPanel>
+                        <Image Source="user.png" Width="20" Height="20"  DockPanel.Dock="Left"></Image>
+                        <MenuItem x:Name="btnMasterUsers" Header="Users" Click="btnMasterUsers_Click"  DockPanel.Dock="Left"></MenuItem>
+                    </DockPanel>
+                </MenuItem>
 
 
                 <MenuItem x:Name="btnTransaksi"  Margin="0 0 3 0" Header="Transaksi" Height="30" Background="#FFDDDDDD" BorderBrush="#FF707070" BorderThickness="1 1 1 1">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                        <MenuItem x:Name="btnTransaksiPembelian" Header="Pembelian Premium" Click="btnTransaksiPembelian_Click"></MenuItem>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                        <MenuItem x:Name="btnPeminjamanBuku" Header="Peminjaman Buku" Click="btnPeminjamanBuku_Click"></MenuItem>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
-                        <MenuItem x:Name="btnPengembalianBuku" Header="Pengembalian Buku" Click="btnPengembalianBuku_Click"></MenuItem>
-                    </StackPanel>
+                    <DockPanel>
+                        <Image Source="coin.png" Width="20" Height="20" DockPanel.Dock="Left"></Image>
+                        <MenuItem x:Name="btnTransaksiPembelian" Header="Pembelian Premium" Click="btnTransaksiPembelian_Click" DockPanel.Dock="Left"></MenuItem>
+                    </DockPanel>
+                    <DockPanel>
+                        <Image Source="shake.png" Width="20" Height="20" DockPanel.Dock="Left"></Image>
+                        <MenuItem x:Name="btnPeminjamanBuku" Header="Peminjaman Buku" Click="btnPeminjamanBuku_Click" DockPanel.Dock="Left"></MenuItem>
+                    </DockPanel>
+                    <DockPanel>
+                        <Image Source="return.jpg" Width="20" Height="20" DockPanel.Dock="Left"></Image>
+                        <MenuItem x:Name="btnPengembalianBuku" Header="Pengembalian Buku" Click="btnPengembalianBuku_Click" DockPanel.Dock="Left"></MenuItem>
+                    </DockPanel>
                 </MenuItem>
                 <MenuItem x:Name="btnLaporan" Margin="0 0 3 0" Header="Laporan" Height="30" BorderBrush="#FF707070" Background="#FFDDDDDD" BorderThickness="1 1 1 1">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                        <Image Source="coin.png" Width="20" Height="20"></Image>
                         <MenuItem x:Name="pembelianPremium" Header="Pembelian Premium" Click="pembelianPremium_Click"></MenuItem>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                        <Image Source="book.png" Width="20" Height="20"></Image>
                         <MenuItem Header="Detail Buku" Click="MenuItem_Click"></MenuItem>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="placeholder.png" Width="20" Height="20"></Image>
+                        <Image Source="return.jpg" Width="20" Height="20"></Image>
                         <MenuItem x:Name="pinjamdanbeli"  Header="Peminjaman dan Pengembalian Buku" Click="pinjamdanbeli_Click"></MenuItem>
                     </StackPanel>
                 </MenuItem>
                 <MenuItem x:Name="btnLogOut" HorizontalAlignment="Right" Margin="0 0 3 0" Header="LogOut" Height="30" BorderBrush="#FF707070" Background="#FFDDDDDD" BorderThickness="1 1 1 1" Click="btnLogOut_Click"/>
             </Menu>
         </Grid>
-       
+
 
     </Grid>
 </Window>

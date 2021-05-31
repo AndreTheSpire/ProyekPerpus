@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpusPCS"
         mc:Ignorable="d"
-        Title="UpdatePembelianPremium" Height="600" Width="1000">
+        Title="UpdatePembelianPremium" Height="600" Width="1000" Icon="icon opac search.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>

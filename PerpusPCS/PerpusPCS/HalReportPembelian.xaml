@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PerpusPCS"
         xmlns:Viewer="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer" x:Class="PerpusPCS.HalReportPembelian"
         mc:Ignorable="d"
-        Title="HalReportPembelian" Height="700" Width="900">
+        Title="HalReportPembelian" Height="700" Width="900" Icon="icon opac search.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>

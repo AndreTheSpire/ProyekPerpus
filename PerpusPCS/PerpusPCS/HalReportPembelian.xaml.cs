@@ -31,6 +31,7 @@ namespace PerpusPCS
         public HalReportPembelian()
         {
             InitializeComponent();
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
             loadComboBoxStatus();
             loadComboBoxMetodePembayaran();

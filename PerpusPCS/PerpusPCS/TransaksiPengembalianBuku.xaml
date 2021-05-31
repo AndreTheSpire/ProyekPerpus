@@ -41,8 +41,8 @@
                 <Label Content="Nama" MinWidth="70"/>
                 <TextBox x:Name="txtNama" MinWidth="130" Width="Auto"/>
             </StackPanel>
-            <Button x:Name="btnCari" HorizontalAlignment="Center" MinWidth="200" Content="Cari" Margin="10 10 10 0" Click="btnCari_Click"></Button>
-            <Button x:Name="btnResetPencarian" HorizontalAlignment="Center" MinWidth="200" Content="Reset Pencarian" Margin="10 4 10 0" Click="btnResetPencarian_Click"></Button>
+            <Button x:Name="btnCari" HorizontalAlignment="Center" MinWidth="200" Content="Cari"  Click="btnCari_Click"></Button>
+            <Button x:Name="btnResetPencarian" HorizontalAlignment="Center" MinWidth="200" Content="Reset Pencarian" Margin="0 4 0 0" Click="btnResetPencarian_Click"></Button>
         </StackPanel>
         <Button x:Name="btnBackToMenu" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Right" MinWidth="100" Margin="3" Content="Back To Menu" Click="btnBackToMenu_Click"></Button>
     </Grid>

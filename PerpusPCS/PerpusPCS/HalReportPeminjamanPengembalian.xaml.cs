@@ -33,6 +33,7 @@ namespace PerpusPCS
         public HalReportPeminjamanPengembalian()
         {
             InitializeComponent();
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.conn = ConnectionPage.conn;
 
         }

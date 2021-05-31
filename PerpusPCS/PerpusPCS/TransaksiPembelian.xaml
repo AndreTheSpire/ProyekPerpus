@@ -14,9 +14,9 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="87*"/>
-            <RowDefinition Height="29*"/>
-            <RowDefinition Height="169*"/>
+            <RowDefinition Height="83*"/>
+            <RowDefinition Height="36*"/>
+            <RowDefinition Height="166*"/>
             <RowDefinition Height="253*"/>
             <RowDefinition Height="31"/>
         </Grid.RowDefinitions>
@@ -47,7 +47,7 @@
             </DockPanel>
 
         </DockPanel>
-        <Button x:Name="btnPilihUser" Grid.Column="2" VerticalAlignment="Center" Margin="10,5,10,4" Height="20" Click="btnPilihUser_Click" Grid.Row="1">Pilih User</Button>
+        <Button x:Name="btnPilihUser" Grid.Column="2" VerticalAlignment="Center" Click="btnPilihUser_Click" Grid.Row="1">Pilih User</Button>
         <DataGrid x:Name="dgvPremium" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1" Grid.Row="2"  SelectionChanged="dgvPremium_SelectionChanged" Loaded="dgvPremium_Loaded" ColumnWidth="*" Margin="0 10 0 10" CanUserAddRows="False"/>
         <DockPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2">
             <DockPanel DockPanel.Dock="Top" Margin="20 15 0 0">
@@ -71,6 +71,6 @@
                 <Button DockPanel.Dock="Left" HorizontalAlignment="Center" x:Name="btnSimpan" MinWidth="100" MaxWidth="150" Click="btnSimpan_Click" >Simpan</Button>
             </DockPanel>
         </Grid>
-        <Button x:Name="btnToUpdatePembelianPremium" Grid.Row="4" Grid.Column="1" Margin="10 0 10 4" HorizontalAlignment="Center" Click="btnToUpdatePembelianPremium_Click">Go To Update Pembelian Premium</Button>
+        <Button x:Name="btnToUpdatePembelianPremium" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Click="btnToUpdatePembelianPremium_Click" Width="186">Go To Update Pembelian Premium</Button>
     </Grid>
 </Window>

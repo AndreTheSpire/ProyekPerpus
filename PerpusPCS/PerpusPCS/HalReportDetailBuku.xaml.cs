@@ -201,7 +201,7 @@ namespace PerpusPCS
             //parameter Genre
             if (cbGenre.SelectedIndex != -1)
             {
-                ComboBoxItem temp = (ComboBoxItem)cbBahasa.SelectedItem;
+                ComboBoxItem temp = (ComboBoxItem)cbGenre.SelectedItem;
                 genre = temp.Content.ToString();
             }
 

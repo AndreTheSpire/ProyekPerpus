@@ -75,27 +75,30 @@ is
     s_user users%rowtype;
     c_pernahBeli number(10);
     var_waktu number(10);
-    coba number(10);
+    elapsedDay number(10);
 begin
     -- 0 false, 1 true
     select * into s_user from users where id = p_id;
     select count(*) into c_pernahBeli from pembelian_premium where id_user = p_id and status = 1;
     if c_pernahBeli = 0 then 
+    DBMS_OUTPUT.PUT_LINE('tidak pernah beli');
     return 0; --false
     end if;
     --mencari kapan terakhir beli
     for i in (
         select * from pembelian_premium 
-        where id_user = p_id 
+        where id_user = p_id and status = 1
         order by created_at desc
     ) loop
         --apakah masih aktif ?
         --mengambil berapa hari waktu aktif
+        DBMS_OUTPUT.PUT_LINE('masuk loop');
         select waktu * 30 into var_waktu from premium where i.id_premium = id;
         --membandingkan waktu
-        select sysdate - created_at diff into coba from pembelian_premium where id_user = p_id and rownum = 1 order by created_at desc;
-        DBMS_OUTPUT.PUT_LINE(var_waktu);
-        if  var_waktu >= coba then
+        elapsedDay := sysdate - i.created_at;
+        --select sysdate - created_at diff into elapsedDay from i ;
+        DBMS_OUTPUT.PUT_LINE(var_waktu || ' and '|| elapsedDay);
+        if  var_waktu >= elapsedDay then
         return 1;
         else 
         return 0;
@@ -105,7 +108,7 @@ end;
 /
 show err;
 
-select cekValidPremium(1) from dual;
+select cekValidPremium(0) from dual;
 
 --function untuk mengetahui apakah masih aktif atau tidak untuk transaksi kembalian
 create or replace function cekValidPremiumKembalikan(p_id number,tanggal_pinjam date)

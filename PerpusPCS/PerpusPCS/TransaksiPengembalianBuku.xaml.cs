@@ -113,6 +113,7 @@ namespace PerpusPCS
 
         private void btnKembalikan_Click(object sender, RoutedEventArgs e)
         {
+            
             if (dgvPengembalianBuku.SelectedIndex == -1)
             {
                 MessageBox.Show("Pilih Salah Satu Item pada Datagrid Pengembalian Buku !");
@@ -193,6 +194,7 @@ namespace PerpusPCS
                             MessageBox.Show("Pengembalian Buku Dibatalkan!");
                         }
                         trans.Commit();
+                        ds2.Clear();
                         dgvPengembalianBuku.SelectedIndex = -1;
                         dgvDetailPeminjaman.SelectedIndex = -1;
                     }

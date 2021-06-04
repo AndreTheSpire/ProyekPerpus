@@ -49,11 +49,6 @@ namespace PerpusPCS
             string metode_pembayaran = "Semua";
             pembelian pembelian = new pembelian();
             pembelian.SetDatabaseLogon(ConnectionPage.userId, ConnectionPage.pass, ConnectionPage.source, "");
-            //if (user_id == -1)
-            //{
-            //    MessageBox.Show("pilihlah user terlebih dahulu");
-            //    return;
-            //}
 
             if (tglawalinp.SelectedDate != null && tglawalinp.SelectedDate < tglakhirinp.SelectedDate)
             {

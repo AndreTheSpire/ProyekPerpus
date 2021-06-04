@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerpusPCS"
         mc:Ignorable="d"
-        Title="ConnectionPage" Height="381.923" Width="345.385">
+        Title="ConnectionPage" Height="381.923" Width="621.544">
     <Grid>
         <Label Content="Connection To DataBase" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="32" Width="317" FontSize="16"/>
         <Label Content="DataBase" HorizontalAlignment="Left" Margin="35,63,0,0" VerticalAlignment="Top" FontSize="16"/>
@@ -15,6 +15,10 @@
         <TextBox x:Name="TxtUsername" HorizontalAlignment="Left" Height="23" Margin="125,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" FontSize="16" TabIndex="1"/>
         <TextBox x:Name="TxtPass" HorizontalAlignment="Left" Height="23" Margin="125,178,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" FontSize="16" TabIndex="2"/>
         <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="104,268,0,0" VerticalAlignment="Top" Width="132" Height="35" FontSize="16" TabIndex="3" Click="btnConnect_Click"/>
+        <Button x:Name="btnApply" Content="Apply" HorizontalAlignment="Left" Margin="501,268,0,0" VerticalAlignment="Top" Width="75" Click="btnApply_Click"/>
+        <Label Content="Saved Logins" HorizontalAlignment="Left" Margin="363,32,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="363,268,0,0" VerticalAlignment="Top" Width="75" Click="btnAdd_Click"/>
+        <ListBox x:Name="listLogins" HorizontalAlignment="Left" Height="186" Margin="363,67,0,0" VerticalAlignment="Top" Width="226"/>
 
     </Grid>
 </Window>

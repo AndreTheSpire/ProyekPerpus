@@ -144,83 +144,85 @@ namespace PerpusPCS
         private void btnPilih_Click(object sender, RoutedEventArgs e)
         {
             DataRow dr = dt2.NewRow();
-            try
+            if (user_id != -1)
             {
-                conn.Close();
-                conn.Open();
-                //pengecekan user udah pernah dipilih atau belum
-                if (user_id == -1)
+                try
                 {
-                    MessageBox.Show("Belum Memilih User", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                    conn.Close();
+                    conn.Open();
 
-                OracleCommand cmd = new OracleCommand()
-                {
-                    CommandType = CommandType.StoredProcedure,
-                    Connection = conn,
-                    CommandText = "cekValidPremium"
-                };
-                cmd.Parameters.Add(new OracleParameter()
-                {
-                    Direction = ParameterDirection.ReturnValue,
-                    ParameterName = "returnval",
-                    OracleDbType = OracleDbType.Int32,
-                    Size = 20
-                });
-                cmd.Parameters.Add(new OracleParameter()
-                {
-                    Direction = ParameterDirection.Input,
-                    ParameterName = "p_id",
-                    OracleDbType = OracleDbType.Int32,
-                    Size = 20,
-                    Value = user_id
-                });
-                cmd.ExecuteNonQuery();
-                int cekValid = Convert.ToInt32(cmd.Parameters["returnval"].Value.ToString());
-                conn.Close();
-                String statusbuku = dt.Rows[dgvBuku.SelectedIndex][5].ToString();
-                int banyakbukupilihan = dgvPilih.Items.Count;
-                int[] daftarpilihan = new int[banyakbukupilihan];
-                for (int i = 0; i < dgvPilih.Items.Count; i++)
-                {
-                    daftarpilihan[i] = Convert.ToInt32(dt2.Rows[i][0]);
-                }
-                bool sudahada = false;
-                for (int i = 0; i < daftarpilihan.Length; i++)
-                {
-                    if (Convert.ToInt32(dt.Rows[dgvBuku.SelectedIndex][0]) == daftarpilihan[i])
+                    OracleCommand cmd = new OracleCommand()
                     {
-                        sudahada = true;
+                        CommandType = CommandType.StoredProcedure,
+                        Connection = conn,
+                        CommandText = "cekValidPremium"
+                    };
+                    cmd.Parameters.Add(new OracleParameter()
+                    {
+                        Direction = ParameterDirection.ReturnValue,
+                        ParameterName = "returnval",
+                        OracleDbType = OracleDbType.Int32,
+                        Size = 20
+                    });
+                    cmd.Parameters.Add(new OracleParameter()
+                    {
+                        Direction = ParameterDirection.Input,
+                        ParameterName = "p_id",
+                        OracleDbType = OracleDbType.Int32,
+                        Size = 20,
+                        Value = user_id
+                    });
+                    cmd.ExecuteNonQuery();
+                    int cekValid = Convert.ToInt32(cmd.Parameters["returnval"].Value.ToString());
+                    conn.Close();
+                    String statusbuku = dt.Rows[dgvBuku.SelectedIndex][5].ToString();
+                    int banyakbukupilihan = dgvPilih.Items.Count;
+                    int[] daftarpilihan = new int[banyakbukupilihan];
+                    for (int i = 0; i < dgvPilih.Items.Count; i++)
+                    {
+                        daftarpilihan[i] = Convert.ToInt32(dt2.Rows[i][0]);
                     }
-                }
-                if (user_id != -1 && dgvBuku.SelectedIndex != -1)
-                {
-                    if ((cekValid == 0 && statusbuku.Equals("Free")) || (cekValid == 1 && (statusbuku.Equals("Free") || statusbuku.Equals("Premium"))))
+                    bool sudahada = false;
+                    for (int i = 0; i < daftarpilihan.Length; i++)
                     {
-                        if (!sudahada)
+                        if (Convert.ToInt32(dt.Rows[dgvBuku.SelectedIndex][0]) == daftarpilihan[i])
                         {
-                            dr["ID"] = dt.Rows[dgvBuku.SelectedIndex][0];
-                            dr["Judul"] = dt.Rows[dgvBuku.SelectedIndex][1];
-                            dr["Author"] = dt.Rows[dgvBuku.SelectedIndex][2];
-                            dr["Penerbit"] = dt.Rows[dgvBuku.SelectedIndex][3];
-                            dr["Halaman"] = dt.Rows[dgvBuku.SelectedIndex][4];
-                            dr["Bahasa"] = dt.Rows[dgvBuku.SelectedIndex][6];
-                            dt2.Rows.Add(dr);
+                            sudahada = true;
+                        }
+                    }
+                    if (user_id != -1 && dgvBuku.SelectedIndex != -1)
+                    {
+                        if ((cekValid == 0 && statusbuku.Equals("Free")) || (cekValid == 1 && (statusbuku.Equals("Free") || statusbuku.Equals("Premium"))))
+                        {
+                            if (!sudahada)
+                            {
+                                dr["ID"] = dt.Rows[dgvBuku.SelectedIndex][0];
+                                dr["Judul"] = dt.Rows[dgvBuku.SelectedIndex][1];
+                                dr["Author"] = dt.Rows[dgvBuku.SelectedIndex][2];
+                                dr["Penerbit"] = dt.Rows[dgvBuku.SelectedIndex][3];
+                                dr["Halaman"] = dt.Rows[dgvBuku.SelectedIndex][4];
+                                dr["Bahasa"] = dt.Rows[dgvBuku.SelectedIndex][6];
+                                dt2.Rows.Add(dr);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Buku Sudah Dipilih");
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("Buku Sudah Dipilih");
+                            MessageBox.Show("User Tidak Memiliki Premium Tidak Bisa Pinjam Premium");
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("User Tidak Memiliki Premium Tidak Bisa Pinjam Premium");
-                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Belum Memilih User", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             dgvBuku.SelectedIndex = -1;
         }
@@ -330,12 +332,9 @@ namespace PerpusPCS
                             conn.Close();
                             
                         }
-                        for (int i = dgvPilih.Items.Count - 1; i >= 0; i--)
-                        {
-                            dt2.Rows[i].Delete();
-                        }
                         MessageBox.Show("Transaksi Berhasil");
                     }
+                    dt2.Clear();
                 }
                 catch (Exception ex)
                 {

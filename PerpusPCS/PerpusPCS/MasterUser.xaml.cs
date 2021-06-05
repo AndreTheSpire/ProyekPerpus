@@ -295,6 +295,7 @@ namespace PerpusPCS
                 kode += $" and no_telp like '%{tbFilterNoTelp.Text}%'";
             }
             loadData(kode);
+            dgvUser_Loaded(sender, e);
             tbFilterNoTelp.Text = "";
             tbFilterNama.Text = "";
             tbFilterUsername.Text = "";
@@ -317,6 +318,24 @@ namespace PerpusPCS
             if (tbPassword.IsEnabled == false)
             {
                 tbPassword.Text = tbUsername.Text;
+            }
+        }
+
+        private void tbFilterNoTelp_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int jam = Convert.ToInt32(tbFilterNoTelp.Text);
+            }
+            catch
+            {
+                int panjang = tbFilterNoTelp.Text.Length;
+                if (panjang >= 1)
+                {
+                    tbFilterNoTelp.Text = tbFilterNoTelp.Text.Substring(0, panjang - 1);
+                    tbFilterNoTelp.Focus();
+                    tbFilterNoTelp.SelectionStart = panjang;
+                }
             }
         }
     }

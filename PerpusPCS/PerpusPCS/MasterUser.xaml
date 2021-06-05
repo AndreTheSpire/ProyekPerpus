@@ -76,7 +76,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 2 0 0">
                 <Label Content="No Telp" MinWidth="100"></Label>
-                <TextBox x:Name="tbFilterNoTelp" MinWidth="150" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbFilterNoTelp" MinWidth="150" HorizontalAlignment="Center" TextChanged="tbFilterNoTelp_TextChanged"/>
             </StackPanel>
             <Button x:Name="btnFilter" MinWidth="100" MaxWidth="200" Width="Auto" Margin="0 4 0 0" Click="btnFilter_Click">Filter</Button>
         </StackPanel>

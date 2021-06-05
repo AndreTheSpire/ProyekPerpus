@@ -45,7 +45,7 @@ namespace PerpusPCS
 
             OracleCommand cmd = new OracleCommand();
             cmd.Connection = conn;
-            cmd.CommandText = $"select hp.id,u.username as Username, u.nama as Nama, to_char(hp.tanggal_peminjaman,'DD/MM/YYYY'), u.id from users u left join h_peminjaman hp on hp.id_user = u.id where 1 = 1 {str_kode} and hp.id not in (select id_h_peminjaman from pengembalian)";
+            cmd.CommandText = $"select hp.id,u.username as Username, u.nama as Nama, to_char(hp.tanggal_peminjaman,'DD/MM/YYYY'), u.id from users u left join h_peminjaman hp on hp.id_user = u.id where 1 = 1 {str_kode} and hp.id not in (select id_h_peminjaman from pengembalian) order by 1";
 
             conn.Close();
             conn.Open();
@@ -99,6 +99,7 @@ namespace PerpusPCS
                 dgvDetailPeminjaman.ItemsSource = ds2.DefaultView;
 
                 conn.Close();
+                dgvDetailPeminjaman_Loaded();
             }
             else
             {
@@ -194,16 +195,19 @@ namespace PerpusPCS
                             MessageBox.Show("Pengembalian Buku Dibatalkan!");
                         }
                         trans.Commit();
-                        ds2.Clear();
+                        if (ds2 != null)
+                        {
+                            ds2.Clear();
+                        }
                         dgvPengembalianBuku.SelectedIndex = -1;
                         dgvDetailPeminjaman.SelectedIndex = -1;
-                    }
-                    catch (Exception ex)
-                    {
-                        trans.Rollback();
-                        MessageBox.Show(ex.Message);
-                    }
                 }
+                    catch (Exception ex)
+                {
+                    trans.Rollback();
+                    MessageBox.Show(ex.Message);
+                }
+            }
                 conn.Close();
                 LoadData(null, null);
                 dgvPengembalianBuku_Loaded(sender, e);
@@ -264,6 +268,18 @@ namespace PerpusPCS
             dgvPengembalianBuku.Columns[2].Header = "Nama";
             dgvPengembalianBuku.Columns[3].Header = "Tanggal Pinjam";
             dgvPengembalianBuku.Columns[4].Visibility = Visibility.Hidden;
+        }
+
+        private void dgvDetailPeminjaman_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        private void dgvDetailPeminjaman_Loaded()
+        {
+            dgvDetailPeminjaman.Columns[0].Width = DataGridLength.Auto;
+            dgvDetailPeminjaman.Columns[1].Width = DataGridLength.Auto;
+            dgvDetailPeminjaman.Columns[0].Header = "ID";
+            dgvDetailPeminjaman.Columns[1].Header = "ID User";
         }
     }
 }

@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         <Button x:Name="btnPilihBuku" Grid.Row="1" Grid.Column="2" Click="btnPilihBuku_Click" VerticalAlignment="Center" Height="20" Margin="50 4 50 0">PIlih Buku</Button>
 
-        <DataGrid x:Name="dgvKatBuku" Grid.Column="1" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5" SelectionChanged="dgvKatBuku_SelectionChanged" CanUserAddRows="False"/>
+        <DataGrid x:Name="dgvKatBuku" Grid.Column="1" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5" SelectionChanged="dgvKatBuku_SelectionChanged" CanUserAddRows="False" Loaded="dgvKatBuku_Loaded" ColumnWidth="*"/>
         <DockPanel  Grid.Column="1" Grid.Row="3"  Grid.ColumnSpan="1" >
             <DockPanel DockPanel.Dock="Top" Margin="0 4 0 0">
                 <Label Content="ID" MinWidth="100" DockPanel.Dock="Left"></Label>

@@ -45,11 +45,11 @@ namespace PerpusPCS
             cmd.Connection = conn;
             if (kode == null)
             {
-                cmd.CommandText = $"select id, judul, author, penerbit, halaman, case status_premium when 0 then 'Free' when 1 then 'Premium' end, bahasa from buku where status_delete = 0";
+                cmd.CommandText = $"select id, judul, author, penerbit, halaman, case status_premium when 0 then 'Free' when 1 then 'Premium' end, bahasa from buku where status_delete = 0 order by 1";
             }
             else
             {
-                cmd.CommandText = kode;
+                cmd.CommandText = kode + " order by 1";
             }
             
 
@@ -210,12 +210,17 @@ namespace PerpusPCS
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     conn.Close();
-                    resetTampilan();
+                    resetTampilan(); 
+                    dgvBuku_Loaded(sender, e);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Periksa Kembali Data Yang Akan Dimasukkan","Wrong Input",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
         private bool cekValid()
@@ -252,11 +257,16 @@ namespace PerpusPCS
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     resetTampilan();
+                    dgvBuku_Loaded(sender, e);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Periksa Kembali Data Yang Akan Dimasukkan","Wrong Input",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
 
@@ -280,12 +290,17 @@ namespace PerpusPCS
 
                     conn.Close();
                     resetTampilan();
+                    dgvBuku_Loaded(sender, e);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
                 
+            }
+            else
+            {
+                MessageBox.Show("Periksa Kembali Data Yang Akan Dimasukkan", "Wrong Input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

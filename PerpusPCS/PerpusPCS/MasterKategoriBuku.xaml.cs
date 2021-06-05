@@ -301,6 +301,7 @@ namespace PerpusPCS
             }
             loadDataKat();
             resetForm();
+            dgvKatBuku_Loaded();
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
@@ -333,6 +334,7 @@ namespace PerpusPCS
             }
             loadDataKat();
             resetForm();
+            dgvKatBuku_Loaded();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -365,6 +367,7 @@ namespace PerpusPCS
             }
             loadDataKat();
             resetForm();
+            dgvKatBuku_Loaded();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -505,6 +508,18 @@ namespace PerpusPCS
             txtJudul.Text = Buku_judul;
             autogenID();
             loadDataKat();
+            dgvKatBuku_Loaded();
+        }
+
+        private void dgvKatBuku_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        private void dgvKatBuku_Loaded()
+        {
+            dgvKatBuku.Columns[0].Width = DataGridLength.Auto;
+            //dgvKatBuku.Columns[1].Width = DataGridLength.Auto;
+            dgvKatBuku.Columns[2].Width = DataGridLength.Auto;
         }
     }
 }

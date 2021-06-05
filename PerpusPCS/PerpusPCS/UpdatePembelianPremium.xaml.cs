@@ -174,9 +174,69 @@ namespace PerpusPCS
             conn.Close();
         }
 
+        private bool cekKondisi(int user_id)
+        {
+            conn.Close();
+            conn.Open();
+            //pengecekan user udah pernah dipilih atau belum
+            if (user_id == -1)
+            {
+                MessageBox.Show("Belum Memilih User", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            OracleCommand cmd = new OracleCommand()
+            {
+                CommandType = CommandType.StoredProcedure,
+                Connection = conn,
+                CommandText = "cekValidPremium"
+            };
+            cmd.Parameters.Add(new OracleParameter()
+            {
+                Direction = ParameterDirection.ReturnValue,
+                ParameterName = "returnval",
+                OracleDbType = OracleDbType.Int32,
+                Size = 20
+            });
+            cmd.Parameters.Add(new OracleParameter()
+            {
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_id",
+                OracleDbType = OracleDbType.Int32,
+                Size = 20,
+                Value = user_id
+            });
+            cmd.ExecuteNonQuery();
+            int cekValid = Convert.ToInt32(cmd.Parameters["returnval"].Value.ToString());
+            conn.Close();
+            if (cekValid == 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private void dgvPembelianPremium_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (dgvPembelianPremium.SelectedIndex == -1)
+            {
+                return;
+            }
 
+            int user_id = -1;
+            int idx = dgvPembelianPremium.SelectedIndex;
+            string username = dt.Rows[idx][1].ToString();
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = $"select id from users where username = '{username}'";
+            conn.Close();
+            conn.Open();
+            user_id = Convert.ToInt32(cmd.ExecuteScalar());
+            
+            conn.Close();
             DataRowView temp = (DataRowView)dgvPembelianPremium.SelectedItem;
             if (temp == null) return;
             int id = Convert.ToInt32(temp[0]);
@@ -193,6 +253,10 @@ namespace PerpusPCS
                 btnCancel_Click(sender, e);
             }
             txtIdPembayaranTerpilih.Text = id.ToString();
+            if (!cekKondisi(user_id))
+            {
+                rbAccepted.IsEnabled = false;
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

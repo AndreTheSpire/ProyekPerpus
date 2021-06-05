@@ -233,7 +233,7 @@ namespace PerpusPCS
                 {
                     MessageBox.Show("user ini sudah pernah didaftarkan");
                 }
-                
+                hitungHarga();
             }
         }
 
@@ -289,6 +289,23 @@ namespace PerpusPCS
         {
             UpdatePembelianPremium upp = new UpdatePembelianPremium();
             upp.ShowDialog();
+        }
+        private void hitungHarga()
+        {
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = conn;
+            conn.Close();
+            conn.Open();
+            int total = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                int id_premium = Convert.ToInt32(row[2]);
+                cmd.CommandText = $"select harga from premium where id = {id_premium}";
+                int harga = Convert.ToInt32(cmd.ExecuteScalar());
+                total += harga;
+            }
+            conn.Close();
+            txtHarga.Text = $"Total Harga : {total}";
         }
     }
 }

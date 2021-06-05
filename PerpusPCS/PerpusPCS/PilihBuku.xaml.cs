@@ -38,6 +38,7 @@ namespace PerpusPCS
         public PilihBuku()
         {
             InitializeComponent();
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             conn = ConnectionPage.conn;
             loadData(null);
         }
@@ -52,11 +53,11 @@ namespace PerpusPCS
             cmd.Connection = conn;
             if (kode == null)
             {
-                cmd.CommandText = $"select id, judul, author, penerbit, halaman, case status_premium when 0 then 'Free' when 1 then 'Premium' end, bahasa,status_delete from buku where status_delete = 0";
+                cmd.CommandText = $"select id, judul, author, penerbit, halaman, case status_premium when 0 then 'Free' when 1 then 'Premium' end, bahasa,status_delete from buku where status_delete = 0 order by 1";
             }
             else
             {
-                cmd.CommandText = kode;
+                cmd.CommandText = kode + " order by 1";
             }
 
 

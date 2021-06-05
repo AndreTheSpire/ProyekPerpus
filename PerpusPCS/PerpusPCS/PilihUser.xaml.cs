@@ -69,11 +69,11 @@ namespace PerpusPCS
             cmd.Connection = conn;
             if (kode == null)
             {
-                cmd.CommandText = $"select ID,username,password,nama,to_char(tanggal_lahir,'DD/MM/YYYY'),no_telp,status_delete from users where status_delete = 0";
+                cmd.CommandText = $"select ID,username,password,nama,to_char(tanggal_lahir,'DD/MM/YYYY'),no_telp,status_delete from users where status_delete = 0 order by 1";
             }
             else
             {
-                cmd.CommandText = kode;
+                cmd.CommandText = kode + " order by 1";
             }
             conn.Close();
             conn.Open();

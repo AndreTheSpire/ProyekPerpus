@@ -325,7 +325,7 @@ namespace PerpusPCS
         {
             try
             {
-                int jam = Convert.ToInt32(tbFilterNoTelp.Text);
+                long jam = Convert.ToInt64(tbFilterNoTelp.Text);
             }
             catch
             {
